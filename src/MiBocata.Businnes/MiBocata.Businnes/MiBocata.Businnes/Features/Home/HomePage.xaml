@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage
+    x:Class="MiBocata.Businnes.Features.Home.HomePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:order="clr-namespace:MiBocata.Businnes.Features.Order"
+    xmlns:store="clr-namespace:MiBocata.Businnes.Features.Store"
+    xmlns:windows="clr-namespace:Xamarin.Forms.PlatformConfiguration.WindowsSpecific;assembly=Xamarin.Forms.Core"
+    android:TabbedPage.ToolbarPlacement="Bottom"
+    windows:TabbedPage.HeaderIconsEnabled="true"
+    BarBackgroundColor="White"
+    SelectedTabColor="Blue"
+    UnselectedTabColor="LightGray"
+    mc:Ignorable="d">
+
+    <order:OrderPage Title="Pedidos" IconImageSource="baseline_notes_black_24.png" />
+    <store:StorePage Title="Tienda" IconImageSource="baseline_settings_black_24.png" />
+</TabbedPage>

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<framework:BasePage
+    x:Class="MiBocata.Businnes.Features.Order.OrderPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:framework="clr-namespace:MiBocata.Businnes.Framework"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:templates="clr-namespace:MiBocata.Businnes.Features.Order.Templates"
+    Title="Pedidos"
+    BackgroundColor="#EEEEEE"
+    NavigationPage.HasNavigationBar="True"
+    mc:Ignorable="d">
+    <framework:BasePage.ToolbarItems>
+        <ToolbarItem Command="{Binding RefreshCommand}" Text="Actualizar" />
+    </framework:BasePage.ToolbarItems>
+    <NavigationPage.TitleView>
+        <Label Text="Hello" />
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <Grid>
+            <CollectionView ItemsSource="{Binding Orders}" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <templates:OrderItemView />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Grid>
+                        <Label
+                            HorizontalOptions="Center"
+                            Text="No tienes pedidos aún"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </CollectionView.EmptyView>
+            </CollectionView>
+
+            <ActivityIndicator
+                HorizontalOptions="Center"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="Center" />
+        </Grid>
+    </ContentPage.Content>
+</framework:BasePage>

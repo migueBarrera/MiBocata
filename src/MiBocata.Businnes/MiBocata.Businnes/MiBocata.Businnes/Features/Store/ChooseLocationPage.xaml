@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<framework:BasePage
+    x:Class="MiBocata.Businnes.Features.Store.ChooseLocationPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:framework="clr-namespace:MiBocata.Businnes.Framework"
+    xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    NavigationPage.HasNavigationBar="False"
+    mc:Ignorable="d">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60" />
+            </Grid.RowDefinitions>
+
+            <Grid BackgroundColor="LightBlue">
+                <StackLayout Orientation="Vertical" Spacing="0">
+                    <Label FontSize="24" Text="¿Donde esta tu tienda?" />
+                    <Label
+                        Margin="8,0,0,0"
+                        FontSize="14"
+                        Text="Intenta elegir con la mayor precisión" />
+                </StackLayout>
+            </Grid>
+            <maps:Map
+                x:Name="MyMap"
+                Grid.Row="1"
+                HeightRequest="200"
+                IsShowingUser="False"
+                ItemsSource="{Binding Locations}"
+                MapClicked="MyMap_MapClicked"
+                MapType="Hybrid"
+                WidthRequest="320">
+                <maps:Map.ItemTemplate>
+                    <DataTemplate>
+                        <maps:Pin
+                            Address="{Binding Address}"
+                            Label="{Binding Description}"
+                            Position="{Binding Position}" />
+                    </DataTemplate>
+                </maps:Map.ItemTemplate>
+            </maps:Map>
+
+            <Grid Grid.Row="2" BackgroundColor="White">
+                <Button
+                    Margin="16,8"
+                    Command="{Binding NextCommand}"
+                    Text="Elegir posición" />
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</framework:BasePage>

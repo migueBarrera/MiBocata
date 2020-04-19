@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<framework:BaseContentPage
+    x:Class="MiBocata.Features.Profile.ProfilePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+    xmlns:framework="clr-namespace:MiBocata.Framework"
+    xmlns:logIn="clr-namespace:MiBocata.Features.LogIn"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ButtonStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="Margin" Value="8,4,0,4" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid>
+                <StackLayout IsVisible="{Binding UserIsLogged}">
+                    <ffimageloading:CachedImage
+                        Margin="0,16,0,24"
+                        ErrorPlaceholder="profile_placeholder.png"
+                        HeightRequest="90"
+                        HorizontalOptions="Center"
+                        LoadingPlaceholder="profile_placeholder.png"
+                        Source="{Binding Client.Image}"
+                        VerticalOptions="Center"
+                        WidthRequest="90">
+                        <ffimageloading:CachedImage.Transformations>
+                            <fftransformations:CircleTransformation />
+                        </ffimageloading:CachedImage.Transformations>
+                    </ffimageloading:CachedImage>
+                    <BoxView BackgroundColor="LightGray" HeightRequest="1" />
+                    <Label Style="{StaticResource ButtonStyle}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <FormattedString.Spans>
+                                    <Span Text="¡Hola " />
+                                    <Span Text="{Binding Client.Name}" />
+                                    <Span Text="!" />
+                                </FormattedString.Spans>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <BoxView BackgroundColor="LightGray" HeightRequest="1" />
+                    <Label Style="{StaticResource ButtonStyle}" Text="Editar perfil">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding EditProfileCommand}" NumberOfTapsRequired="1" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <BoxView BackgroundColor="LightGray" HeightRequest="1" />
+                    <Label Style="{StaticResource ButtonStyle}" Text="Mis pedidos">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OrdersCommand}" NumberOfTapsRequired="1" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <BoxView BackgroundColor="LightGray" HeightRequest="1" />
+                    <Label Style="{StaticResource ButtonStyle}" Text="Cerrar sesión">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CloseSessionCommand}" NumberOfTapsRequired="1" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <BoxView BackgroundColor="LightGray" HeightRequest="1" />
+                </StackLayout>
+
+                <Grid IsVisible="{Binding UserIsLogged, Converter={StaticResource NegateBoolConverter}}">
+                    <logIn:LogInControlView x:Name="MyLoginControlProfile" />
+                </Grid>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</framework:BaseContentPage>

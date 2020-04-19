@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<framework:BasePage
+    x:Class="MiBocata.Businnes.Features.Products.NewProductPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+    xmlns:framework="clr-namespace:MiBocata.Businnes.Framework"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Nuevo producto"
+    Visual="Material"
+    mc:Ignorable="d">
+    <ContentPage.Content>
+        <Grid Margin="16">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <ScrollView>
+                <StackLayout Orientation="Vertical">
+                    <ffimageloading:CachedImage
+                        Margin="0,0,0,0"
+                        ErrorPlaceholder="profile_placeholder.png"
+                        HeightRequest="130"
+                        HorizontalOptions="Center"
+                        LoadingPlaceholder="profile_placeholder.png"
+                        Source="{Binding Productimage}"
+                        VerticalOptions="Center"
+                        WidthRequest="130">
+                        <ffimageloading:CachedImage.Transformations>
+                            <fftransformations:CircleTransformation />
+                        </ffimageloading:CachedImage.Transformations>
+                        <ffimageloading:CachedImage.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding TakeImageCommand}" />
+                        </ffimageloading:CachedImage.GestureRecognizers>
+                    </ffimageloading:CachedImage>
+                    <Entry Placeholder="Bocadillo de jamón..." Text="{Binding ProductName}" />
+                    <Entry Placeholder="Ingredientes o descripción" Text="{Binding ProductDescription}" />
+                    <Entry
+                        Keyboard="Numeric"
+                        Placeholder="Precio"
+                        Text="{Binding Productprice}" />
+                </StackLayout>
+            </ScrollView>
+            <Button
+                Grid.Row="1"
+                Command="{Binding CreateProductCommand}"
+                Text="Añadir" />
+        </Grid>
+    </ContentPage.Content>
+</framework:BasePage>
