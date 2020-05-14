@@ -50,6 +50,11 @@ Puedes descargar la app apuntando al backend en mi repositorio publicado
 # Contributing
 Este proyecto acepta cualquier tipo de aporte de todos los usuarios. Solo tienes que hacer tu Pull Request.
 
-O también puedes contribuir ayudandome con un coffee
+# Did you like it?
 
 <a href='https://ko-fi.com/Y8Y41MNBQ' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+
+Your caffeine helps me a lot :sparkles:
+
+**Happy coding! :sparkles: :camel: :boom:**
+
