@@ -20,6 +20,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
+    projects: 'src/MiBocataAPI/MiBocataAPI.sln'
     
 - task: DotNetCoreCLI@2
   displayName: Build
