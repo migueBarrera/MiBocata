@@ -21,9 +21,9 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: true
-    arguments: '-r linux-x64 --self-contained false --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: false
-    workingDirectory: 'src/MiBocataAPI/MiBocataAPI.sln'
+    workingDirectory: 'src/MiBocataAPI/MiBocataAPI/MiBocataAPI.csproj'
 
 # this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
 - task: PublishPipelineArtifact@1
