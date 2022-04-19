@@ -15,11 +15,12 @@ namespace MiBocataAPI.Middleware
             var passDB = config.GetSection("DataBase").GetSection("Pass").Value;
             var dataBaseName = config.GetSection("DataBase").GetSection("DataBaseName").Value;
 
-            services
-                .AddDbContextPool<MBDBContext>(options => options
-                .UseMySql($"Server=localhost;Database={dataBaseName};User={userDB};Password={passDB};", mySqlOptions => mySqlOptions
-                    .ServerVersion(new Version(10, 4, 11), ServerType.MariaDb)
-            ));
+            //services
+            //    .AddDbContextPool<MBDBContext>(options => options
+            //    .UseMySql($"Server=localhost;Database={dataBaseName};User={userDB};Password={passDB};", mySqlOptions => mySqlOptions.UseRelationalNulls()
+
+            //    //    .ServerVersion(new Version(10, 4, 11), ServerType.MariaDb)
+            //));
 
             return services;
         }
