@@ -18,6 +18,13 @@ steps:
     version: '6.0.x'
 
 - task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    command: build
+    projects: 'src/MiBocataAPI/MiBocataAPI/MiBocataAPI.csproj'
+    arguments: '--configuration $(buildConfiguration)' # Update this to match your need
+
+- task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
     publishWebProjects: true
