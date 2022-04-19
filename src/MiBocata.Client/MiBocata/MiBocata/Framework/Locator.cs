@@ -8,6 +8,7 @@ using MiBocata.Features.Register;
 using MiBocata.Features.Stores;
 using MiBocata.Services.API.RefitServices;
 using MiBocata.Services.AuthenticationService;
+using MiBocata.Services.Commons.NotificationService;
 using MiBocata.Services.ConnectivityServices;
 using MiBocata.Services.DialogService;
 using MiBocata.Services.GeolocationService;
@@ -67,8 +68,9 @@ namespace MiBocata.Framework
             RegisterSingleton<IMiBocataNavigationService, MiBocataNavigationService>();
             RegisterSingleton<IPreferencesService, PreferencesService>();
             RegisterSingleton<IGeolocationService, GeolocationService>();
+            RegisterSingleton<INotificationService, EmptyNotificationService>();
             RegisterSingleton<ISessionService, SessionService>();
-            RegisterSingleton<INotificationService, OneSignalService>();
+            //RegisterSingleton<INotificationService, OneSignalService>();
             RegisterSingleton<IDialogService, DialogService>();
             RegisterSingleton<IConnectivityService, ConnectivityService>();
             RegisterSingleton<IRefitService, RefitService>();

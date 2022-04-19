@@ -17,7 +17,7 @@ namespace MiBocata
         {
             InitializeComponent();
 
-            InitOneSignal();
+            //InitOneSignal();
         }
 
         protected override void OnStart()
