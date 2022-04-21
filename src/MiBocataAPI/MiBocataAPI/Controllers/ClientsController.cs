@@ -1,199 +1,186 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MiBocataAPI.DB;
-using Models;
-using MiBocataAPI.Helpers;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Http;
-using System.IO;
-using MiBocataAPI.Framework;
+﻿namespace MiBocataAPI.Controllers;
 
-namespace MiBocataAPI.Controllers
+[Route("api/[controller]")]
+[ApiController]
+public class ClientsController : MBControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ClientsController : MBControllerBase
+    public ClientsController(IConfiguration configuration, MBDBContext context)
+        : base(configuration, context)
     {
-        public ClientsController(IConfiguration configuration, MBDBContext context)
-            : base(configuration, context)
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Client>>> GetClient()
+    {
+        return await _context.Client.ToListAsync();
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Client>> GetClient(int id)
+    {
+        var client = await _context.Client.FindAsync(id);
+
+        if (client == null)
         {
+            return NotFound();
         }
 
-        // GET: api/Clients
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Client>>> GetClient()
+        return client;
+    }
+
+    [HttpGet("{id}/orders")]
+    public async Task<ActionResult<IEnumerable<Order>>> GetClientOrders(int id)
+    {
+        return await _context.Order
+                                .Where(o => o.ClientId == id)
+                                .Include(o => o.OrderProducts)
+                                .Include(o => o.Client)
+                                .Include(o => o.Store)
+                                    .ThenInclude(s => s.StoreLocation)
+                                .ToListAsync();
+    }
+
+    [HttpPost]
+    [Route("SignUp")]
+    public async Task<ActionResult<ClientSignUpResponse>> PostSignUp(ClientSignUpRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(request.Name) ||
+            string.IsNullOrWhiteSpace(request.Password))
         {
-            return await _context.Client.ToListAsync();
+            return BadRequest("Required parameters");
         }
 
-        // GET: api/Clients/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Client>> GetClient(int id)
+        if (ClientExists(request.Email))
+        {
+            return Conflict();
+        }
+
+        var client = new Client()
+        {
+            Name = request.Name,
+            Password = Hash.Create(request.Password),
+            Email = request.Email,
+        };
+
+        _context.Client.Add(client);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction("GetClient", new { id = client.Id }, new ClientSignUpResponse()
+        {
+            Id = client.Id,
+            Email = request.Email,
+            Name = request.Name,
+            Token = JwtSecurityTokenHelper.BuildToken(configuration["Jwt:Key"], client),
+        });
+    }
+
+    [HttpPost]
+    [Route("SignIn")]
+    public ActionResult<ClientSignInResponse> PostSignIn(ClientSignInRequest request)
+    {
+        var client = _context.Client
+            .Where(a => a.Email == request.Email)
+            .Single();
+        if (client == null)
+        {
+            return NotFound();
+        }
+
+        if (!Hash.Validate(request.Password, client.Password))
+        {
+            return NotFound();
+        }
+
+        return Ok(new ClientSignInResponse()
+        {
+            Id = client.Id,
+            Email = client.Email,
+            Name = client.Name,
+            Token = JwtSecurityTokenHelper.BuildToken(configuration["Jwt:Key"], client),
+        });
+    }
+
+    [HttpPost]
+    [Route("{id}/image")]
+    public async Task<IActionResult> PostUploadImage(int id, IFormFile file)
+    {
+        if (file == null)
+        {
+            return BadRequest();
+        }
+
+        var url = await ImageHelper.UploadImage("clients", file);
+
+        if (!string.IsNullOrWhiteSpace(url))
         {
             var client = await _context.Client.FindAsync(id);
-            
-            if (client == null)
-            {
-                return NotFound();
-            }
-
-            return client;
+            client.Image = url;
+            await UpdateClients(id, client);
+            return Ok(url);
         }
-        
-        // GET: api/Clients/5/Orders
-        [HttpGet("{id}/orders")]
-        public async Task<ActionResult<IEnumerable<Order>>> GetClientOrders(int id)
+        else
         {
-            return await _context.Order
-                                    .Where(o => o.ClientId == id)
-                                    .Include(o => o.OrderProducts)
-                                    .Include(o => o.Client)
-                                    .Include(o => o.Store)
-                                        .ThenInclude(s => s.StoreLocation)
-                                    .ToListAsync();
+            return BadRequest();
+        }
+    }
+
+    [HttpPut("{id}")]
+    public Task<IActionResult> PutClient(int id, Client client)
+    {
+        return UpdateClients(id, client);
+    }
+
+    // DELETE: api/Clients/5
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<Client>> DeleteClient(int id)
+    {
+        var client = await _context.Client.FindAsync(id);
+        if (client == null)
+        {
+            return NotFound();
         }
 
-        // POST: api/Clients/SignUp
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPost]
-        [Route("SignUp")]
-        public async Task<ActionResult<Client>> PostSignUp(Client client)
+        _context.Client.Remove(client);
+        await _context.SaveChangesAsync();
+
+        return client;
+    }
+
+    private async Task<IActionResult> UpdateClients(int id, Client client)
+    {
+        if (id != client.Id)
         {
-            if (string.IsNullOrWhiteSpace(client.Name) ||
-                string.IsNullOrWhiteSpace(client.Password))
-            {
-                return BadRequest("Required parameters");
-            }
+            return BadRequest();
+        }
 
-            if (ClientExists(client.Email))
-            {
-                return Conflict();
-            }
+        _context.Entry(client).State = EntityState.Modified;
 
-            client.Password = Hash.Create(client.Password);
-
-            _context.Client.Add(client);
+        try
+        {
             await _context.SaveChangesAsync();
-
-            //client.Password = string.Empty;
-            client.Token = JwtSecurityTokenHelper.BuildToken(configuration["Jwt:Key"], client);
-
-            return CreatedAtAction("GetClient", new { id = client.Id }, client);
         }
-
-        // POST: api/Clients
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPost]
-        [Route("SignIn")]
-        public ActionResult<Client> PostSignIn(Client client)
+        catch (DbUpdateConcurrencyException)
         {
-            var user = _context.Client.Where(a => a.Email == client.Email).Single();
-            if (user == null)
+            if (!ClientExists(id))
             {
                 return NotFound();
-            }
-
-            if (!Hash.Validate(client.Password, user.Password))
-            {
-                return NotFound();
-            }
-
-            //user.Password = string.Empty;
-            user.Token = JwtSecurityTokenHelper.BuildToken(configuration["Jwt:Key"], user);
-            
-            return user;
-        }
-
-        [HttpPost]
-        [Route("{id}/image")]
-        public async Task<IActionResult> PostUploadImage(int id, IFormFile file)
-        {
-            if (file == null)
-            {
-                return BadRequest();
-            }
-
-            var url = await ImageHelper.UploadImage("clients", file);
-
-            if (!string.IsNullOrWhiteSpace(url))
-            {
-                var client = await _context.Client.FindAsync(id);
-                client.Image = url;
-                await UpdateClients(id, client);
-                return Ok(url);
             }
             else
             {
-                return BadRequest();
+                throw;
             }
         }
 
-        private async Task<IActionResult> UpdateClients(int id, Client client)
-        {
-            if (id != client.Id)
-            {
-                return BadRequest();
-            }
+        return NoContent();
+    }
 
-            _context.Entry(client).State = EntityState.Modified;
+    private bool ClientExists(int id)
+    {
+        return _context.Client.Any(e => e.Id == id);
+    }
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ClientExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        private bool ClientExists(int id)
-        {
-            return _context.Client.Any(e => e.Id == id);
-        }
-
-        private bool ClientExists(string email)
-        {
-            return _context.Client.Any(e => e.Email == email);
-        }
-
-        // PUT: api/Clients/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPut("{id}")]
-        public Task<IActionResult> PutClient(int id, Client client)
-        {
-            return UpdateClients(id, client);
-        }
-
-        // DELETE: api/Clients/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Client>> DeleteClient(int id)
-        {
-            var client = await _context.Client.FindAsync(id);
-            if (client == null)
-            {
-                return NotFound();
-            }
-
-            _context.Client.Remove(client);
-            await _context.SaveChangesAsync();
-
-            return client;
-        }
+    private bool ClientExists(string email)
+    {
+        return _context.Client.Any(e => e.Email == email);
     }
 }

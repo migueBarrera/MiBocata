@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "..\Commons\Models
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureStorageManager", "..\Commons\AzureStorageManager\AzureStorageManager.csproj", "{EAFFAE61-8323-4117-9A2C-BFFAB616EEF9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mibocata.Infrastructure", "Mibocata.Infrastructure\Mibocata.Infrastructure.csproj", "{D9A16BCE-5D36-4335-8CAC-E6A1C118C8D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{EAFFAE61-8323-4117-9A2C-BFFAB616EEF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAFFAE61-8323-4117-9A2C-BFFAB616EEF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAFFAE61-8323-4117-9A2C-BFFAB616EEF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9A16BCE-5D36-4335-8CAC-E6A1C118C8D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9A16BCE-5D36-4335-8CAC-E6A1C118C8D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9A16BCE-5D36-4335-8CAC-E6A1C118C8D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9A16BCE-5D36-4335-8CAC-E6A1C118C8D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

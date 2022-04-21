@@ -1,28 +1,28 @@
-﻿using MiBocataAPI.DB;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
-using System;
+﻿namespace MiBocataAPI.Middleware;
 
-namespace MiBocataAPI.Middleware
+public static class DataBaseExtension
 {
-    public static class DataBaseExtension
+    public static IServiceCollection AddDataBaseConfiguration(this IServiceCollection services, IConfiguration config)
     {
-        public static IServiceCollection AddDataBaseConfiguration(this IServiceCollection services, IConfiguration config)
-        {
-            var userDB = config.GetSection("DataBase").GetSection("User").Value;
-            var passDB = config.GetSection("DataBase").GetSection("Pass").Value;
-            var dataBaseName = config.GetSection("DataBase").GetSection("DataBaseName").Value;
 
-            //services
-            //    .AddDbContextPool<MBDBContext>(options => options
-            //    .UseMySql($"Server=localhost;Database={dataBaseName};User={userDB};Password={passDB};", mySqlOptions => mySqlOptions.UseRelationalNulls()
+        var userDB = config.GetSection("DataBase").GetSection("User").Value;
+        var passDB = config.GetSection("DataBase").GetSection("Pass").Value;
+        var dataBaseName = config.GetSection("DataBase").GetSection("DataBaseName").Value;
 
-            //    //    .ServerVersion(new Version(10, 4, 11), ServerType.MariaDb)
-            //));
+        var connectionString = $"server=localhost;user={userDB};password={passDB};database={dataBaseName}";
 
-            return services;
-        }
+        var serverVersion = new MySqlServerVersion(new Version(8, 0, 27));
+
+        services.AddDbContext<MBDBContext>(
+        dbContextOptions => dbContextOptions
+            .UseMySql(connectionString, serverVersion)
+            // The following three options help with debugging, but should
+            // be changed or removed for production.
+            .LogTo(Console.WriteLine, LogLevel.Information)
+            .EnableSensitiveDataLogging()
+            .EnableDetailedErrors()
+    );
+
+        return services;
     }
 }

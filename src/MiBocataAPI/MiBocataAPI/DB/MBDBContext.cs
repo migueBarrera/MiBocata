@@ -1,9 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Mibocata.Infrastructure.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace MiBocataAPI.DB
 {
@@ -19,7 +15,7 @@ namespace MiBocataAPI.DB
 
         public DbSet<Store> Store { get; set; }
 
-        public DbSet<Models.Product> Product { get; set; }
+        public DbSet<Mibocata.Infrastructure.Data.Models.Product> Product { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

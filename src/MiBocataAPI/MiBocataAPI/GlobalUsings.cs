@@ -1,0 +1,15 @@
+﻿global using Models.Responses;
+global using Models.Requests;
+global using Mibocata.Infrastructure.Data.Models;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Mvc;
+global using MiBocataAPI.DB;
+global using MiBocataAPI.Helpers;
+global using MiBocataAPI.Framework;
+global using Microsoft.AspNetCore.Authorization;
+global using System.Security.Claims;
+global using Microsoft.IdentityModel.Tokens;
+global using System.IdentityModel.Tokens.Jwt;
+global using System.Text;
+global using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+global using Microsoft.WindowsAzure.Storage.Blob;
