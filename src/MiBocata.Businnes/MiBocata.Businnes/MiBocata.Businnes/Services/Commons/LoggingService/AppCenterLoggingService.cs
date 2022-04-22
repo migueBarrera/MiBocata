@@ -1,11 +1,12 @@
-﻿using MiBocata.Businnes.Framework;
+﻿using System;
+using System.Collections.Generic;
+using MiBocata.Businnes.Framework;
+using Mibocata.Core.Services.Interfaces;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
-using System;
-using System.Collections.Generic;
 
-namespace MiBocata.Businnes.Services.LoggingService
+namespace MiBocata.Businnes.Services.Commons.LoggingService
 {
     public class AppCenterLoggingService : ILoggingService
     {

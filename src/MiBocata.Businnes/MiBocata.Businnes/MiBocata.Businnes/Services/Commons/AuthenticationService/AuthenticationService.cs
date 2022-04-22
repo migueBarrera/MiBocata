@@ -1,10 +1,6 @@
-﻿using MiBocata.Businnes.Framework;
-using MiBocata.Businnes.Services.Preferences;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Mibocata.Core.Services.Interfaces;
 
-namespace MiBocata.Businnes.Services.AuthenticationService
+namespace MiBocata.Businnes.Services.Commons.AuthenticationService
 {
     public class AuthenticationService : IAuthenticationService
     {

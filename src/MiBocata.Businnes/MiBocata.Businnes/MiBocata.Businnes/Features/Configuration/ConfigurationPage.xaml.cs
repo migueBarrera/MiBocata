@@ -7,7 +7,6 @@ using Xamarin.Forms.Xaml;
 
 namespace MiBocata.Businnes.Features.Configuration
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ConfigurationPage : BasePage
     {
         public ConfigurationPage()

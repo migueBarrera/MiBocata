@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Mibocata.Core.Services.Interfaces;
 
 namespace MiBocata.Services.AuthenticationService
 {

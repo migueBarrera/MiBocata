@@ -1,4 +1,4 @@
-﻿using Models;
+﻿using Models.Core;
 using System;
 using System.Globalization;
 using Xamarin.Forms;

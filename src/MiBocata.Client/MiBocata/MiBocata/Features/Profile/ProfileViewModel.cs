@@ -1,5 +1,10 @@
-﻿using MiBocata.Framework;
-using Models;
+﻿using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Services.Interfaces;
+using MiBocata.Framework;
+using MiBocata.Services.NavigationService;
+using MiBocata.Services.NotificationService;
+using MiBocata.Services.PreferencesService;
+using Models.Core;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -9,6 +14,30 @@ namespace MiBocata.Features.Profile
     {
         private Client client;
         private bool userIsLogged;
+
+        public ProfileViewModel(
+            INotificationService notificationService,
+            IMiBocataNavigationService navigationService,
+            IPreferencesService preferencesService,
+            ISessionService sessionService,
+            ILoggingService loggingService,
+            IDialogService dialogService,
+            IConnectivityService connectivityService,
+            IRefitService refitService,
+            ITaskHelperFactory taskHelperFactory,
+            IKeyboardService keyboardService)
+            : base(
+                  navigationService,
+                  preferencesService,
+                  sessionService,
+                  loggingService,
+                  dialogService,
+                  connectivityService,
+                  refitService,
+                  taskHelperFactory,
+                  keyboardService)
+        {
+        }
 
         public bool UserIsLogged 
         { 

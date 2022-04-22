@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
+    <Compile Include="PlarformDependencies.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\KeyboardService.cs" />
@@ -204,6 +205,10 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\profile_placeholder.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Commons\Mibocata.Core\Mibocata.Core.csproj">
+      <Project>{E98153DE-E969-4498-BCC3-18EDBE0C49E3}</Project>
+      <Name>Mibocata.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MiBocata.Businnes\MiBocata.Businnes.csproj">
       <Project>{A3C5D5DD-EA23-46E2-AC28-559A26F0204A}</Project>
       <Name>MiBocata.Businnes</Name>

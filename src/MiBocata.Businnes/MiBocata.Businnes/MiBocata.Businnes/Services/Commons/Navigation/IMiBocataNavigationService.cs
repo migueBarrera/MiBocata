@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace MiBocata.Businnes.Services.Navigation
+namespace MiBocata.Businnes.Services.Commons.Navigation
 {
     public interface IMiBocataNavigationService
     {

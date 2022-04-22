@@ -3,10 +3,15 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Mibocata.Core.Features.Orders;
+using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Services.Interfaces;
 using MiBocata.Framework;
-using MiBocata.Services.API.Interfaces;
+using MiBocata.Services.NavigationService;
 using MiBocata.Services.NotificationService;
-using Models;
+using MiBocata.Services.PreferencesService;
+using Models.Core;
+using Models.Requests;
 using Xamarin.Forms;
 
 namespace MiBocata.Features.Cart
@@ -21,7 +26,27 @@ namespace MiBocata.Features.Cart
         private double amount;
         private ObservableCollection<OrderProduct> listCartProducts;
 
-        public CartViewModel(INotificationService notificationService)
+        public CartViewModel(
+            INotificationService notificationService,
+            IMiBocataNavigationService navigationService,
+            IPreferencesService preferencesService,
+            ISessionService sessionService,
+            ILoggingService loggingService,
+            IDialogService dialogService,
+            IConnectivityService connectivityService,
+            IRefitService refitService,
+            ITaskHelperFactory taskHelperFactory,
+            IKeyboardService keyboardService)
+            : base(
+                  navigationService,
+                  preferencesService,
+                  sessionService,
+                  loggingService,
+                  dialogService,
+                  connectivityService,
+                  refitService,
+                  taskHelperFactory,
+                  keyboardService)
         {
             this.notificationService = notificationService;
             this.orderApi = RefitService.InitRefitInstance<IOrderApi>(isAutenticated: true);
@@ -111,7 +136,7 @@ namespace MiBocata.Features.Cart
             var result = await TaskHelperFactory.
                                     CreateInternetAccessViewModelInstance(LoggingService, this).
                                     TryExecuteAsync(
-                                    () => orderApi.Create(order));
+                                    () => orderApi.Create(CreateOrderRequest.Parse(order)));
 
             if (result)
             {

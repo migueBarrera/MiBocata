@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="PlatformDependencies.cs" />
     <Compile Include="Services\KeyboardService.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
@@ -159,5 +160,11 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <BundleResource Include="Resources\robotfoot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Commons\Mibocata.Core\Mibocata.Core.csproj">
+      <Project>{E98153DE-E969-4498-BCC3-18EDBE0C49E3}</Project>
+      <Name>Mibocata.Core</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

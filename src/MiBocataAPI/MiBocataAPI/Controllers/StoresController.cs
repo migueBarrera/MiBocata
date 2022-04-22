@@ -1,4 +1,6 @@
-﻿namespace MiBocataAPI.Controllers;
+﻿using Mibocata.Infrastructure.Data.Models.Mappers;
+
+namespace MiBocataAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -10,16 +12,18 @@ public class StoresController : MBControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Store>>> GetStore()
+    public async Task<ActionResult<IEnumerable<StoreResponse>>> GetStore()
     {
-        return await _context.Store
+        var stores = await _context.Store
                              .Include(s => s.Products)
                              .Include(s => s.StoreLocation)
                              .ToListAsync();
+
+        return Ok(stores.Select(s => StoreMapper.Parse(s)));
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Store>> GetStore(int id)
+    public async Task<ActionResult<StoreResponse>> GetStore(int id)
     {
         var store = await _context.Store
                                   .Include(s => s.Products)
@@ -32,36 +36,52 @@ public class StoresController : MBControllerBase
             return NotFound();
         }
 
-        return store;
+        return Ok(StoreMapper.Parse(store));
     }
 
     [HttpGet("{id}/orders")]
-    public async Task<ActionResult<IEnumerable<Order>>> GetStoreOrders(int id)
+    public async Task<ActionResult<IEnumerable<OrdersResponse>>> GetStoreOrders(int id)
     {
-        return await _context.Order
+        var orders = await _context.Order
                                 .Where(o => o.StoreId == id)
                                 .Include(s => s.OrderProducts)
                                 .Include(s => s.Client)
                                 .Include(s => s.Store)
                                 .ToListAsync();
+
+        return Ok(orders
+            .Select(o => OrderMapper.Parse(o)));
     }
     
     [HttpGet("{id}/products")]
-    public async Task<ActionResult<IEnumerable<Product>>> GetStoreProducts(int id)
+    public async Task<ActionResult<IEnumerable<ProductsResponse>>> GetStoreProducts(int id)
     {
-        return await _context.Product
+        var products = await _context.Product
                                 .Where(o => o.StoreId == id)
                                 .ToListAsync();
+
+        return Ok(products.Select(p => StoreMapper.Parse(p)));
     }
 
     [HttpPut("{id}")]
     [Authorize]
-    public async Task<IActionResult> PutStore(int id, Store store)
+    public async Task<IActionResult> PutStore(int id, StoreUpdateRequest request)
     {
-        if (id != store.Id)
+        if (id != request.Id)
         {
             return BadRequest();
         }
+
+        var store = new Store()
+        {
+            Id = id,
+            AutoAccept = request.AutoAccept,
+            Image = request.Image,
+            Name = request.Name,
+            //TODO review
+            //Products = request.Products,
+            //StoreLocation = request.StoreLocation,
+        };
 
         _context.Entry(store).State = EntityState.Modified;
 
@@ -86,7 +106,7 @@ public class StoresController : MBControllerBase
 
     [HttpPost]
     [Authorize]
-    public async Task<ActionResult<Store>> PostStore(Store store)
+    public async Task<ActionResult<StoreResponse>> PostStore(StoreCreateRequest request)
     {
         var idEmpleado = 0;
         var currentUser = HttpContext.User;
@@ -96,6 +116,7 @@ public class StoresController : MBControllerBase
         }
         var user = _context.Shopkeeper.Where(a => a.Id == idEmpleado).Single();
 
+        var store = StoreMapper.Parse(request);
         _context.Store.Add(store);
         await _context.SaveChangesAsync();
 
@@ -104,8 +125,7 @@ public class StoresController : MBControllerBase
 
         await _context.SaveChangesAsync();
 
-
-        return CreatedAtAction("GetStore", new { id = store.Id }, store);
+        return CreatedAtAction("GetStore", new { id = store.Id }, StoreMapper.Parse(store));
     }
 
     [HttpDelete("{id}")]

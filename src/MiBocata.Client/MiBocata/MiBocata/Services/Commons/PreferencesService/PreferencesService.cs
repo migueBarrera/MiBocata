@@ -1,4 +1,4 @@
-﻿using Models;
+﻿using Models.Core;
 using Newtonsoft.Json;
 
 namespace MiBocata.Services.PreferencesService

@@ -1,9 +1,9 @@
-﻿using MiBocata.Framework;
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Mibocata.Core.Features.Refit;
+using MiBocata.Framework;
 using MiBocata.Services.PreferencesService;
-using Refit;
 
 namespace MiBocata.Services.API.RefitServices
 {
@@ -20,11 +20,11 @@ namespace MiBocata.Services.API.RefitServices
         {
             var handler = WireHttpHandlers();
 
-            RefitSettings refitSettings = null;
+            Refit.RefitSettings refitSettings = null;
 
             var httpClient = GetClient(handler, isAutenticated);
 
-            return RestService.For<T>(httpClient, refitSettings);
+            return Refit.RestService.For<T>(httpClient, refitSettings);
         }
 
         private HttpClient GetClient(DelegatingHandler handler, bool isAutenticated)

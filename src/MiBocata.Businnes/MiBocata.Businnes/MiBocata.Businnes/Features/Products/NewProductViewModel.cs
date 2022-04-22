@@ -1,9 +1,12 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
+using Mibocata.Core.Features.Products;
+using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Services.Interfaces;
 using MiBocata.Businnes.Framework;
-using MiBocata.Businnes.Services.API.Interfaces;
-using MiBocata.Businnes.Services.ImagesService;
-using Models;
+using MiBocata.Businnes.Services.Commons.Navigation;
+using MiBocata.Businnes.Services.Commons.Preferences;
+using Models.Core;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Xamarin.Forms;
@@ -15,7 +18,7 @@ namespace MiBocata.Businnes.Features.Products
         private readonly IImagesService imagesService;
         private readonly IProductApi productApi;
 
-        private Models.Store store;
+        private Store store;
 
         private MediaFile mediaFile;
         private ImageSource productimage;
@@ -23,7 +26,29 @@ namespace MiBocata.Businnes.Features.Products
         private string productDescription;
         private double productprice;
 
-        public NewProductViewModel(IImagesService imagesService)
+        public NewProductViewModel(
+           IImagesService imagesService,
+           INavigationService navigationService,
+           IMiBocataNavigationService miBocataNavigationService,
+           IPreferencesService preferencesService,
+           ISessionService sessionService,
+           ILoggingService loggingService,
+           IDialogService dialogService,
+           IConnectivityService connectivityService,
+           ITaskHelper taskHelper,
+           IRefitService refitService,
+           ITaskHelperFactory taskHelperFactory)
+           : base(
+                 navigationService,
+                 miBocataNavigationService,
+                 preferencesService,
+                 sessionService,
+                 loggingService,
+                 dialogService,
+                 connectivityService,
+                 taskHelper,
+                 refitService,
+                 taskHelperFactory)
         {
             this.imagesService = imagesService;
             this.productApi = RefitService.InitRefitInstance<IProductApi>(isAutenticated: true);
@@ -121,16 +146,23 @@ namespace MiBocata.Businnes.Features.Products
 
         private async Task<Product> CreateProductAsync()
         {
-            var p = new Product()
+            var response = await productApi.Create(new Models.Requests.CreateProductRequest()
             {
-                ////Image = Productimage,
                 Name = ProductName,
                 UnitPrice = Productprice,
                 StoreId = store.Id,
                 Description = ProductDescription,
+            });
+
+            var product = new Product()
+            {
+                Id = response.Id,
+                Name = response.Name,
+                UnitPrice = response.UnitPrice,
+                StoreId = response.Id,
+                Description = response.Description,
             };
 
-            var product = await productApi.Create(p);
             store.Products.Add(product);
 
             return product;

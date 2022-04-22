@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using MiBocata.Businnes.Services.Preferences;
-using Models;
+﻿using System.Collections.Generic;
+using System.Linq;
+using MiBocata.Businnes.Services.Commons.Preferences;
+using Models.Core;
 
-namespace MiBocata.Businnes.Services.Products
+namespace MiBocata.Businnes.Services.Commons.Products
 {
     public class ProductsService : IProductsService
     {
@@ -17,7 +16,10 @@ namespace MiBocata.Businnes.Services.Products
 
         public IEnumerable<Product> GetProducts()
         {
-            return preferencesService.GetStore().Products;
+            //TODO map to produc, o no ?
+
+            var productResponse = preferencesService.GetStore().Products;
+            return productResponse.Select((x) => new Product());
         }
     }
 }

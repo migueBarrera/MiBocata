@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29123.88
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiBocata.Businnes.UWP", "MiBocata.Businnes\MiBocata.Businnes.UWP\MiBocata.Businnes.UWP.csproj", "{418405A2-7180-4632-8A46-2ACF96822CBE}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -23,6 +23,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "..\Commons\Models\Models.csproj", "{C389E558-B2B5-4B10-87A0-A4F0B461F7B8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureStorageManager", "..\Commons\AzureStorageManager\AzureStorageManager.csproj", "{9EBD9495-1BE0-4B80-B593-7ED7E66B0C38}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mibocata.Core", "..\Commons\Mibocata.Core\Mibocata.Core.csproj", "{E98153DE-E969-4498-BCC3-18EDBE0C49E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -220,6 +222,30 @@ Global
 		{9EBD9495-1BE0-4B80-B593-7ED7E66B0C38}.Release|x64.Build.0 = Release|Any CPU
 		{9EBD9495-1BE0-4B80-B593-7ED7E66B0C38}.Release|x86.ActiveCfg = Release|Any CPU
 		{9EBD9495-1BE0-4B80-B593-7ED7E66B0C38}.Release|x86.Build.0 = Release|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Debug|ARM.Build.0 = Debug|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Debug|x64.Build.0 = Debug|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Debug|x86.Build.0 = Debug|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Release|ARM.ActiveCfg = Release|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Release|ARM.Build.0 = Release|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Release|iPhone.Build.0 = Release|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Release|x64.ActiveCfg = Release|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Release|x64.Build.0 = Release|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Release|x86.ActiveCfg = Release|Any CPU
+		{E98153DE-E969-4498-BCC3-18EDBE0C49E3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

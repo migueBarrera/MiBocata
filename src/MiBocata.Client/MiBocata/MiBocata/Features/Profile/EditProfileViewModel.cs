@@ -1,6 +1,12 @@
-﻿using MiBocata.Framework;
-using MiBocata.Services.API.Interfaces;
-using Models;
+﻿using Mibocata.Core.Features.Clients;
+using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Services.Interfaces;
+using MiBocata.Framework;
+using MiBocata.Services.NavigationService;
+using MiBocata.Services.NotificationService;
+using MiBocata.Services.PreferencesService;
+using Models.Core;
+using Models.Requests;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
@@ -17,7 +23,27 @@ namespace MiBocata.Features.Profile
         private ImageSource productimage;
         private readonly IClientApi clientApi;
 
-        public EditProfileViewModel()
+        public EditProfileViewModel(
+              INotificationService notificationService,
+              IMiBocataNavigationService navigationService,
+              IPreferencesService preferencesService,
+              ISessionService sessionService,
+              ILoggingService loggingService,
+              IDialogService dialogService,
+              IConnectivityService connectivityService,
+              IRefitService refitService,
+              ITaskHelperFactory taskHelperFactory,
+              IKeyboardService keyboardService)
+          : base(
+                navigationService,
+                preferencesService,
+                sessionService,
+                loggingService,
+                dialogService,
+                connectivityService,
+                refitService,
+                taskHelperFactory,
+                keyboardService)
         {
             clientApi = RefitService.InitRefitInstance<IClientApi>(isAutenticated: true);
         }
@@ -53,7 +79,10 @@ namespace MiBocata.Features.Profile
         {
             Client = PreferencesService.GetUser();
             mediaFile = null;
-            Productimage = ImageSource.FromUri(new Uri(Client.Image));
+            if (!string.IsNullOrEmpty(Client.Image))
+            {
+                Productimage = ImageSource.FromUri(new Uri(Client.Image));
+            }
 
             return base.InitializeAsync(navigationData);
         }
@@ -63,7 +92,7 @@ namespace MiBocata.Features.Profile
             var result = await TaskHelperFactory.
                                     CreateInternetAccessViewModelInstance(LoggingService, this).
                                     TryExecuteAsync(
-                                    () => clientApi.UploadClient(Client.Id, Client));
+                                    () => clientApi.UploadClient(Client.Id, ClientUpdateRequest.Parse(Client)));
 
             if (result)
             {

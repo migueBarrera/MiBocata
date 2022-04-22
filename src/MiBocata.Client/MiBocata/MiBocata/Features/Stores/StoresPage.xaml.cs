@@ -1,4 +1,5 @@
-﻿using MiBocata.Framework;
+﻿using Mibocata.Core.Extensions;
+using MiBocata.Framework;
 using System.ComponentModel;
 using System.Linq;
 using Xamarin.Forms.GoogleMaps;
@@ -14,7 +15,7 @@ namespace MiBocata.Features.Stores
             InitializeComponent();
             MoveMapToSpain();
 
-            BindingContext = Locator.Resolve<StoresViewModel>();
+            BindingContext = App.Current.DependencyService.Resolve<StoresViewModel>();
         }
 
         protected override void OnAppearing()

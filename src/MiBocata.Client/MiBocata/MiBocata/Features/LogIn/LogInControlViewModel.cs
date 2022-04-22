@@ -1,10 +1,14 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
+using Mibocata.Core.Features.Auth;
+using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Services.Interfaces;
 using MiBocata.Framework;
 using MiBocata.Helpers;
-using MiBocata.Services.API.Interfaces;
-using MiBocata.Services.TasksServices;
-using Models;
+using MiBocata.Services.NavigationService;
+using MiBocata.Services.PreferencesService;
+using Models.Core;
+using Models.Responses;
 
 namespace MiBocata.Features.LogIn
 {
@@ -13,7 +17,26 @@ namespace MiBocata.Features.LogIn
         private readonly IAuthApi authApi;
         private Client client;
 
-        public LogInControlViewModel()
+        public LogInControlViewModel(
+            IMiBocataNavigationService navigationService,
+            IPreferencesService preferencesService,
+            ISessionService sessionService,
+            ILoggingService loggingService,
+            IDialogService dialogService,
+            IConnectivityService connectivityService,
+            IRefitService refitService,
+            ITaskHelperFactory taskHelperFactory,
+            IKeyboardService keyboardService)
+            : base(
+                  navigationService,
+                  preferencesService,
+                  sessionService,
+                  loggingService,
+                  dialogService,
+                  connectivityService,
+                  refitService,
+                  taskHelperFactory,
+                  keyboardService)
         {
             this.authApi = RefitService.InitRefitInstance<IAuthApi>();
         }
@@ -31,6 +54,18 @@ namespace MiBocata.Features.LogIn
         public override Task InitializeAsync(object navigationData = null)
         {
             User = new Client();
+
+#pragma warning disable CS0162 // Unreachable code detected
+            if (DefaultSettings.DebugMode)
+            {
+                User = new Client()
+                {
+                    Email = "mbmdevelop@gmail.com",
+                    Password = "123456",
+                };
+            }
+#pragma warning restore CS0162 // Unreachable code detected
+
             return base.InitializeAsync(navigationData);
         }
 
@@ -51,11 +86,15 @@ namespace MiBocata.Features.LogIn
             var result = await TaskHelperFactory.
                                     CreateInternetAccessViewModelInstance(LoggingService, this).
                                     TryExecuteAsync(
-                                    () => authApi.SignIn(User));
+                                    () => authApi.SignIn(new Models.Requests.ClientSignInRequest()
+                                    {
+                                        Email = User.Email, 
+                                        Password = User.Password,
+                                    }));
 
             if (result)
             {
-                await LogInSuccessful(result.Value);
+                await LogInSuccessful(ClientSignInResponse.Parse(result.Value));
             }
         }
 

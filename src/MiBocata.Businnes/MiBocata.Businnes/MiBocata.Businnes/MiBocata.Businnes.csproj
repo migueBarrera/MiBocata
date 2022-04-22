@@ -10,11 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="5.1.2" />
     <PackageReference Include="Com.OneSignal" Version="3.8.1" />
     <PackageReference Include="CSharp.OperationResult" Version="0.1.6" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.5.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.5.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
     <PackageReference Include="Refit" Version="5.1.67" />
     <PackageReference Include="Rg.Plugins.Popup" Version="1.2.0.223" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
@@ -33,7 +34,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Commons\AzureStorageManager\AzureStorageManager.csproj" />
+    <ProjectReference Include="..\..\..\Commons\Mibocata.Core\Mibocata.Core.csproj" />
     <ProjectReference Include="..\..\..\Commons\Models\Models.csproj" />
+    <ProjectReference Include="..\..\Mibocata.Core\Mibocata.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,10 +52,10 @@
     <EmbeddedResource Update="Features\LogIn\Templates\HelpYouView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Features\Order\OrderPage.xaml">
+    <EmbeddedResource Update="Features\Orders\OrderPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Features\Order\Templates\OrderItemView.xaml">
+    <EmbeddedResource Update="Features\Orders\Templates\OrderItemView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Features\Products\NewProductPage.xaml">
@@ -67,13 +70,13 @@
     <EmbeddedResource Update="Features\Registro\RegisterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Features\Store\ChooseLocationPage.xaml">
+    <EmbeddedResource Update="Features\Stores\ChooseLocationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Features\Store\CreateStorePage.xaml">
+    <EmbeddedResource Update="Features\Stores\CreateStorePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Features\Store\StorePage.xaml">
+    <EmbeddedResource Update="Features\Stores\StorePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

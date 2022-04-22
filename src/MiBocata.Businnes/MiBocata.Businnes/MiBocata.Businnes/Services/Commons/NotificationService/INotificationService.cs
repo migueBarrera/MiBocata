@@ -1,4 +1,4 @@
-﻿namespace MiBocata.Businnes.Services.NotificationService
+﻿namespace MiBocata.Businnes.Services.Commons.NotificationService
 {
     public interface INotificationService
     {

@@ -10,7 +10,7 @@
 
         public const string OneSignalAppId = "__ENTER_YOUR_ONE_SIGNAL_ID_SECRET_HERE__";
 
-        public const string URL_BASE = "__ENTER_YOUR_BASE_URL_HERE__";
+        public const string URL_BASE = "http://141.94.207.18";
 
         public const bool DebugMode =
 #if DEBUG 

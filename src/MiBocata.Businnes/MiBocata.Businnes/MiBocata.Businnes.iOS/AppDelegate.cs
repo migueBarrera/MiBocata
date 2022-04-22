@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Foundation;
+﻿using Foundation;
 using UIKit;
 
 namespace MiBocata.Businnes.iOS
@@ -27,7 +23,7 @@ namespace MiBocata.Businnes.iOS
             global::Xamarin.Forms.Forms.Init();
             Xamarin.FormsMaps.Init();
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
-            LoadApplication(new App());
+            LoadApplication(new App(new PlatformDependencies()));
 
             return base.FinishedLaunching(app, options);
         }

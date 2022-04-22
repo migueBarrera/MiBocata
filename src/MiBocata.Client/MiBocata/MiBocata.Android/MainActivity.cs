@@ -25,7 +25,7 @@ namespace MiBocata.Droid
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);
             Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
-            LoadApplication(new App());
+            LoadApplication(new App(new PlatformDependencies()));
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

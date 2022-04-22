@@ -1,6 +1,9 @@
-﻿using MiBocata.Framework;
+﻿using Mibocata.Core.Extensions;
+using Mibocata.Core.Framework;
+using MiBocata.Framework;
 using MiBocata.Services.NavigationService;
 using MiBocata.Services.NotificationService;
+using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -8,17 +11,16 @@ namespace MiBocata
 {
     public partial class App : Application
     {
-        static App()
-        {
-            Locator.RegisterDependencies();
-        }
-
-        public App()
+        public App(IDependencies platformDependencies)
         {
             InitializeComponent();
-
+            this.DependencyService = ServicesCollection.GetServiceCollection(platformDependencies);
             //InitOneSignal();
         }
+
+        public static new App Current => Xamarin.Forms.Application.Current as App;
+
+        public IServiceProvider DependencyService { get; private set; }
 
         protected override void OnStart()
         {
@@ -37,13 +39,13 @@ namespace MiBocata
 
         private Task InitNavigation()
         {
-            var navigationService = Locator.Resolve<IMiBocataNavigationService>();
+            var navigationService = DependencyService.Resolve<IMiBocataNavigationService>();
             return navigationService.InitializeAsync();
         }
 
         private void InitOneSignal()
         {
-            var notificationService = Locator.Resolve<INotificationService>();
+            var notificationService = DependencyService.Resolve<INotificationService>();
             notificationService.Initialize();
         }
     }

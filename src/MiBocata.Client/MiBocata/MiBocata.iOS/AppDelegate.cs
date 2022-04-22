@@ -4,9 +4,6 @@ using Xamarin.Forms;
 
 namespace MiBocata.iOS
 {
-    // The UIApplicationDelegate for the application. This class is responsible for launching the 
-    // User Interface of the application, as well as listening (and optionally responding) to 
-    // application events from iOS.
     [Register("AppDelegate")]
     public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
     {
@@ -21,7 +18,7 @@ namespace MiBocata.iOS
             global::Xamarin.Forms.Forms.Init();
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             Xamarin.FormsGoogleMaps.Init("AIzaSyCM78zUBOKc8CxXY6peBStEmb0LusUd0G4");
-            LoadApplication(new App());
+            LoadApplication(new App(new PlatformDependencies()));
 
             // TODO https://documentation.onesignal.com/docs/xamarin-sdk-setup 
             return base.FinishedLaunching(app, options);

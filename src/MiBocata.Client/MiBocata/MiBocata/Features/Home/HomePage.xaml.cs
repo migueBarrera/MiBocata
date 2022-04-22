@@ -1,5 +1,4 @@
-﻿using System.Collections.Specialized;
-using MiBocata.Framework;
+﻿using MiBocata.Framework;
 using Xamarin.Forms;
 
 namespace MiBocata.Features.Home

@@ -1,7 +1,12 @@
-﻿using MiBocata.Businnes.Framework;
+﻿using Mibocata.Core.Features.Auth;
+using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Services.Interfaces;
+using MiBocata.Businnes.Framework;
 using MiBocata.Businnes.Helpers;
-using MiBocata.Businnes.Services.API.Interfaces;
+using MiBocata.Businnes.Services.Commons.Navigation;
+using MiBocata.Businnes.Services.Commons.Preferences;
 using Models;
+using Models.Core;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -12,10 +17,34 @@ namespace MiBocata.Businnes.Features.Registro
     {
         private Shopkeeper todoItem;
         private readonly IAuthApi authApi;
+        private readonly IKeyboardService keyboardService;
 
-        public RegisterViewModel()
+        public RegisterViewModel(
+          INavigationService navigationService,
+          IMiBocataNavigationService miBocataNavigationService,
+          IPreferencesService preferencesService,
+          ISessionService sessionService,
+          ILoggingService loggingService,
+          IDialogService dialogService,
+          IConnectivityService connectivityService,
+          ITaskHelper taskHelper,
+          IRefitService refitService,
+          ITaskHelperFactory taskHelperFactory, 
+          IKeyboardService keyboardService)
+          : base(
+                navigationService,
+                miBocataNavigationService,
+                preferencesService,
+                sessionService,
+                loggingService,
+                dialogService,
+                connectivityService,
+                taskHelper,
+                refitService,
+                taskHelperFactory)
         {
             this.authApi = RefitService.InitRefitInstance<IAuthApi>();
+            this.keyboardService = keyboardService;
         }
 
         public Shopkeeper User
@@ -54,7 +83,7 @@ namespace MiBocata.Businnes.Features.Registro
                 return;
             }
 
-            KeyboardService.HideSoftKeyboard();
+            keyboardService.HideSoftKeyboard();
 
             if (!await ValidateAsync())
             {
@@ -64,11 +93,22 @@ namespace MiBocata.Businnes.Features.Registro
             var result = await TaskHelperFactory.
                 CreateInternetAccessViewModelInstance(LoggingService, this).
                 TryExecuteAsync(
-                () => authApi.SignUp(User)); 
+                () => authApi.SignUp(new Models.Requests.ShopkeeperSignUpRequest()
+                {
+                    Email = User.Email,
+                    Name = User.Name,
+                    Password = User.Password,
+                }));
 
+            //TODO
             if (result)
             {
-                await RegisterSuccessesful(result.Value);
+                await RegisterSuccessesful(new Shopkeeper()
+                {
+                    Id = result.Value.Id,
+                    Email = result.Value.Email,
+                    Name = result.Value.Name,
+                });
             }
         }
 

@@ -1,8 +1,4 @@
-﻿using MiBocata.Businnes.Services.KeyboardService;
-using MiBocata.Businnes.UWP.Services;
-using Xamarin.Forms;
-
-[assembly: Dependency(typeof(KeyboardService))]
+﻿using Mibocata.Core.Services.Interfaces;
 
 namespace MiBocata.Businnes.UWP.Services
 {

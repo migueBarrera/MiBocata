@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using MiBocata.Services.ConnectivityServices;
-using MiBocata.Services.DialogService;
-using MiBocata.Services.LoggingService;
+using Mibocata.Core.Services.Interfaces;
 using OperationResult;
 using Refit;
 using static OperationResult.Helpers;

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MiBocata.Services.NotificationService;
 
 namespace MiBocata.Services.Commons.NotificationService

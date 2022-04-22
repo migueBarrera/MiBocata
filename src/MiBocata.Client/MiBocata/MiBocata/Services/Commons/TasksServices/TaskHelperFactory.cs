@@ -1,12 +1,10 @@
-﻿using MiBocata.Framework;
-using MiBocata.Services.ConnectivityServices;
-using MiBocata.Services.DialogService;
-using MiBocata.Services.LoggingService;
+﻿using Mibocata.Core.Framework;
+using Mibocata.Core.Services.Interfaces;
 using Xamarin.Forms;
 
 namespace MiBocata.Services.TasksServices
 {
-    public class TaskHelperFactory
+    public class TaskHelperFactory : ITaskHelperFactory
     {
         private readonly IDialogService dialogsService;
         private readonly IConnectivityService connectivityService;
@@ -24,7 +22,7 @@ namespace MiBocata.Services.TasksServices
                 .WithLogging(logger);
         }
 
-        public ITaskHelper CreateInternetAccessViewModelInstance(ILoggingService logger, BaseViewModel viewModel)
+        public ITaskHelper CreateInternetAccessViewModelInstance(ILoggingService logger, CoreViewModel viewModel)
         {
             return this.CreateInternetAccessViewModelInstance(logger)
                 .WhenStarting(() => Device.BeginInvokeOnMainThread(() => viewModel.IsBusy = true))

@@ -1,12 +1,13 @@
-﻿using Xamarin.Essentials;
+﻿using Models.Core;
+using Xamarin.Essentials;
 
 namespace MiBocata.Businnes.Helpers
 {
     public class PlacemarkLocationMapper
     {
-        public static Models.StoreLocation Mapper(Placemark placemark, double latidude, double longitude)
+        public static StoreLocation Mapper(Placemark placemark, double latidude, double longitude)
         {
-            var location = new Models.StoreLocation()
+            var location = new StoreLocation()
             {
                 Longitude = longitude,
                 Latitude = latidude,

@@ -1,10 +1,10 @@
 ﻿using Com.OneSignal;
 using MiBocata.Businnes.Framework;
-using MiBocata.Businnes.Services.Preferences;
+using MiBocata.Businnes.Services.Commons.Preferences;
 using System;
 using Xamarin.Forms;
 
-namespace MiBocata.Businnes.Services.NotificationService
+namespace MiBocata.Businnes.Services.Commons.NotificationService
 {
     public class OneSignalService : INotificationService
     {

@@ -69,7 +69,10 @@ public class ShopkeepersController : MBControllerBase
     [Route("SignIn")]
     public ActionResult<ShopkeeperSignInResponse> PostSignIn(ShopkeeperSignInRequest request)
     {
-        var shopkeeper = _context.Shopkeeper.Where(a => a.Email == request.Email).Single();
+        var shopkeeper = _context
+            .Shopkeeper
+            .Where(a => a.Email == request.Email)
+            .Single();
         if (shopkeeper == null)
         {
             return NotFound();

@@ -1,8 +1,10 @@
-﻿using MiBocata.Framework;
-using MiBocata.Services.API.Interfaces;
-using MiBocata.Services.GeolocationService;
-using Models;
-using System;
+﻿using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Features.Stores;
+using Mibocata.Core.Services.Interfaces;
+using MiBocata.Framework;
+using MiBocata.Services.NavigationService;
+using MiBocata.Services.PreferencesService;
+using Models.Core;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +23,26 @@ namespace MiBocata.Features.Stores
         private IEnumerable<Model> stores;
 
         public StoresViewModel(
-            IGeolocationService geolocationService)
+            IGeolocationService geolocationService,
+            IMiBocataNavigationService navigationService,
+            IPreferencesService preferencesService,
+            ISessionService sessionService,
+            ILoggingService loggingService,
+            IDialogService dialogService,
+            IConnectivityService connectivityService,
+            IRefitService refitService,
+            ITaskHelperFactory taskHelperFactory,
+            IKeyboardService keyboardService)
+            : base(
+                  navigationService,
+                  preferencesService,
+                  sessionService,
+                  loggingService,
+                  dialogService,
+                  connectivityService,
+                  refitService,
+                  taskHelperFactory,
+                  keyboardService)
         {
             this.geolocationService = geolocationService;
             this.storeApi = RefitService.InitRefitInstance<IStoreApi>(isAutenticated: false);
@@ -100,7 +121,7 @@ namespace MiBocata.Features.Stores
 
             public List<Product> Products { get; set; }
 
-            public Models.StoreLocation Location { get; set; }
+            public StoreLocation Location { get; set; }
         }
     }
 }

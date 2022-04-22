@@ -1,29 +1,24 @@
-﻿using MiBocata.Businnes.Features.LogIn;
-using MiBocata.Businnes.Features.Registro;
-using MiBocata.Businnes.Framework;
-using MiBocata.Businnes.Services.LoggingService;
-using MiBocata.Businnes.Services.Navigation;
-using MiBocata.Businnes.Services.NotificationService;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using MiBocata.Businnes.Framework;
+using MiBocata.Businnes.Services.Commons.Navigation;
+using MiBocata.Businnes.Services.Commons.NotificationService;
+using Mibocata.Core.Extensions;
+using Mibocata.Core.Framework;
+using Mibocata.Core.Services.Interfaces;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.WindowsSpecific;
-using Xamarin.Forms.Xaml;
 
 namespace MiBocata.Businnes
 {
     public partial class App : Xamarin.Forms.Application
     {
-        static App()
-        {
-            Locator.RegisterDependencies();
-        }
-
-        public App()
+        public App(IDependencies platformDependencies)
         {
             InitializeComponent();
             Current.On<Windows>().SetImageDirectory("Assets");
+            this.DependencyService = ServicesCollection.GetServiceCollection(platformDependencies);
             if (Device.RuntimePlatform == Device.UWP)
             {
                 InitNavigation();
@@ -32,9 +27,13 @@ namespace MiBocata.Businnes
             InitOneSignal();
         }
 
+        public static new App Current => Xamarin.Forms.Application.Current as App;
+
+        public IServiceProvider DependencyService { get; private set; }
+
         protected override void OnStart()
         {
-            Locator.Resolve<ILoggingService>().Initialize();
+            DependencyService.Resolve<ILoggingService>().Initialize();
 
             if (Device.RuntimePlatform != Device.UWP)
             {
@@ -54,13 +53,13 @@ namespace MiBocata.Businnes
 
         private Task InitNavigation()
         {
-            var navigationService = Locator.Resolve<IMiBocataNavigationService>();
+            var navigationService = this.DependencyService.Resolve<IMiBocataNavigationService>();
             return navigationService.InitializeAsync();
         }
 
         private void InitOneSignal()
         {
-            var notificationService = Locator.Resolve<INotificationService>();
+            var notificationService = DependencyService.Resolve<INotificationService>();
             notificationService.Initialize();
         }
     }

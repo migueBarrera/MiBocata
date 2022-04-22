@@ -1,4 +1,5 @@
-﻿using MiBocata.Framework;
+﻿using Mibocata.Core.Extensions;
+using MiBocata.Framework;
 using Xamarin.Forms;
 
 namespace MiBocata.Features.LogIn
@@ -9,7 +10,7 @@ namespace MiBocata.Features.LogIn
         {
             InitializeComponent();
 
-            BindingContext = Locator.Resolve<LogInControlViewModel>();
+            BindingContext = App.Current.DependencyService.Resolve<LogInControlViewModel>();
         }
     }
 }

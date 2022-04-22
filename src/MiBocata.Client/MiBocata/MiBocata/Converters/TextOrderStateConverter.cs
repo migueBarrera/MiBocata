@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models.Core;
+using System;
 using Xamarin.Forms;
 
 namespace MiBocata.Converters
@@ -7,23 +8,23 @@ namespace MiBocata.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            var state = (Models.OrderStates)value;
+            var state = (OrderStates)value;
             var text = string.Empty;
             switch (state)
             {
-                case Models.OrderStates.ACCEPTED:
+                case OrderStates.ACCEPTED:
                     text = "Aceptado";
                     break;
-                case Models.OrderStates.REJECTED:
+                case OrderStates.REJECTED:
                     text = "Rechazado";
                     break;
-                case Models.OrderStates.AUTOACCEPTED:
+                case OrderStates.AUTOACCEPTED:
                     text = "Auto aceptado";
                     break;
-                case Models.OrderStates.STARTED:
+                case OrderStates.STARTED:
                     text = "Pendiente";
                     break;
-                case Models.OrderStates.DEFAULT:
+                case OrderStates.DEFAULT:
                     text = "DEFAULT";
                     break;
             }

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
 	  <!--TODO Change to .net6 when port apps to maui-->
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
 	  <LangVersion>9.0</LangVersion>
   </PropertyGroup>
 

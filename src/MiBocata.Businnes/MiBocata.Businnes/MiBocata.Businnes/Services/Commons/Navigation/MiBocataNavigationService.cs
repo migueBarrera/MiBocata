@@ -1,12 +1,13 @@
 ﻿using System.Threading.Tasks;
+using Mibocata.Core.Services.Interfaces;
 using MiBocata.Businnes.Features.Home;
 using MiBocata.Businnes.Features.LogIn;
 using MiBocata.Businnes.Features.Registro;
-using MiBocata.Businnes.Features.Store;
-using MiBocata.Businnes.Services.AuthenticationService;
-using MiBocata.Businnes.Services.Preferences;
+using MiBocata.Businnes.Features.Stores;
+using MiBocata.Businnes.Services.Commons.AuthenticationService;
+using MiBocata.Businnes.Services.Commons.Preferences;
 
-namespace MiBocata.Businnes.Services.Navigation
+namespace MiBocata.Businnes.Services.Commons.Navigation
 {
     public class MiBocataNavigationService : IMiBocataNavigationService
     {
@@ -19,9 +20,9 @@ namespace MiBocata.Businnes.Services.Navigation
             INavigationService navigationService,
             IPreferencesService preferencesService)
         {
-            this.AuthenticationService = authenticationService;
-            this.NavigationService = navigationService;
-            this.PreferencesService = preferencesService;
+            AuthenticationService = authenticationService;
+            NavigationService = navigationService;
+            PreferencesService = preferencesService;
         }
 
         public async Task InitializeAsync()

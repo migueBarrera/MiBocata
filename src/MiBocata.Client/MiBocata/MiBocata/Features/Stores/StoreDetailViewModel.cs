@@ -1,6 +1,10 @@
-﻿using MiBocata.Framework;
+﻿using Mibocata.Core.Extensions;
+using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Services.Interfaces;
+using MiBocata.Framework;
 using MiBocata.Services.NavigationService;
-using Models;
+using MiBocata.Services.PreferencesService;
+using Models.Core;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -14,7 +18,26 @@ namespace MiBocata.Features.Stores
         private int countItems;
         private ObservableCollection<OrderProduct> listCartProducts;
 
-        public StoreDetailViewModel()
+        public StoreDetailViewModel(
+            IMiBocataNavigationService navigationService,
+            IPreferencesService preferencesService,
+            ISessionService sessionService,
+            ILoggingService loggingService,
+            IDialogService dialogService,
+            IConnectivityService connectivityService,
+            IRefitService refitService,
+            ITaskHelperFactory taskHelperFactory,
+            IKeyboardService keyboardService)
+            : base(
+                  navigationService,
+                  preferencesService,
+                  sessionService,
+                  loggingService,
+                  dialogService,
+                  connectivityService,
+                  refitService,
+                  taskHelperFactory,
+                  keyboardService)
         {
             listCartProducts = new ObservableCollection<OrderProduct>();
         }
@@ -62,7 +85,7 @@ namespace MiBocata.Features.Stores
 
         private async void AddRemoveItemCommandAsync(Product product)
         {
-            await Locator.Resolve<INavigationService>().NavigateToPopupAsync<AddProductViewModel>(product, false);
+            await App.Current.DependencyService.Resolve<INavigationService>().NavigateToPopupAsync<AddProductViewModel>(product, false);
         }
 
         private async Task GoToCartCommandAsync()

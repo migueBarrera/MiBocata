@@ -1,9 +1,4 @@
-﻿using MiBocata.iOS.Services;
-using MiBocata.Services.KeyboardService;
-using System;
-using Xamarin.Forms;
-
-[assembly: Dependency(typeof(KeyboardService))]
+﻿using Mibocata.Core.Services.Interfaces;
 
 namespace MiBocata.iOS.Services
 {
@@ -11,7 +6,7 @@ namespace MiBocata.iOS.Services
     {
         public void HideSoftKeyboard()
         {
-            throw new NotImplementedException();
+            // ?? 
         }
     }
 }

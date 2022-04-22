@@ -1,4 +1,5 @@
-﻿using MiBocata.Features.LogIn;
+﻿using Mibocata.Core.Extensions;
+using MiBocata.Features.LogIn;
 using MiBocata.Framework;
 
 namespace MiBocata.Features.Profile
@@ -9,7 +10,7 @@ namespace MiBocata.Features.Profile
         {
             InitializeComponent();
 
-            BindingContext = Locator.Resolve<ProfileViewModel>();
+            BindingContext = App.Current.DependencyService.Resolve<ProfileViewModel>();
         }
 
         protected override void OnAppearing()

@@ -23,7 +23,7 @@ namespace MiBocata.Businnes.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
             Xamarin.FormsMaps.Init(this, savedInstanceState);
-            LoadApplication(new App());
+            LoadApplication(new App(new PlarformDependencies()));
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

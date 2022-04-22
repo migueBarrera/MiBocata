@@ -1,9 +1,6 @@
-﻿using System;
-using MiBocata.Businnes.iOS.Services;
-using MiBocata.Businnes.Services.KeyboardService;
-using Xamarin.Forms;
+﻿using Mibocata.Core.Services.Interfaces;
+using System;
 
-[assembly: Dependency(typeof(KeyboardService))]
 namespace MiBocata.Businnes.iOS.Services
 {
     public class KeyboardService : IKeyboardService

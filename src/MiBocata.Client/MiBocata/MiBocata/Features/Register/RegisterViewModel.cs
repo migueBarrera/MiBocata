@@ -1,7 +1,12 @@
-﻿using MiBocata.Framework;
+﻿using Mibocata.Core.Features.Auth;
+using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Services.Interfaces;
+using MiBocata.Framework;
 using MiBocata.Helpers;
-using MiBocata.Services.API.Interfaces;
-using Models;
+using MiBocata.Services.NavigationService;
+using MiBocata.Services.PreferencesService;
+using Models.Core;
+using Models.Responses;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -12,7 +17,26 @@ namespace MiBocata.Features.Register
         private Client user;
         private readonly IAuthApi authApi;
 
-        public RegisterViewModel()
+        public RegisterViewModel(
+            IMiBocataNavigationService navigationService,
+            IPreferencesService preferencesService,
+            ISessionService sessionService,
+            ILoggingService loggingService,
+            IDialogService dialogService,
+            IConnectivityService connectivityService,
+            IRefitService refitService,
+            ITaskHelperFactory taskHelperFactory,
+            IKeyboardService keyboardService)
+            : base(
+                  navigationService,
+                  preferencesService,
+                  sessionService,
+                  loggingService,
+                  dialogService,
+                  connectivityService,
+                  refitService,
+                  taskHelperFactory,
+                  keyboardService)
         {
             this.authApi = RefitService.InitRefitInstance<IAuthApi>();
         }
@@ -49,11 +73,16 @@ namespace MiBocata.Features.Register
             var result = await TaskHelperFactory.
                                 CreateInternetAccessViewModelInstance(LoggingService, this).
                                 TryExecuteAsync(
-                                () => authApi.SignUp(User));
+                                () => authApi.SignUp(new Models.Requests.ClientSignUpRequest()
+                                {
+                                    Email = user.Email,
+                                    Name = user.Name,
+                                    Password = user.Password,
+                                }));
 
             if (result)
             {
-                await RegisterSuccessesful(result.Value);
+                await RegisterSuccessesful(ClientSignUpResponse.Parse(result.Value));
             }
         }
 

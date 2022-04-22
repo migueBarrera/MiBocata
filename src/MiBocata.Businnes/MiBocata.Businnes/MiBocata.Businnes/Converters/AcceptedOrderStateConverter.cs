@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models.Core;
+using System;
 using Xamarin.Forms;
 
 namespace MiBocata.Businnes.Converters
@@ -7,9 +8,9 @@ namespace MiBocata.Businnes.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            var state = (Models.OrderStates)value;
+            var state = (OrderStates)value;
 
-            return state == Models.OrderStates.STARTED;
+            return state == OrderStates.STARTED;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

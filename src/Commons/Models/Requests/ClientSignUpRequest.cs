@@ -1,4 +1,4 @@
-﻿namespace Models.Responses
+﻿namespace Models.Requests
 {
     public class ClientSignUpRequest
     {

@@ -1,10 +1,15 @@
-﻿using MiBocata.Businnes.Framework;
-using MiBocata.Businnes.Helpers;
-using MiBocata.Businnes.Services.API.Interfaces;
-using MiBocata.Businnes.Services.TasksServices;
-using Models;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
+using MiBocata.Businnes.Framework;
+using MiBocata.Businnes.Helpers;
+using MiBocata.Businnes.Services.Commons.Navigation;
+using MiBocata.Businnes.Services.Commons.Preferences;
+using Mibocata.Core.Features.Auth;
+using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Features.Stores;
+using Mibocata.Core.Services.Interfaces;
+using Models;
+using Models.Core;
 using Xamarin.Forms;
 
 namespace MiBocata.Businnes.Features.LogIn
@@ -14,11 +19,35 @@ namespace MiBocata.Businnes.Features.LogIn
         private Shopkeeper todoItem;
         private readonly IAuthApi authApi;
         private readonly IStoreApi storeApi;
+        private readonly IKeyboardService keyboardService;
 
-        public LogInViewModel()
+        public LogInViewModel(
+            INavigationService navigationService,
+            IMiBocataNavigationService miBocataNavigationService,
+            IPreferencesService preferencesService,
+            ISessionService sessionService,
+            ILoggingService loggingService,
+            IDialogService dialogService,
+            IConnectivityService connectivityService,
+            ITaskHelper taskHelper,
+            IRefitService refitService,
+            ITaskHelperFactory taskHelperFactory, 
+            IKeyboardService keyboardService)
+            : base(
+                  navigationService,
+                  miBocataNavigationService,
+                  preferencesService,
+                  sessionService,
+                  loggingService,
+                  dialogService,
+                  connectivityService,
+                  taskHelper,
+                  refitService,
+                  taskHelperFactory)
         {
             this.authApi = RefitService.InitRefitInstance<IAuthApi>();
             this.storeApi = RefitService.InitRefitInstance<IStoreApi>(isAutenticated: true);
+            this.keyboardService = keyboardService;
         }
 
         public Shopkeeper User
@@ -43,7 +72,7 @@ namespace MiBocata.Businnes.Features.LogIn
                 User = new Shopkeeper()
                 {
                     Email = "mbmdevelop@gmail.com",
-                    Password = "12345",
+                    Password = "123456",
                 };
             }
 #pragma warning restore CS0162 // Unreachable code detected
@@ -69,7 +98,7 @@ namespace MiBocata.Businnes.Features.LogIn
                 return;
             }
 
-            KeyboardService.HideSoftKeyboard();
+            keyboardService.HideSoftKeyboard();
 
             if (!await ValidateAsync())
             {
@@ -79,11 +108,21 @@ namespace MiBocata.Businnes.Features.LogIn
             var result = await TaskHelperFactory.
                 CreateInternetAccessViewModelInstance(LoggingService, this).
                 TryExecuteAsync(
-                () => authApi.SignIn(User));
+                () => authApi.SignIn(new Models.Requests.ShopkeeperSignInRequest()
+                {
+                    Email = User.Email,
+                    Password = User.Password,
+                }));
 
             if (result)
             {
-                await LogInSuccessful(result.Value);
+                //TODO
+                await LogInSuccessful(new Shopkeeper()
+                {
+                    Email = result.Value.Email,
+                    Name = result.Value.Name,
+                    Id = result.Value.Id,
+                });
             }
         }
 
@@ -113,7 +152,14 @@ namespace MiBocata.Businnes.Features.LogIn
             if (shopkeeper.IdStore != 0)
             {
                 var store = await storeApi.Get(shopkeeper.IdStore);
-                PreferencesService.SetStore(store);
+                PreferencesService.SetStore(new Store()
+                {
+                    Id = store.Id,
+                    Name = store.Name,
+                    Image = store.Image,
+                    AutoAccept = store.AutoAccept,
+                    Products = store.Products,
+                });
                 ////store.PushToken = pushToken;
                 ////await StoreManager.DefaultManager.UpdateItemAsync(store);
                 await MiBocataNavigationService.NavigateToHome();

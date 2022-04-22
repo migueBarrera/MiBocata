@@ -1,5 +1,8 @@
-﻿using MiBocata.Businnes.Framework;
-using MiBocata.Businnes.Services.LoggingService;
+﻿using Mibocata.Core.Extensions;
+using Mibocata.Core.Services.Interfaces;
+using MiBocata.Businnes.Framework;
+using MiBocata.Businnes.Services.Commons.LoggingService;
+using MiBocata.Businnes.Services.Commons.Navigation;
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -92,7 +95,7 @@ namespace MiBocata.Businnes.Services.Navigation
             }
 
             var page = Activator.CreateInstance(pageType) as Page;
-            var viewModel = Locator.Resolve<TViewModel>()
+            var viewModel = App.Current.DependencyService.Resolve<TViewModel>()
                             as BaseViewModel;
             page.BindingContext = viewModel;
 

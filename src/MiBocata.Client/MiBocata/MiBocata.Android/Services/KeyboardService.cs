@@ -1,11 +1,7 @@
 ﻿using Android.Content;
 using Android.Views.InputMethods;
-using MiBocata.Droid.Services;
-using MiBocata.Services.KeyboardService;
+using Mibocata.Core.Services.Interfaces;
 using Plugin.CurrentActivity;
-using Xamarin.Forms;
-
-[assembly: Dependency(typeof(KeyboardService))]
 
 namespace MiBocata.Droid.Services
 {

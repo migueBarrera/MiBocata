@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using Mibocata.Core.Services.Interfaces;
+using System.Collections.Concurrent;
 
 namespace MiBocata.Services.SessionService
 {

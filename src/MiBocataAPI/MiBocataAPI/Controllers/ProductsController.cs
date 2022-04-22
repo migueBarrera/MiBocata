@@ -1,10 +1,15 @@
-﻿namespace MiBocataAPI.Controllers;
+﻿using Mibocata.Infrastructure.Data.Models.Mappers;
+using Models.Responses;
+
+namespace MiBocataAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 public class ProductsController : MBControllerBase
 {
-    public ProductsController(IConfiguration configuration, MBDBContext context)
+    public ProductsController(
+        IConfiguration configuration, 
+        MBDBContext context)
         : base(configuration, context)
     {
     }
@@ -16,7 +21,7 @@ public class ProductsController : MBControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Product>> GetProduct(string id)
+    public async Task<ActionResult<ProductsResponse>> GetProduct(string id)
     {
         var product = await _context.Product.FindAsync(id);
 
@@ -25,7 +30,7 @@ public class ProductsController : MBControllerBase
             return NotFound();
         }
 
-        return product;
+        return Ok(ProductMapper.Parse(product));
     }
 
     [HttpPut("{id}")]
@@ -35,17 +40,19 @@ public class ProductsController : MBControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Product>> PostProduct(Product product)
+    public async Task<ActionResult<ProductsResponse>> PostProduct(ProductCreateRequest request)
     {
         //TODO comprobar que el producto el id de store es el del token
+        var product = ProductMapper.Parse(request);
         _context.Product.Add(product);
+
         try
         {
             await _context.SaveChangesAsync();
         }
         catch (DbUpdateException)
         {
-            if (ProductExists(product.Id))
+            if (ProductExists(request.Id))
             {
                 return Conflict();
             }
@@ -55,7 +62,7 @@ public class ProductsController : MBControllerBase
             }
         }
 
-        return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+        return CreatedAtAction("GetProduct", new { id = product.Id }, ProductMapper.Parse(product));
     }
 
     [HttpPost]

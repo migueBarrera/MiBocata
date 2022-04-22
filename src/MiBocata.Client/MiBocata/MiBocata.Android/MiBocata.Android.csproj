@@ -91,7 +91,7 @@
     <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="28.0.0.3" />
     <PackageReference Include="Xamarin.Android.Support.Core.Utils" Version="28.0.0.3" />
     <PackageReference Include="Xamarin.Android.Support.CustomTabs" Version="28.0.0.3" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.5.2" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.2" />
     <PackageReference Include="Xamarin.Forms.Visual.Material">
       <Version>5.0.0.2401</Version>
     </PackageReference>
@@ -109,11 +109,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
+    <Compile Include="PlatformDependencies.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\KeyboardService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />
@@ -140,6 +144,10 @@
     <AndroidResource Include="Resources\drawable-hdpi\profile_placeholder.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Commons\Mibocata.Core\Mibocata.Core.csproj">
+      <Project>{5B1A7006-5CDD-4F68-B1C6-9C6A74D4642B}</Project>
+      <Name>Mibocata.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MiBocata\MiBocata.csproj">
       <Project>{D76B3FF7-08A9-420E-8CB6-A593C6C709E1}</Project>
       <Name>MiBocata</Name>

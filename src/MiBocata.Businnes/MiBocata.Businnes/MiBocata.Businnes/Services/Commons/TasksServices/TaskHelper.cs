@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using MiBocata.Businnes.Services.ConnectivityServices;
-using MiBocata.Businnes.Services.DialogService;
-using MiBocata.Businnes.Services.LoggingService;
+using Mibocata.Core.Services.Interfaces;
 using OperationResult;
 using Refit;
 using static OperationResult.Helpers;
 
-namespace MiBocata.Businnes.Services.TasksServices
+namespace MiBocata.Businnes.Services.Commons.TasksServices
 {
     public class TaskHelper : ITaskHelper
     {
@@ -22,7 +19,9 @@ namespace MiBocata.Businnes.Services.TasksServices
         private Func<Exception, Task<bool>> errorHandler;
         private ILoggingService logger;
 
-        public TaskHelper(IDialogService dialogsService, IConnectivityService connectivityService)
+        public TaskHelper(
+            IDialogService dialogsService, 
+            IConnectivityService connectivityService)
         {
             this.dialogsService = dialogsService;
             this.connectivityService = connectivityService;
@@ -30,21 +29,21 @@ namespace MiBocata.Businnes.Services.TasksServices
 
         public ITaskHelper CheckInternetBeforeStarting(bool check)
         {
-            this.checkInternetAccess = check;
+            checkInternetAccess = check;
 
             return this;
         }
 
         public ITaskHelper WhenStarting(Action action)
         {
-            this.whenStarting = action;
+            whenStarting = action;
 
             return this;
         }
 
         public ITaskHelper WhenFinished(Action action)
         {
-            this.whenFinished = action;
+            whenFinished = action;
 
             return this;
         }
@@ -58,7 +57,7 @@ namespace MiBocata.Businnes.Services.TasksServices
 
         public ITaskHelper WithErrorHandling(Func<Exception, Task<bool>> handler)
         {
-            this.errorHandler = handler;
+            errorHandler = handler;
 
             return this;
         }
@@ -66,7 +65,7 @@ namespace MiBocata.Businnes.Services.TasksServices
         public async Task<Status> TryExecuteAsync(Func<Task> task)
         {
             var taskWrapper = new Func<Task<object>>(() => WrapTaskAsync(task));
-            var result = await this.TryExecuteAsync(taskWrapper);
+            var result = await TryExecuteAsync(taskWrapper);
 
             if (result)
             {
@@ -78,9 +77,9 @@ namespace MiBocata.Businnes.Services.TasksServices
 
         public async Task<Result<T>> TryExecuteAsync<T>(Func<Task<T>> task)
         {
-            if (this.checkInternetAccess)
+            if (checkInternetAccess)
             {
-                bool abort = await this.ExecuteInternetAccessLoopAsync();
+                bool abort = await ExecuteInternetAccessLoopAsync();
 
                 if (abort)
                 {
@@ -88,7 +87,7 @@ namespace MiBocata.Businnes.Services.TasksServices
                 }
             }
 
-            this.whenStarting?.Invoke();
+            whenStarting?.Invoke();
 
             Result<T> result = Error();
 
@@ -99,18 +98,18 @@ namespace MiBocata.Businnes.Services.TasksServices
             }
             catch (Exception exception)
             {
-                this.logger?.Error(exception);
+                logger?.Error(exception);
 
                 var isAlreadyHandled = false;
 
-                if (this.errorHandler != null)
+                if (errorHandler != null)
                 {
-                    isAlreadyHandled = await this.errorHandler.Invoke(exception);
+                    isAlreadyHandled = await errorHandler.Invoke(exception);
                 }
 
                 if (!isAlreadyHandled)
                 {
-                    isAlreadyHandled = await this.HandleCommonExceptionsAsync(exception);
+                    isAlreadyHandled = await HandleCommonExceptionsAsync(exception);
                 }
 
                 if (!isAlreadyHandled)
@@ -120,7 +119,7 @@ namespace MiBocata.Businnes.Services.TasksServices
             }
             finally
             {
-                this.whenFinished?.Invoke();
+                whenFinished?.Invoke();
             }
 
             return result;
@@ -135,21 +134,21 @@ namespace MiBocata.Businnes.Services.TasksServices
 
         private async Task<bool> ExecuteInternetAccessLoopAsync()
         {
-            while (!this.connectivityService.IsThereInternet)
+            while (!connectivityService.IsThereInternet)
             {
-                await this.dialogsService.ShowAlertAsync(
+                await dialogsService.ShowAlertAsync(
                     "This application requires an active Internet connection to work.",
                     "There is no internet access");
             }
 
-            return !this.connectivityService.IsThereInternet;
+            return !connectivityService.IsThereInternet;
         }
 
         private async Task<bool> HandleCommonExceptionsAsync(Exception exception)
         {
             if (exception is HttpRequestException || exception is ApiException)
             {
-                await this.dialogsService.ShowAlertAsync(
+                await dialogsService.ShowAlertAsync(
                     "An error was detected while communicating with server. Please, try again later.",
                     "Data error");
 

@@ -1,4 +1,5 @@
-﻿using MiBocata.Framework;
+﻿using Mibocata.Core.Services.Interfaces;
+using MiBocata.Framework;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;

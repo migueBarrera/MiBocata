@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Models.Core;
+using System.Collections.Generic;
 
-namespace MiBocata.Businnes.Services.Products
+namespace MiBocata.Businnes.Services.Commons.Products
 {
     public interface IProductsService
     {
-        IEnumerable<Models.Product> GetProducts();
+        IEnumerable<Product> GetProducts();
     }
 }

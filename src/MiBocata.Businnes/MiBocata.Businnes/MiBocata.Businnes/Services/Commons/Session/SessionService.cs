@@ -1,6 +1,7 @@
-﻿using System.Collections.Concurrent;
+﻿using Mibocata.Core.Services.Interfaces;
+using System.Collections.Concurrent;
 
-namespace MiBocata.Businnes.Services.Session
+namespace MiBocata.Businnes.Services.Commons.Session
 {
     public class SessionService : ISessionService
     {
@@ -18,7 +19,7 @@ namespace MiBocata.Businnes.Services.Session
             }
             else
             {
-                return default(T);
+                return default;
             }
         }
 

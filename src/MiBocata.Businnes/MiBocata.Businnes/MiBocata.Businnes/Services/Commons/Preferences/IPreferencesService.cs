@@ -1,6 +1,6 @@
-﻿using Models;
+﻿using Models.Core;
 
-namespace MiBocata.Businnes.Services.Preferences
+namespace MiBocata.Businnes.Services.Commons.Preferences
 {
     public interface IPreferencesService
     {

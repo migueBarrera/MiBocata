@@ -1,8 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Mibocata.Core.Features.Orders;
+using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Services.Interfaces;
 using MiBocata.Framework;
-using MiBocata.Services.API.Interfaces;
-using Models;
+using MiBocata.Services.NavigationService;
+using MiBocata.Services.NotificationService;
+using MiBocata.Services.PreferencesService;
+using Models.Core;
+using Models.Responses;
 
 namespace MiBocata.Features.Orders
 {
@@ -12,7 +19,27 @@ namespace MiBocata.Features.Orders
         private IEnumerable<Order> order;
         private Client client;
 
-        public OrdersViewModel()
+        public OrdersViewModel(
+            INotificationService notificationService,
+            IMiBocataNavigationService navigationService,
+            IPreferencesService preferencesService,
+            ISessionService sessionService,
+            ILoggingService loggingService,
+            IDialogService dialogService,
+            IConnectivityService connectivityService,
+            IRefitService refitService,
+            ITaskHelperFactory taskHelperFactory,
+            IKeyboardService keyboardService)
+            : base(
+                  navigationService,
+                  preferencesService,
+                  sessionService,
+                  loggingService,
+                  dialogService,
+                  connectivityService,
+                  refitService,
+                  taskHelperFactory,
+                  keyboardService)
         {
             this.orderApi = RefitService.InitRefitInstance<IOrderApi>(isAutenticated: true);
         }
@@ -40,7 +67,10 @@ namespace MiBocata.Features.Orders
 
             if (result)
             {
-                list = result.Value;
+                list = result
+                    .Value
+                    .Select(o => OrdersResponse.Parse(o))
+                    .ToList();
             }
 
             return list;

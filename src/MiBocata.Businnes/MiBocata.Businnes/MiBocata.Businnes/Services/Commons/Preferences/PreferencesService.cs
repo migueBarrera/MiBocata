@@ -1,7 +1,8 @@
 ﻿using Models;
+using Models.Core;
 using Newtonsoft.Json;
 
-namespace MiBocata.Businnes.Services.Preferences
+namespace MiBocata.Businnes.Services.Commons.Preferences
 {
     // todo investigar sharedName
     public class PreferencesService : IPreferencesService

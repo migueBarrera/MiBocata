@@ -1,9 +1,8 @@
-﻿using MiBocata.Framework;
+﻿using Mibocata.Core.Extensions;
+using MiBocata.Framework;
 using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MiBocata.Services.NavigationService
@@ -41,7 +40,7 @@ namespace MiBocata.Services.NavigationService
             }
 
             var page = Activator.CreateInstance(pageType) as PopupPage;
-            var viewModel = Locator.Resolve<TViewModel>()
+            var viewModel = App.Current.DependencyService.Resolve<TViewModel>()
                             as BaseViewModel;
             page.BindingContext = viewModel;
 
