@@ -6,6 +6,8 @@ trigger:
     exclude:
     - src/MiBocata.Client
     - src/MiBocata.API
+    - src/azure-pipelines-api.yml
+    - src/azure-pipelines-client.yml
 
 pool:
   vmImage: 'macos-latest'
