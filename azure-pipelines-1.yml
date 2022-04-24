@@ -1,0 +1,22 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'macos-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  outputDirectory: '$(build.binariesDirectory)/$(buildConfiguration)'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: 'src/MiBocata.Client/MiBocata.Client.sln'
+
+- task: XamarinAndroid@1
+  inputs:
+    projectFile: 'src/MiBocata.Client/MiBocata/MiBocata.Android/MiBocata.Android.csproj'
+    outputDirectory: '$(outputDirectory)'
+    configuration: '$(buildConfiguration)'
