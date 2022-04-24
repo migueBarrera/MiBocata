@@ -3,7 +3,6 @@ using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
 using MiBocata.Framework;
 using MiBocata.Services.NavigationService;
-using MiBocata.Services.NotificationService;
 using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
