@@ -2,11 +2,9 @@
 {
     public static class DefaultSettings
     {
-        public const string AppCenterAndroidSecret = "__ENTER_YOUR_ANDROID_APPCENTER_SECRET_HERE__";
+        public const string AppCenterAndroidSecret = "8e701712-894c-42f0-9364-8b9cc5f59aea";
 
-        public const string AppCenteriOSSecret = "__ENTER_YOUR_IOS_APPCENTER_SECRET_HERE__";
-
-        public const string AppCenterUWPSecret = "__ENTER_YOUR_UWP_APPCENTER_SECRET_HERE__";
+        public const string AppCenteriOSSecret = "b0e29123-0a7d-4041-bf28-9c6f5438c7ab";
 
         public const string OneSignalAppId = "__ENTER_YOUR_ONE_SIGNAL_ID_SECRET_HERE__";
 

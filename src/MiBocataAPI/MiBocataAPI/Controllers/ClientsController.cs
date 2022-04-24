@@ -115,7 +115,8 @@ public class ClientsController : MBControllerBase
         {
             var client = await _context.Client.FindAsync(id);
             client.Image = url;
-            await UpdateClients(id, client);
+            _context.Entry(client).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
             return Ok(url);
         }
         else
@@ -125,12 +126,23 @@ public class ClientsController : MBControllerBase
     }
 
     [HttpPut("{id}")]
-    public Task<IActionResult> PutClient(int id, Client client)
+    public async Task<IActionResult> PutClient(int id, ClientUpdateRequest request)
     {
-        return UpdateClients(id, client);
+        var client = await _context.Client.FindAsync(id);
+        if(client == null)
+        {
+            return NotFound();
+        }
+
+        client.Phone = request.Phone;
+        client.Email = request.Email;
+        client.Name = request.Name;
+
+        _context.Entry(client).State = EntityState.Modified;
+        await _context.SaveChangesAsync();
+        return Ok();
     }
 
-    // DELETE: api/Clients/5
     [HttpDelete("{id}")]
     public async Task<ActionResult<Client>> DeleteClient(int id)
     {
@@ -146,22 +158,16 @@ public class ClientsController : MBControllerBase
         return client;
     }
 
-    private async Task<IActionResult> UpdateClients(int id, Client client)
+    private async Task<IActionResult> UpdateClients(Client client)
     {
-        if (id != client.Id)
-        {
-            return BadRequest();
-        }
-
-        _context.Entry(client).State = EntityState.Modified;
-
         try
         {
+            _context.Entry(client).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!ClientExists(id))
+            if (!ClientExists(client.Id))
             {
                 return NotFound();
             }

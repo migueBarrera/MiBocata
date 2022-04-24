@@ -9,11 +9,11 @@ using MiBocata.Features.Orders;
 using MiBocata.Features.Profile;
 using MiBocata.Features.Register;
 using MiBocata.Features.Stores;
+using MiBocata.Services;
 using MiBocata.Services.API.RefitServices;
 using MiBocata.Services.AuthenticationService;
 using MiBocata.Services.Commons.NotificationService;
 using MiBocata.Services.DialogService;
-using MiBocata.Services.LoggingService;
 using MiBocata.Services.NavigationService;
 using MiBocata.Services.NotificationService;
 using MiBocata.Services.PreferencesService;
@@ -39,6 +39,7 @@ namespace MiBocata.Framework
             serviceCollection.AddTransient<OrdersViewModel>();
             serviceCollection.AddTransient<AddProductViewModel>();
 
+            serviceCollection.AddTransient<IAppCenterSecretService, AppCenterSecretService>();
             serviceCollection.AddTransient<IAuthenticationService, AuthenticationService>();
             serviceCollection.AddTransient<INavigationService, NavigationService>();
             serviceCollection.AddTransient<IMiBocataNavigationService, MiBocataNavigationService>();
@@ -48,18 +49,6 @@ namespace MiBocata.Framework
             serviceCollection.AddTransient<IDialogService, DialogService>();
             serviceCollection.AddTransient<IRefitService, RefitService>();
             serviceCollection.AddTransient<ITaskHelperFactory, TaskHelperFactory>();
-            //RegisterSingleton<INotificationService, OneSignalService>();
-
-#pragma warning disable CS0162 // Se detectó código inaccesible
-            if (DefaultSettings.DebugMode)
-            {
-                serviceCollection.AddTransient<ILoggingService, DebugLoggingService>();
-            }
-            else
-            {
-                serviceCollection.AddTransient<ILoggingService, AppCenterLoggingService>();
-            }
-#pragma warning restore CS0162 // Se detectó código inaccesible
         }
     }
 }

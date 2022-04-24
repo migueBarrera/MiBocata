@@ -4,7 +4,6 @@ using Mibocata.Core.Services.Interfaces;
 using MiBocata.Services.NavigationService;
 using MiBocata.Services.PreferencesService;
 using PubSub;
-using Xamarin.Forms;
 
 namespace MiBocata.Framework
 {

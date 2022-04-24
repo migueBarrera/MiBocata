@@ -4,7 +4,7 @@ using Xamarin.Forms;
 
 namespace MiBocata.Framework
 {
-    //TODO cambiar por el de asyc await bueno
+    ////TODO cambiar por el de asyc await bueno
     public class AsyncCommand : Command
     {
         public AsyncCommand(Func<object, Task> execute)

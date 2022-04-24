@@ -1,14 +1,15 @@
-﻿using System;
+﻿using Microsoft.AppCenter.Crashes;
+using System;
+using System.Collections.Generic;
+
 namespace Mibocata.Core.Services.Interfaces
 {
     public interface IAppCenterService
     {
         void Initialize();
 
-        void Debug(string message);
+        void TrackEvent(string name, IDictionary<string, string> properties = null);
 
-        void Warning(string message);
-
-        void Error(Exception exception);
+        void TrackError(Exception exception, IDictionary<string, string> properties = null, params ErrorAttachmentLog[] attachments);
     }
 }

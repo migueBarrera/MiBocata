@@ -23,9 +23,7 @@
         <pancakeview:PancakeView
             HeightRequest="24"
             CornerRadius="24"
-            BorderThickness="1"
-            BackgroundColor="White"
-            BorderColor="Gray">
+            BackgroundColor="White">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />

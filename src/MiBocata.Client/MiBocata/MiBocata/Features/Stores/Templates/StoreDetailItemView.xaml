@@ -35,9 +35,7 @@
                 </Grid.RowDefinitions>
                 <pancakeview:PancakeView
                     Grid.Row="0"
-                    BorderThickness="0"
-                    CornerRadius="18"
-                    HasShadow="True">
+                    CornerRadius="18">
                     <Image Aspect="AspectFill" Source="{Binding Image}" />
                 </pancakeview:PancakeView>
                 <Label

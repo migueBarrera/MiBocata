@@ -1,14 +1,13 @@
-﻿using Mibocata.Core.Extensions;
-using Mibocata.Core.Services.Interfaces;
-using MiBocata.Businnes.Framework;
-using MiBocata.Businnes.Services.Commons.LoggingService;
-using MiBocata.Businnes.Services.Commons.Navigation;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using MiBocata.Businnes.Framework;
+using MiBocata.Businnes.Services.Commons.Navigation;
+using Mibocata.Core.Extensions;
+using Mibocata.Core.Services.Interfaces;
 using Xamarin.Forms;
 
 namespace MiBocata.Businnes.Services.Navigation

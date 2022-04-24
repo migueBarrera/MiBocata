@@ -21,9 +21,7 @@
                 Spacing="3">
                 <pancakeview:PancakeView
                     Margin="10"
-                    BorderThickness="0"
                     CornerRadius="18"
-                    HasShadow="True"
                     HeightRequest="150"
                     HorizontalOptions="Center"
                     WidthRequest="150">

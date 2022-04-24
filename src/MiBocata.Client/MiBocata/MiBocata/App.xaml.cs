@@ -1,5 +1,6 @@
 ﻿using Mibocata.Core.Extensions;
 using Mibocata.Core.Framework;
+using Mibocata.Core.Services.Interfaces;
 using MiBocata.Framework;
 using MiBocata.Services.NavigationService;
 using MiBocata.Services.NotificationService;
@@ -15,7 +16,6 @@ namespace MiBocata
         {
             InitializeComponent();
             this.DependencyService = ServicesCollection.GetServiceCollection(platformDependencies);
-            //InitOneSignal();
         }
 
         public static new App Current => Xamarin.Forms.Application.Current as App;
@@ -24,6 +24,7 @@ namespace MiBocata
 
         protected override void OnStart()
         {
+            DependencyService.Resolve<ILoggingService>().Initialize();
             InitNavigation();
         }
 
@@ -41,12 +42,6 @@ namespace MiBocata
         {
             var navigationService = DependencyService.Resolve<IMiBocataNavigationService>();
             return navigationService.InitializeAsync();
-        }
-
-        private void InitOneSignal()
-        {
-            var notificationService = DependencyService.Resolve<INotificationService>();
-            notificationService.Initialize();
         }
     }
 }

@@ -8,7 +8,6 @@ using MiBocata.Businnes.Features.Stores;
 using MiBocata.Businnes.Services.API.RefitServices;
 using MiBocata.Businnes.Services.Commons.AuthenticationService;
 using MiBocata.Businnes.Services.Commons.DialogService;
-using MiBocata.Businnes.Services.Commons.LoggingService;
 using MiBocata.Businnes.Services.Commons.Navigation;
 using MiBocata.Businnes.Services.Commons.NotificationService;
 using MiBocata.Businnes.Services.Commons.Preferences;
@@ -21,6 +20,7 @@ using Mibocata.Core.Framework;
 using Mibocata.Core.Services;
 using Mibocata.Core.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using MiBocata.Businnes.Services;
 
 namespace MiBocata.Businnes.Framework
 {
@@ -39,17 +39,7 @@ namespace MiBocata.Businnes.Framework
             serviceCollection.AddTransient<IDialogService, DialogService>();
             serviceCollection.AddTransient<INotificationService, OneSignalService>();
             serviceCollection.AddTransient<ITaskHelperFactory, TaskHelperFactory>();
-
-#pragma warning disable CS0162 // Se detectó código inaccesible
-            if (DefaultSettings.DebugMode)
-            {
-                serviceCollection.AddTransient<ILoggingService, DebugLoggingService>();
-            }
-            else
-            {
-                serviceCollection.AddTransient<ILoggingService, AppCenterLoggingService>();
-            }
-#pragma warning restore CS0162 // Se detectó código inaccesible
+            serviceCollection.AddTransient<IAppCenterSecretService, AppCenterSecretService>();
 
             serviceCollection.AddTransient<LogInViewModel>();
             serviceCollection.AddTransient<RegisterViewModel>();
