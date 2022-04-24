@@ -6,6 +6,8 @@ trigger:
     exclude:
     - src/MiBocata.Businnes
     - src/MiBocata.Client
+    - src/pipelines/azure-pipelines-client.yml
+    - src/pipelines/azure-pipelines-businnes.yml
 
 pool:
   vmImage: ubuntu-latest
