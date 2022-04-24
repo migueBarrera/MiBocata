@@ -1,5 +1,11 @@
 trigger:
-- master
+  branches:
+    include:
+    - master
+  paths:
+    exclude:
+    - src/MiBocata.Businnes
+    - src/MiBocata.API
 
 pool:
   vmImage: 'macos-latest'
