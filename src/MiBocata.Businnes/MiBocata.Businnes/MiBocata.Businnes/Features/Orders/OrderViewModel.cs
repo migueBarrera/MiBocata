@@ -2,49 +2,41 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using MiBocata.Businnes.Framework;
+using MiBocata.Businnes.Services.Commons.Preferences;
 using Mibocata.Core.Features.Orders;
 using Mibocata.Core.Features.Refit;
 using Mibocata.Core.Services.Interfaces;
-using MiBocata.Businnes.Framework;
-using MiBocata.Businnes.Services.Commons.Navigation;
-using MiBocata.Businnes.Services.Commons.Preferences;
 using Models.Core;
 using Xamarin.Forms;
+using Mibocata.Core.Framework;
 
 namespace MiBocata.Businnes.Features.Orders
 {
-    public class OrderViewModel : BaseViewModel
+    public class OrderViewModel : CoreViewModel
     {
         private readonly IOrderApi orderApi;
+        private readonly IPreferencesService preferencesService;
+        private readonly ITaskHelperFactory taskHelperFactory;
+        private readonly ILoggingService loggingService;
+        private readonly IDialogService dialogService;
 
         private ObservableCollection<Order> orders;
 
         private Store store;
 
         public OrderViewModel(
-           INavigationService navigationService,
-           IMiBocataNavigationService miBocataNavigationService,
-           IPreferencesService preferencesService,
-           ISessionService sessionService,
-           ILoggingService loggingService,
-           IDialogService dialogService,
-           IConnectivityService connectivityService,
-           ITaskHelper taskHelper,
            IRefitService refitService,
-           ITaskHelperFactory taskHelperFactory)
-           : base(
-                 navigationService,
-                 miBocataNavigationService,
-                 preferencesService,
-                 sessionService,
-                 loggingService,
-                 dialogService,
-                 connectivityService,
-                 taskHelper,
-                 refitService,
-                 taskHelperFactory)
+           IPreferencesService preferencesService,
+           ITaskHelperFactory taskHelperFactory,
+           ILoggingService loggingService,
+           IDialogService dialogService)
         {
-            orderApi = RefitService.InitRefitInstance<IOrderApi>(isAutenticated: true);
+            this.orderApi = refitService.InitRefitInstance<IOrderApi>(isAutenticated: true);
+            this.preferencesService = preferencesService;
+            this.taskHelperFactory = taskHelperFactory;
+            this.loggingService = loggingService;
+            this.dialogService = dialogService;
         }
 
         public ObservableCollection<Order> Orders
@@ -64,7 +56,7 @@ namespace MiBocata.Businnes.Features.Orders
         public override async Task InitializeAsync(object navigationData)
         {
             await base.InitializeAsync(navigationData);
-            store = PreferencesService.GetStore();
+            store = preferencesService.GetStore();
             await RefreshCommandAsync();
         }
 
@@ -100,7 +92,7 @@ namespace MiBocata.Businnes.Features.Orders
                 }
             }
 
-            await TaskHelperFactory.CreateInternetAccessViewModelInstance(LoggingService, this).
+            await taskHelperFactory.CreateInternetAccessViewModelInstance(loggingService, this).
                 TryExecuteAsync(() => GetOrders());
         }
 
@@ -114,7 +106,7 @@ namespace MiBocata.Businnes.Features.Orders
         {
             order.State = states;
 
-            var response = await TaskHelperFactory.CreateInternetAccessViewModelInstance(LoggingService, this).
+            var response = await taskHelperFactory.CreateInternetAccessViewModelInstance(loggingService, this).
                                     TryExecuteAsync(() => orderApi.Update(order.Id, new Models.Requests.UpdateOrderRequest()
                                     {
                                         //order todo
@@ -125,7 +117,7 @@ namespace MiBocata.Businnes.Features.Orders
             }
             else
             {
-                await DialogService.ShowMessage("Ocurrio un error", string.Empty);
+                await dialogService.ShowMessage("Ocurrio un error", string.Empty);
             }
         }
     }

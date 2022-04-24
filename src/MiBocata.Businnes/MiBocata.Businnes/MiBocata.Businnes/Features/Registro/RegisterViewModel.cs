@@ -1,50 +1,49 @@
-﻿using Mibocata.Core.Features.Auth;
-using Mibocata.Core.Features.Refit;
-using Mibocata.Core.Services.Interfaces;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
 using MiBocata.Businnes.Framework;
 using MiBocata.Businnes.Helpers;
 using MiBocata.Businnes.Services.Commons.Navigation;
 using MiBocata.Businnes.Services.Commons.Preferences;
+using Mibocata.Core.Features.Auth;
+using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Services.Interfaces;
 using Models;
 using Models.Core;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using Xamarin.Forms;
+using Mibocata.Core.Framework;
 
 namespace MiBocata.Businnes.Features.Registro
 {
-    public class RegisterViewModel : BaseViewModel
+    public class RegisterViewModel : CoreViewModel
     {
         private Shopkeeper todoItem;
         private readonly IAuthApi authApi;
+        private readonly IMiBocataNavigationService miBocataNavigationService;
+        private readonly IPreferencesService preferencesService;
+        private readonly ILoggingService loggingService;
+        private readonly IDialogService dialogService;
+        private readonly ITaskHelperFactory taskHelperFactory;
         private readonly IKeyboardService keyboardService;
+        private readonly INavigationService navigationService;
 
         public RegisterViewModel(
-          INavigationService navigationService,
           IMiBocataNavigationService miBocataNavigationService,
           IPreferencesService preferencesService,
-          ISessionService sessionService,
           ILoggingService loggingService,
           IDialogService dialogService,
-          IConnectivityService connectivityService,
-          ITaskHelper taskHelper,
           IRefitService refitService,
-          ITaskHelperFactory taskHelperFactory, 
-          IKeyboardService keyboardService)
-          : base(
-                navigationService,
-                miBocataNavigationService,
-                preferencesService,
-                sessionService,
-                loggingService,
-                dialogService,
-                connectivityService,
-                taskHelper,
-                refitService,
-                taskHelperFactory)
+          ITaskHelperFactory taskHelperFactory,
+          IKeyboardService keyboardService, 
+          INavigationService navigationService)
         {
-            this.authApi = RefitService.InitRefitInstance<IAuthApi>();
+            this.authApi = refitService.InitRefitInstance<IAuthApi>();
+            this.miBocataNavigationService = miBocataNavigationService;
+            this.preferencesService = preferencesService;
+            this.loggingService = loggingService;
+            this.dialogService = dialogService;
+            this.taskHelperFactory = taskHelperFactory;
             this.keyboardService = keyboardService;
+            this.navigationService = navigationService;
         }
 
         public Shopkeeper User
@@ -73,7 +72,7 @@ namespace MiBocata.Businnes.Features.Registro
 
         private async Task BackCommandAsync()
         {
-            await NavigationService.NavigateBackAsync();
+            await navigationService.NavigateBackAsync();
         }
 
         private async Task RegisterCommandAsync()
@@ -90,8 +89,8 @@ namespace MiBocata.Businnes.Features.Registro
                 return;
             }
 
-            var result = await TaskHelperFactory.
-                CreateInternetAccessViewModelInstance(LoggingService, this).
+            var result = await taskHelperFactory.
+                CreateInternetAccessViewModelInstance(loggingService, this).
                 TryExecuteAsync(
                 () => authApi.SignUp(new Models.Requests.ShopkeeperSignUpRequest()
                 {
@@ -114,21 +113,21 @@ namespace MiBocata.Businnes.Features.Registro
 
         private async Task RegisterSuccessesful(Shopkeeper result)
         {
-            PreferencesService.SetUser(result);
-            await MiBocataNavigationService.NavigateToChooseLocationStore();
+            preferencesService.SetUser(result);
+            await miBocataNavigationService.NavigateToChooseLocationStore();
         }
 
         private async Task<bool> ValidateAsync()
         {
             if (!ValidateHelper.IsValidEmail(User.Email))
             {
-                await DialogService.ShowMessage("Compruebe su email", string.Empty);
+                await dialogService.ShowMessage("Compruebe su email", string.Empty);
                 return false;
             }
 
             if (!ValidateHelper.IsValidPassword(User.Password))
             {
-                await DialogService.ShowMessage("La contraseña debe tener al menos 4 caracteres", string.Empty);
+                await dialogService.ShowMessage("La contraseña debe tener al menos 4 caracteres", string.Empty);
                 return false;
             }
 

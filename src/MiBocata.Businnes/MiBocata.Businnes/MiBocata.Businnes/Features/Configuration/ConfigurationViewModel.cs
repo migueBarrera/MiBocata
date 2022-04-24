@@ -6,6 +6,7 @@ using MiBocata.Businnes.Services.Commons.Navigation;
 using MiBocata.Businnes.Services.Commons.Preferences;
 using Mibocata.Core.Features.Refit;
 using Mibocata.Core.Features.Stores;
+using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
 using Models.Core;
 using Xamarin.Forms.Maps;
@@ -13,38 +14,29 @@ using static MiBocata.Businnes.Features.Stores.ChooseLocationViewModel;
 
 namespace MiBocata.Businnes.Features.Configuration
 {
-    public class ConfigurationViewModel : BaseViewModel
+    public class ConfigurationViewModel : CoreViewModel
     {
         private Store store;
 
         private readonly IStoreApi storeApi;
-
+        private readonly INavigationService navigationService;
+        private readonly IPreferencesService preferencesService;
+        private readonly ILoggingService loggingService;
+        private readonly ITaskHelperFactory taskHelperFactory;
         private IEnumerable<Model> locations;
 
         public ConfigurationViewModel(
             INavigationService navigationService,
-            IMiBocataNavigationService miBocataNavigationService,
             IPreferencesService preferencesService,
-            ISessionService sessionService,
             ILoggingService loggingService,
-            IDialogService dialogService,
-            IConnectivityService connectivityService,
-            ITaskHelper taskHelper,
             IRefitService refitService,
             ITaskHelperFactory taskHelperFactory)
-            : base(
-                  navigationService,
-                  miBocataNavigationService,
-                  preferencesService,
-                  sessionService,
-                  loggingService,
-                  dialogService,
-                  connectivityService,
-                  taskHelper,
-                  refitService,
-                  taskHelperFactory)
         {
-            storeApi = RefitService.InitRefitInstance<IStoreApi>(isAutenticated: true);
+            storeApi = refitService.InitRefitInstance<IStoreApi>(isAutenticated: true);
+            this.navigationService = navigationService;
+            this.preferencesService = preferencesService;
+            this.loggingService = loggingService;
+            this.taskHelperFactory = taskHelperFactory;
         }
 
         public Store Store { get => store; set => SetAndRaisePropertyChanged(ref store, value); }
@@ -65,8 +57,8 @@ namespace MiBocata.Businnes.Features.Configuration
                 return;
             }
 
-            var result = await TaskHelperFactory.
-                                    CreateInternetAccessViewModelInstance(LoggingService, this).
+            var result = await taskHelperFactory.
+                                    CreateInternetAccessViewModelInstance(loggingService, this).
                                     TryExecuteAsync(() => storeApi.Update(store.Id, new Models.Requests.StoreUpdateRequest()
                                     {
                                         //store TODO
@@ -74,8 +66,8 @@ namespace MiBocata.Businnes.Features.Configuration
 
             if (result)
             {
-                PreferencesService.SetStore(store);
-                await NavigationService.NavigateBackAsync();
+                preferencesService.SetStore(store);
+                await navigationService.NavigateBackAsync();
             }
         }
 
@@ -87,7 +79,7 @@ namespace MiBocata.Businnes.Features.Configuration
 
         public override Task InitializeAsync(object navigationData)
         {
-            Store = PreferencesService.GetStore();
+            Store = preferencesService.GetStore();
             Locations = new List<Model>()
             {
                 new Model()

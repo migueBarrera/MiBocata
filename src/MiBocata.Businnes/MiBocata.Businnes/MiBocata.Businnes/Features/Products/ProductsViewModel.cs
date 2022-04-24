@@ -1,5 +1,6 @@
 ﻿using Mibocata.Core.Features.Products;
 using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
 using MiBocata.Businnes.Framework;
 using MiBocata.Businnes.Services.Commons.Navigation;
@@ -13,42 +14,31 @@ using System.Windows.Input;
 
 namespace MiBocata.Businnes.Features.Products
 {
-    public class ProductsViewModel : BaseViewModel
+    public class ProductsViewModel : CoreViewModel
     {
         private bool hasProducts;
         private Store store;
 
-        private readonly IProductsService productsService;
+        private readonly INavigationService navigationService;
+        private readonly IPreferencesService preferencesService;
+        private readonly ILoggingService loggingService;
+        private readonly ITaskHelperFactory taskHelperFactory;
         private readonly IProductApi productApi;
 
         private ObservableCollection<Product> products;
 
         public ProductsViewModel(
-            IProductsService productsService,
             INavigationService navigationService,
-            IMiBocataNavigationService miBocataNavigationService,
             IPreferencesService preferencesService,
-            ISessionService sessionService,
             ILoggingService loggingService,
-            IDialogService dialogService,
-            IConnectivityService connectivityService,
-            ITaskHelper taskHelper,
             IRefitService refitService,
             ITaskHelperFactory taskHelperFactory)
-            : base(
-                  navigationService,
-                  miBocataNavigationService,
-                  preferencesService,
-                  sessionService,
-                  loggingService,
-                  dialogService,
-                  connectivityService,
-                  taskHelper,
-                  refitService,
-                  taskHelperFactory)
         {
-            this.productsService = productsService;
-            this.productApi = RefitService.InitRefitInstance<IProductApi>(isAutenticated: true);
+            this.navigationService = navigationService;
+            this.preferencesService = preferencesService;
+            this.loggingService = loggingService;
+            this.taskHelperFactory = taskHelperFactory;
+            this.productApi = refitService.InitRefitInstance<IProductApi>(isAutenticated: true);
         }
 
         public bool HasProducts
@@ -72,13 +62,13 @@ namespace MiBocata.Businnes.Features.Products
         public override async Task InitializeAsync(object navigationData)
         {
             await base.InitializeAsync(navigationData);
-            store = PreferencesService.GetStore();
+            store = preferencesService.GetStore();
             await GetProducts();
         }
 
         private async Task GetProducts()
         {
-            var result = await TaskHelperFactory.CreateInternetAccessViewModelInstance(LoggingService, this).
+            var result = await taskHelperFactory.CreateInternetAccessViewModelInstance(loggingService, this).
                                 TryExecuteAsync(() => productApi.GetByStore(store.Id));
 
             if (result)
@@ -89,7 +79,7 @@ namespace MiBocata.Businnes.Features.Products
 
         private async Task NewProductCommandAsync()
         {
-            await NavigationService.NavigateToAsync<NewProductViewModel>();
+            await navigationService.NavigateToAsync<NewProductViewModel>();
         }
     }
 }

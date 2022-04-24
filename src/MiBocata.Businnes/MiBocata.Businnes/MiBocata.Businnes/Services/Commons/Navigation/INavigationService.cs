@@ -1,5 +1,4 @@
-﻿using MiBocata.Businnes.Framework;
-using System;
+﻿using Mibocata.Core.Framework;
 using System.Threading.Tasks;
 
 namespace MiBocata.Businnes.Services.Commons.Navigation
@@ -7,19 +6,19 @@ namespace MiBocata.Businnes.Services.Commons.Navigation
     public interface INavigationService
     {
         Task NavigateToAsync<TViewModel>(bool clearStack = false)
-            where TViewModel : BaseViewModel;
+            where TViewModel : CoreViewModel;
 
         Task NavigateToAsync<TViewModel>(object parameter, bool clearStack = false)
-            where TViewModel : BaseViewModel;
+            where TViewModel : CoreViewModel;
 
         Task NavigateBackAsync();
 
         Task RemoveAll();
 
         Task NavigateToPopupAsync<TViewModel>(bool animate)
-            where TViewModel : BaseViewModel;
+            where TViewModel : CoreViewModel;
 
         Task NavigateToPopupAsync<TViewModel>(object parameter, bool animate)
-            where TViewModel : BaseViewModel;
+            where TViewModel : CoreViewModel;
     }
 }

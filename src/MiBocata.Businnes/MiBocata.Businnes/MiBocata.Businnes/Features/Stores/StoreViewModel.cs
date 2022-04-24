@@ -1,5 +1,6 @@
-﻿using Mibocata.Core.Features.Refit;
-using Mibocata.Core.Services.Interfaces;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
+using Mibocata.Core.Framework;
 using MiBocata.Businnes.Features.Configuration;
 using MiBocata.Businnes.Features.LogIn;
 using MiBocata.Businnes.Features.Products;
@@ -7,38 +8,21 @@ using MiBocata.Businnes.Framework;
 using MiBocata.Businnes.Services.Commons.Navigation;
 using MiBocata.Businnes.Services.Commons.Preferences;
 using Models.Core;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace MiBocata.Businnes.Features.Stores
 {
-    public class StoreViewModel : BaseViewModel
+    public class StoreViewModel : CoreViewModel
     {
+        private readonly INavigationService navigationService;
+        private readonly IPreferencesService preferencesService;
         private Store store;
 
         public StoreViewModel(
              INavigationService navigationService,
-             IMiBocataNavigationService miBocataNavigationService,
-             IPreferencesService preferencesService,
-             ISessionService sessionService,
-             ILoggingService loggingService,
-             IDialogService dialogService,
-             IConnectivityService connectivityService,
-             ITaskHelper taskHelper,
-             IRefitService refitService,
-             ITaskHelperFactory taskHelperFactory)
-         : base(
-               navigationService,
-               miBocataNavigationService,
-               preferencesService,
-               sessionService,
-               loggingService,
-               dialogService,
-               connectivityService,
-               taskHelper,
-               refitService,
-               taskHelperFactory)
+             IPreferencesService preferencesService)
         {
+            this.navigationService = navigationService;
+            this.preferencesService = preferencesService;
         }
 
         public Store Store
@@ -58,19 +42,19 @@ namespace MiBocata.Businnes.Features.Stores
 
         public override Task InitializeAsync(object navigationData)
         {
-            Store = PreferencesService.GetStore();
+            Store = preferencesService.GetStore();
             return base.InitializeAsync(navigationData);
         }
 
         private async Task CloseSessionCommandAsync()
         {
-            PreferencesService.SetUser(null);
-            PreferencesService.SetStore(null);
-            await NavigationService.NavigateToAsync<LogInViewModel>(clearStack: true);
+            preferencesService.SetUser(null);
+            preferencesService.SetStore(null);
+            await navigationService.NavigateToAsync<LogInViewModel>(clearStack: true);
         }
 
-        private async Task ConfigCommandAsync() => await NavigationService.NavigateToAsync<ConfigurationViewModel>();
+        private async Task ConfigCommandAsync() => await navigationService.NavigateToAsync<ConfigurationViewModel>();
 
-        private async Task ProductsCommandAsync() => await NavigationService.NavigateToAsync<ProductsViewModel>();
+        private async Task ProductsCommandAsync() => await navigationService.NavigateToAsync<ProductsViewModel>();
     }
 }

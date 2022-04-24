@@ -7,46 +7,41 @@ using MiBocata.Businnes.Services.Commons.Preferences;
 using Mibocata.Core.Features.Auth;
 using Mibocata.Core.Features.Refit;
 using Mibocata.Core.Features.Stores;
+using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
-using Models;
 using Models.Core;
 using Xamarin.Forms;
 
 namespace MiBocata.Businnes.Features.LogIn
 {
-    public class LogInViewModel : BaseViewModel
+    public class LogInViewModel : CoreViewModel
     {
         private Shopkeeper todoItem;
         private readonly IAuthApi authApi;
         private readonly IStoreApi storeApi;
+        private readonly IMiBocataNavigationService miBocataNavigationService;
+        private readonly IPreferencesService preferencesService;
+        private readonly ILoggingService loggingService;
+        private readonly IDialogService dialogService;
+        private readonly ITaskHelperFactory taskHelperFactory;
         private readonly IKeyboardService keyboardService;
 
         public LogInViewModel(
-            INavigationService navigationService,
             IMiBocataNavigationService miBocataNavigationService,
             IPreferencesService preferencesService,
-            ISessionService sessionService,
             ILoggingService loggingService,
             IDialogService dialogService,
-            IConnectivityService connectivityService,
-            ITaskHelper taskHelper,
             IRefitService refitService,
             ITaskHelperFactory taskHelperFactory, 
             IKeyboardService keyboardService)
-            : base(
-                  navigationService,
-                  miBocataNavigationService,
-                  preferencesService,
-                  sessionService,
-                  loggingService,
-                  dialogService,
-                  connectivityService,
-                  taskHelper,
-                  refitService,
-                  taskHelperFactory)
         {
-            this.authApi = RefitService.InitRefitInstance<IAuthApi>();
-            this.storeApi = RefitService.InitRefitInstance<IStoreApi>(isAutenticated: true);
+            this.authApi = refitService.InitRefitInstance<IAuthApi>();
+            this.storeApi = refitService.InitRefitInstance<IStoreApi>(isAutenticated: true);
+            this.miBocataNavigationService = miBocataNavigationService;
+            this.preferencesService = preferencesService;
+            this.loggingService = loggingService;
+            this.dialogService = dialogService;
+            this.taskHelperFactory = taskHelperFactory;
             this.keyboardService = keyboardService;
         }
 
@@ -84,7 +79,7 @@ namespace MiBocata.Businnes.Features.LogIn
         {
             if (Device.RuntimePlatform == Device.UWP)
             {
-                await DialogService.ShowAlertAsync("603033613", "Llamenos sin compromiso");
+                await dialogService.ShowAlertAsync("603033613", "Llamenos sin compromiso");
                 return;
             }
 
@@ -105,8 +100,8 @@ namespace MiBocata.Businnes.Features.LogIn
                 return;
             }
 
-            var result = await TaskHelperFactory.
-                CreateInternetAccessViewModelInstance(LoggingService, this).
+            var result = await taskHelperFactory.
+                CreateInternetAccessViewModelInstance(loggingService, this).
                 TryExecuteAsync(
                 () => authApi.SignIn(new Models.Requests.ShopkeeperSignInRequest()
                 {
@@ -130,13 +125,13 @@ namespace MiBocata.Businnes.Features.LogIn
         {
             if (!ValidateHelper.IsValidEmail(User.Email))
             {
-                await DialogService.ShowMessage("Compruebe su email", string.Empty);
+                await dialogService.ShowMessage("Compruebe su email", string.Empty);
                 return false;
             }
 
             if (!ValidateHelper.IsValidPassword(User.Password))
             {
-                await DialogService.ShowMessage("La contraseña debe tener al menos 4 caracteres", string.Empty);
+                await dialogService.ShowMessage("La contraseña debe tener al menos 4 caracteres", string.Empty);
                 return false;
             }
 
@@ -145,14 +140,14 @@ namespace MiBocata.Businnes.Features.LogIn
 
         private async Task LogInSuccessful(Shopkeeper shopkeeper)
         {
-            PreferencesService.SetUser(shopkeeper);
+            preferencesService.SetUser(shopkeeper);
 
-            var pushToken = PreferencesService.PushToken();
+            var pushToken = preferencesService.PushToken();
 
             if (shopkeeper.IdStore != 0)
             {
                 var store = await storeApi.Get(shopkeeper.IdStore);
-                PreferencesService.SetStore(new Store()
+                preferencesService.SetStore(new Store()
                 {
                     Id = store.Id,
                     Name = store.Name,
@@ -162,17 +157,17 @@ namespace MiBocata.Businnes.Features.LogIn
                 });
                 ////store.PushToken = pushToken;
                 ////await StoreManager.DefaultManager.UpdateItemAsync(store);
-                await MiBocataNavigationService.NavigateToHome();
+                await miBocataNavigationService.NavigateToHome();
             }
             else
             {
-                await MiBocataNavigationService.NavigateToChooseLocationStore();
+                await miBocataNavigationService.NavigateToChooseLocationStore();
             }
         }
 
         private async Task GoToRegisterCommandAsync()
         {
-            await MiBocataNavigationService.NavigateToRegister();
+            await miBocataNavigationService.NavigateToRegister();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using Mibocata.Core.Framework;
+using Xamarin.Forms;
 
 namespace MiBocata.Businnes.Framework
 {
@@ -8,14 +9,14 @@ namespace MiBocata.Businnes.Framework
         {
             base.OnAppearing();
 
-            ((BaseViewModel)BindingContext)?.InitializeAsync(null);
+            ((CoreViewModel)BindingContext)?.InitializeAsync(null);
         }
 
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
 
-            ((BaseViewModel)BindingContext)?.UnitializeAsync(null);
+            ((CoreViewModel)BindingContext)?.UnitializeAsync(null);
         }
     }
 }

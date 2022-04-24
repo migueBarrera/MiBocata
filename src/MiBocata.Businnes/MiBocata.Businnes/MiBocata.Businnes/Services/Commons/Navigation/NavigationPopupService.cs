@@ -1,8 +1,5 @@
-﻿using MiBocata.Businnes.Framework;
+﻿using Mibocata.Core.Framework;
 using MiBocata.Businnes.Services.Commons.Navigation;
-using Rg.Plugins.Popup.Pages;
-using Rg.Plugins.Popup.Services;
-using System;
 using System.Threading.Tasks;
 
 namespace MiBocata.Businnes.Services.Navigation
@@ -10,11 +7,11 @@ namespace MiBocata.Businnes.Services.Navigation
     public partial class NavigationService : INavigationService
     {
         public Task NavigateToPopupAsync<TViewModel>(bool animate)
-            where TViewModel : BaseViewModel
+            where TViewModel : CoreViewModel
             => NavigateToPopupAsync<TViewModel>(null, animate);
 
         public Task NavigateToPopupAsync<TViewModel>(object parameter, bool animate)
-            where TViewModel : BaseViewModel
+            where TViewModel : CoreViewModel
         {
             // var page = CreateAndBindPage(typeof(TViewModel), parameter);
             // await (page.BindingContext as BaseViewModel).InitializeAsync(parameter);

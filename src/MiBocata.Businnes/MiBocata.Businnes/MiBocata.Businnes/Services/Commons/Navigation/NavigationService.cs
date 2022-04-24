@@ -9,6 +9,7 @@ using MiBocata.Businnes.Services.Commons.Navigation;
 using Mibocata.Core.Extensions;
 using Mibocata.Core.Services.Interfaces;
 using Xamarin.Forms;
+using Mibocata.Core.Framework;
 
 namespace MiBocata.Businnes.Services.Navigation
 {
@@ -25,11 +26,11 @@ namespace MiBocata.Businnes.Services.Navigation
         protected Application CurrentApplication => Application.Current;
 
         public Task NavigateToAsync<TViewModel>(bool clearStack = false)
-            where TViewModel : BaseViewModel
+            where TViewModel : CoreViewModel
             => InternalNavigateToAsync<TViewModel>(typeof(TViewModel), null, clearStack);
 
         public Task NavigateToAsync<TViewModel>(object parameter, bool clearStack = false)
-            where TViewModel : BaseViewModel
+            where TViewModel : CoreViewModel
             => InternalNavigateToAsync<TViewModel>(typeof(TViewModel), parameter, clearStack);
 
         public async Task NavigateBackAsync()
@@ -95,7 +96,7 @@ namespace MiBocata.Businnes.Services.Navigation
 
             var page = Activator.CreateInstance(pageType) as Page;
             var viewModel = App.Current.DependencyService.Resolve<TViewModel>()
-                            as BaseViewModel;
+                            as CoreViewModel;
             page.BindingContext = viewModel;
 
             return page;

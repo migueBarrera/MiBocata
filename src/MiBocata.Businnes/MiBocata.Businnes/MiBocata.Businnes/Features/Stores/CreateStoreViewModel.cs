@@ -1,49 +1,44 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Mibocata.Core.Features.Refit;
-using Mibocata.Core.Features.Stores;
-using Mibocata.Core.Services.Interfaces;
 using MiBocata.Businnes.Framework;
 using MiBocata.Businnes.Services.Commons.Navigation;
 using MiBocata.Businnes.Services.Commons.Preferences;
+using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Features.Stores;
+using Mibocata.Core.Services.Interfaces;
 using Models.Core;
 using Xamarin.Forms.Maps;
 using static MiBocata.Businnes.Features.Stores.ChooseLocationViewModel;
+using Mibocata.Core.Framework;
 
 namespace MiBocata.Businnes.Features.Stores
 {
-    public class CreateStoreViewModel : BaseViewModel
+    public class CreateStoreViewModel : CoreViewModel
     {
         private Store store;
         private readonly IStoreApi storeApi;
-
+        private readonly IMiBocataNavigationService miBocataNavigationService;
+        private readonly IPreferencesService preferencesService;
+        private readonly ISessionService sessionService;
+        private readonly ILoggingService loggingService;
+        private readonly ITaskHelperFactory taskHelperFactory;
         private IEnumerable<Model> locations;
 
         public CreateStoreViewModel(
-           INavigationService navigationService,
            IMiBocataNavigationService miBocataNavigationService,
            IPreferencesService preferencesService,
            ISessionService sessionService,
            ILoggingService loggingService,
-           IDialogService dialogService,
-           IConnectivityService connectivityService,
-           ITaskHelper taskHelper,
            IRefitService refitService,
            ITaskHelperFactory taskHelperFactory)
-           : base(
-                 navigationService,
-                 miBocataNavigationService,
-                 preferencesService,
-                 sessionService,
-                 loggingService,
-                 dialogService,
-                 connectivityService,
-                 taskHelper,
-                 refitService,
-                 taskHelperFactory)
         {
-            storeApi = RefitService.InitRefitInstance<IStoreApi>(isAutenticated: true);
+            storeApi = refitService.InitRefitInstance<IStoreApi>(isAutenticated: true);
+            this.miBocataNavigationService = miBocataNavigationService;
+            this.preferencesService = preferencesService;
+            this.sessionService = sessionService;
+            this.loggingService = loggingService;
+            this.taskHelperFactory = taskHelperFactory;
         }
 
         public Store Store { get => store; set => SetAndRaisePropertyChanged(ref store, value); }
@@ -55,7 +50,7 @@ namespace MiBocata.Businnes.Features.Stores
         public override Task InitializeAsync(object navigationData)
         {
             IsBusy = false;
-            Store = SessionService.Get<Store>(nameof(Store));
+            Store = sessionService.Get<Store>(nameof(Store));
             Locations = new List<Model>()
             {
                 new Model()
@@ -78,8 +73,8 @@ namespace MiBocata.Businnes.Features.Stores
             ////var pushToken = PreferencesService.PushToken();
             ////todo store.PushToken = pushToken;
 
-            var result = await TaskHelperFactory.
-                                    CreateInternetAccessViewModelInstance(LoggingService, this).
+            var result = await taskHelperFactory.
+                                    CreateInternetAccessViewModelInstance(loggingService, this).
                                     TryExecuteAsync(() => storeApi.Create(new Models.Requests.StoreCreateRequest()
                                     {
                                         //store
@@ -101,10 +96,10 @@ namespace MiBocata.Businnes.Features.Stores
 
         private async Task OnCreateStoreSuccessful(Store storeResult)
         {
-            SessionService.Clear();
-            PreferencesService.SetStore(storeResult);
+            sessionService.Clear();
+            preferencesService.SetStore(storeResult);
 
-            await MiBocataNavigationService.NavigateToHome();
+            await miBocataNavigationService.NavigateToHome();
         }
 
         private bool Validate()

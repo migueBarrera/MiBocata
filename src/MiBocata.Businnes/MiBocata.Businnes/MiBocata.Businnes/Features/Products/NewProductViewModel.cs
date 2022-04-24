@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using Mibocata.Core.Features.Products;
 using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
 using MiBocata.Businnes.Framework;
 using MiBocata.Businnes.Services.Commons.Navigation;
@@ -13,9 +14,13 @@ using Xamarin.Forms;
 
 namespace MiBocata.Businnes.Features.Products
 {
-    public class NewProductViewModel : BaseViewModel
+    public class NewProductViewModel : CoreViewModel
     {
-        private readonly IImagesService imagesService;
+        private readonly IPreferencesService preferencesService;
+        private readonly INavigationService navigationService;
+        private readonly ILoggingService loggingService;
+        private readonly IDialogService dialogService;
+        private readonly ITaskHelperFactory taskHelperFactory;
         private readonly IProductApi productApi;
 
         private Store store;
@@ -27,31 +32,19 @@ namespace MiBocata.Businnes.Features.Products
         private double productprice;
 
         public NewProductViewModel(
-           IImagesService imagesService,
-           INavigationService navigationService,
-           IMiBocataNavigationService miBocataNavigationService,
+           IRefitService refitService,
            IPreferencesService preferencesService,
-           ISessionService sessionService,
+           INavigationService navigationService,
            ILoggingService loggingService,
            IDialogService dialogService,
-           IConnectivityService connectivityService,
-           ITaskHelper taskHelper,
-           IRefitService refitService,
            ITaskHelperFactory taskHelperFactory)
-           : base(
-                 navigationService,
-                 miBocataNavigationService,
-                 preferencesService,
-                 sessionService,
-                 loggingService,
-                 dialogService,
-                 connectivityService,
-                 taskHelper,
-                 refitService,
-                 taskHelperFactory)
         {
-            this.imagesService = imagesService;
-            this.productApi = RefitService.InitRefitInstance<IProductApi>(isAutenticated: true);
+            this.preferencesService = preferencesService;
+            this.navigationService = navigationService;
+            this.loggingService = loggingService;
+            this.dialogService = dialogService;
+            this.taskHelperFactory = taskHelperFactory;
+            this.productApi = refitService.InitRefitInstance<IProductApi>(isAutenticated: true);
         }
 
         public string ProductName
@@ -80,7 +73,7 @@ namespace MiBocata.Businnes.Features.Products
 
         public override Task InitializeAsync(object navigationData)
         {
-            store = PreferencesService.GetStore();
+            store = preferencesService.GetStore();
             Productimage = "profile_placeholder.png";
             ProductName = string.Empty;
             Productprice = 0;
@@ -113,7 +106,7 @@ namespace MiBocata.Businnes.Features.Products
 
             var stream = new Refit.StreamPart(file.GetStream(), "image.jpeg", "image/jpeg"); ////TODO no estoy seguro si usar este formato
 
-            var result = await TaskHelperFactory.CreateInternetAccessViewModelInstance(LoggingService, this).
+            var result = await taskHelperFactory.CreateInternetAccessViewModelInstance(loggingService, this).
                                 TryExecuteAsync(() => productApi.UploadPhoto(id, stream));
         }
 
@@ -129,7 +122,7 @@ namespace MiBocata.Businnes.Features.Products
                 return;
             }
 
-            var result = await TaskHelperFactory.CreateInternetAccessViewModelInstance(LoggingService, this).
+            var result = await taskHelperFactory.CreateInternetAccessViewModelInstance(loggingService, this).
                 TryExecuteAsync(() => CreateProductAsync());
 
             if (result)
@@ -139,8 +132,8 @@ namespace MiBocata.Businnes.Features.Products
                     await UploadImage(result.Value.Id, mediaFile);
                 }
 
-                PreferencesService.SetStore(store);
-                await NavigationService.NavigateBackAsync();
+                preferencesService.SetStore(store);
+                await navigationService.NavigateBackAsync();
             }
         }
 
@@ -172,13 +165,13 @@ namespace MiBocata.Businnes.Features.Products
         {
             if (string.IsNullOrWhiteSpace(ProductName))
             {
-                await DialogService.ShowMessage("Compruebe el nombre del producto", string.Empty);
+                await dialogService.ShowMessage("Compruebe el nombre del producto", string.Empty);
                 return false;
             }
 
             if (Productprice <= 0)
             {
-                await DialogService.ShowMessage("Compruebe el precio", string.Empty);
+                await dialogService.ShowMessage("Compruebe el precio", string.Empty);
                 return false;
             }
 
