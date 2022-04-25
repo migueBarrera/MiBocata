@@ -1,10 +1,10 @@
 ﻿using Mibocata.Core.Features.Refit;
 using Mibocata.Core.Features.Stores;
+using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
-using MiBocata.Framework;
 using MiBocata.Services.NavigationService;
-using MiBocata.Services.PreferencesService;
 using Models.Core;
+using Models.Responses;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,11 +13,14 @@ using Xamarin.Forms.GoogleMaps;
 
 namespace MiBocata.Features.Stores
 {
-    public class StoresViewModel : BaseViewModel
+    public class StoresViewModel : CoreViewModel
     {
         private readonly IStoreApi storeApi;
         private readonly IGeolocationService geolocationService;
-
+        private readonly IMiBocataNavigationService navigationService;
+        private readonly ISessionService sessionService;
+        private readonly ILoggingService loggingService;
+        private readonly ITaskHelperFactory taskHelperFactory;
         private Location userLocation;
 
         private IEnumerable<Model> stores;
@@ -25,27 +28,17 @@ namespace MiBocata.Features.Stores
         public StoresViewModel(
             IGeolocationService geolocationService,
             IMiBocataNavigationService navigationService,
-            IPreferencesService preferencesService,
             ISessionService sessionService,
             ILoggingService loggingService,
-            IDialogService dialogService,
-            IConnectivityService connectivityService,
             IRefitService refitService,
-            ITaskHelperFactory taskHelperFactory,
-            IKeyboardService keyboardService)
-            : base(
-                  navigationService,
-                  preferencesService,
-                  sessionService,
-                  loggingService,
-                  dialogService,
-                  connectivityService,
-                  refitService,
-                  taskHelperFactory,
-                  keyboardService)
+            ITaskHelperFactory taskHelperFactory)
         {
             this.geolocationService = geolocationService;
-            this.storeApi = RefitService.InitRefitInstance<IStoreApi>(isAutenticated: false);
+            this.navigationService = navigationService;
+            this.sessionService = sessionService;
+            this.loggingService = loggingService;
+            this.taskHelperFactory = taskHelperFactory;
+            this.storeApi = refitService.InitRefitInstance<IStoreApi>(isAutenticated: false);
         }
 
         public Location UserLocation { get => userLocation; set => SetAndRaisePropertyChanged(ref userLocation, value); }
@@ -66,8 +59,8 @@ namespace MiBocata.Features.Stores
 
         private async Task GetStores()
         {
-            var result = await TaskHelperFactory.
-                                    CreateInternetAccessViewModelInstance(LoggingService, this).
+            var result = await taskHelperFactory.
+                                    CreateInternetAccessViewModelInstance(loggingService, this).
                                     TryExecuteAsync(
                                     () => storeApi.GetAll());
 
@@ -78,11 +71,10 @@ namespace MiBocata.Features.Stores
                                {
                                    Position = new Position(x.StoreLocation.Latitude, x.StoreLocation.Longitude),
                                    Description = x.Name,
-                                   Location = x.StoreLocation,
-                                   ////PushToken = x.PushToken,
+                                   Location = StoreLocationResponse.Parse(x.StoreLocation),
                                    IdStore = x.Id,
                                    Image = x.Image,
-                                   Products = x.Products,
+                                   Products = x.Products?.Select(pr => ProductsResponse.Parse(pr)).ToList(),
                                })?.ToList();
             }
         }
@@ -90,7 +82,7 @@ namespace MiBocata.Features.Stores
         public async Task GoToStore(Model model)
         {
             var store = Stores.Where(x => x.IdStore == model.IdStore).FirstOrDefault();
-            SessionService.Save(
+            sessionService.Save(
                 "KEY_SESSION_STORE",
                 new Store()
                 {
@@ -102,7 +94,7 @@ namespace MiBocata.Features.Stores
                     ////PushToken = store.PushToken,
                 });
 
-            await NavigationService.NavigateToStore();
+            await navigationService.NavigateToStore();
         }
 
         public class Model

@@ -1,6 +1,6 @@
 ﻿using Models.Requests;
 using Models.Responses;
-using System;
+using System.Linq;
 
 namespace Mibocata.Infrastructure.Data.Models.Mappers
 {
@@ -27,9 +27,8 @@ namespace Mibocata.Infrastructure.Data.Models.Mappers
                 Name = store.Name,
                 Image = store.Image,
                 AutoAccept = store.AutoAccept,
-                //TODO review
-                //Products = store.Products,
-                //StoreLocation = store.StoreLocation,
+                Products = store.Products?.Select(p => Product.Parse(p)).ToList(),
+                StoreLocation = StoreLocation.Parse(store.StoreLocation),
             };
         }
 
@@ -41,9 +40,9 @@ namespace Mibocata.Infrastructure.Data.Models.Mappers
                 Name = request.Name,
                 Image = request.Image,
                 AutoAccept = request.AutoAccept,
-                //TODO review
+                //TODO review => Creo que no se necesita en este request
                 //Products = request.Products,
-                //StoreLocation = request.StoreLocation,
+                StoreLocation = StoreLocation.Parse(request.StoreLocation),
             };
         }
     }

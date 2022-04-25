@@ -6,6 +6,7 @@ using MiBocata.Businnes.Services.Commons.NotificationService;
 using Mibocata.Core.Extensions;
 using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
+using MiBocata.Framework;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.WindowsSpecific;
@@ -18,7 +19,7 @@ namespace MiBocata.Businnes
         {
             InitializeComponent();
             Current.On<Windows>().SetImageDirectory("Assets");
-            this.DependencyService = ServicesCollection.GetServiceCollection(platformDependencies);
+            this.DependencyService = ServicesCollection.GetServiceCollection(typeof(App).Assembly, platformDependencies);
             if (Device.RuntimePlatform == Device.UWP)
             {
                 InitNavigation();

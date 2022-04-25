@@ -1,10 +1,12 @@
 ﻿using Mibocata.Core.Extensions;
 using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
 using MiBocata.Framework;
 using MiBocata.Services.NavigationService;
 using MiBocata.Services.PreferencesService;
 using Models.Core;
+using PubSub;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -12,34 +14,28 @@ using Xamarin.Forms;
 
 namespace MiBocata.Features.Stores
 {
-    public class StoreDetailViewModel : BaseViewModel
+    public class StoreDetailViewModel : CoreViewModel
     {
         private Store store;
         private int countItems;
         private ObservableCollection<OrderProduct> listCartProducts;
+        private readonly IMiBocataNavigationService navigationService;
+        private readonly IPreferencesService preferencesService;
+        private readonly ISessionService sessionService;
+        private readonly IDialogService dialogService;
+        private Hub Hub = Hub.Default;
 
         public StoreDetailViewModel(
             IMiBocataNavigationService navigationService,
             IPreferencesService preferencesService,
             ISessionService sessionService,
-            ILoggingService loggingService,
-            IDialogService dialogService,
-            IConnectivityService connectivityService,
-            IRefitService refitService,
-            ITaskHelperFactory taskHelperFactory,
-            IKeyboardService keyboardService)
-            : base(
-                  navigationService,
-                  preferencesService,
-                  sessionService,
-                  loggingService,
-                  dialogService,
-                  connectivityService,
-                  refitService,
-                  taskHelperFactory,
-                  keyboardService)
+            IDialogService dialogService)
         {
             listCartProducts = new ObservableCollection<OrderProduct>();
+            this.navigationService = navigationService;
+            this.preferencesService = preferencesService;
+            this.sessionService = sessionService;
+            this.dialogService = dialogService;
         }
 
         public Store Store
@@ -60,8 +56,8 @@ namespace MiBocata.Features.Stores
 
         public override Task InitializeAsync(object navigationData)
         {
-            Store = SessionService.Get<Store>("KEY_SESSION_STORE");
-            listCartProducts = SessionService.Get<ObservableCollection<OrderProduct>>("ListCartProducts");
+            Store = sessionService.Get<Store>("KEY_SESSION_STORE");
+            listCartProducts = sessionService.Get<ObservableCollection<OrderProduct>>("ListCartProducts");
             if (listCartProducts == null)
             {
                 listCartProducts = new ObservableCollection<OrderProduct>();
@@ -90,20 +86,20 @@ namespace MiBocata.Features.Stores
 
         private async Task GoToCartCommandAsync()
         {
-            if (!PreferencesService.IsLogged())
+            if (!preferencesService.IsLogged())
             {
-                await NavigationService.NavigateToLogIn();
+                await navigationService.NavigateToLogIn();
                 return;
             }
 
             if (listCartProducts.Count == 0)
             {
-                await DialogService.ShowAlertAsync(string.Empty, "Añade algun elemento al carrito");
+                await dialogService.ShowAlertAsync(string.Empty, "Añade algun elemento al carrito");
                 return;
             }
 
-            SessionService.Save("ListCartProducts", listCartProducts);
-            await NavigationService.NavigateToCart();
+            sessionService.Save("ListCartProducts", listCartProducts);
+            await navigationService.NavigateToCart();
         }
 
         private void AddProduct(OrderProduct product)

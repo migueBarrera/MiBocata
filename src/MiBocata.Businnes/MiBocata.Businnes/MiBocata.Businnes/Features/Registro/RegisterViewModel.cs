@@ -3,45 +3,29 @@ using System.Windows.Input;
 using MiBocata.Businnes.Framework;
 using MiBocata.Businnes.Helpers;
 using MiBocata.Businnes.Services.Commons.Navigation;
-using MiBocata.Businnes.Services.Commons.Preferences;
-using Mibocata.Core.Features.Auth;
-using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
-using Models;
 using Models.Core;
 using Xamarin.Forms;
-using Mibocata.Core.Framework;
 
 namespace MiBocata.Businnes.Features.Registro
 {
     public class RegisterViewModel : CoreViewModel
     {
         private Shopkeeper todoItem;
-        private readonly IAuthApi authApi;
-        private readonly IMiBocataNavigationService miBocataNavigationService;
-        private readonly IPreferencesService preferencesService;
-        private readonly ILoggingService loggingService;
+        private readonly IRegisterService registerService;
         private readonly IDialogService dialogService;
-        private readonly ITaskHelperFactory taskHelperFactory;
         private readonly IKeyboardService keyboardService;
         private readonly INavigationService navigationService;
 
         public RegisterViewModel(
-          IMiBocataNavigationService miBocataNavigationService,
-          IPreferencesService preferencesService,
-          ILoggingService loggingService,
-          IDialogService dialogService,
-          IRefitService refitService,
-          ITaskHelperFactory taskHelperFactory,
-          IKeyboardService keyboardService, 
-          INavigationService navigationService)
+            IRegisterService registerService,
+            IDialogService dialogService,
+            IKeyboardService keyboardService,
+            INavigationService navigationService)
         {
-            this.authApi = refitService.InitRefitInstance<IAuthApi>();
-            this.miBocataNavigationService = miBocataNavigationService;
-            this.preferencesService = preferencesService;
-            this.loggingService = loggingService;
+            this.registerService = registerService;
             this.dialogService = dialogService;
-            this.taskHelperFactory = taskHelperFactory;
             this.keyboardService = keyboardService;
             this.navigationService = navigationService;
         }
@@ -89,32 +73,7 @@ namespace MiBocata.Businnes.Features.Registro
                 return;
             }
 
-            var result = await taskHelperFactory.
-                CreateInternetAccessViewModelInstance(loggingService, this).
-                TryExecuteAsync(
-                () => authApi.SignUp(new Models.Requests.ShopkeeperSignUpRequest()
-                {
-                    Email = User.Email,
-                    Name = User.Name,
-                    Password = User.Password,
-                }));
-
-            //TODO
-            if (result)
-            {
-                await RegisterSuccessesful(new Shopkeeper()
-                {
-                    Id = result.Value.Id,
-                    Email = result.Value.Email,
-                    Name = result.Value.Name,
-                });
-            }
-        }
-
-        private async Task RegisterSuccessesful(Shopkeeper result)
-        {
-            preferencesService.SetUser(result);
-            await miBocataNavigationService.NavigateToChooseLocationStore();
+            await registerService.RegisterCommandAsync(User);
         }
 
         private async Task<bool> ValidateAsync()

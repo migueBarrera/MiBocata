@@ -1,5 +1,6 @@
 ﻿using Mibocata.Core.Features.Auth;
 using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
 using MiBocata.Framework;
 using MiBocata.Helpers;
@@ -12,33 +13,33 @@ using System.Windows.Input;
 
 namespace MiBocata.Features.Register
 {
-    public class RegisterViewModel : BaseViewModel
+    public class RegisterViewModel : CoreViewModel
     {
         private Client user;
         private readonly IAuthApi authApi;
+        private readonly IMiBocataNavigationService navigationService;
+        private readonly IPreferencesService preferencesService;
+        private readonly ILoggingService loggingService;
+        private readonly IDialogService dialogService;
+        private readonly ITaskHelperFactory taskHelperFactory;
+        private readonly IKeyboardService keyboardService;
 
         public RegisterViewModel(
             IMiBocataNavigationService navigationService,
             IPreferencesService preferencesService,
-            ISessionService sessionService,
             ILoggingService loggingService,
             IDialogService dialogService,
-            IConnectivityService connectivityService,
             IRefitService refitService,
             ITaskHelperFactory taskHelperFactory,
             IKeyboardService keyboardService)
-            : base(
-                  navigationService,
-                  preferencesService,
-                  sessionService,
-                  loggingService,
-                  dialogService,
-                  connectivityService,
-                  refitService,
-                  taskHelperFactory,
-                  keyboardService)
         {
-            this.authApi = RefitService.InitRefitInstance<IAuthApi>();
+            this.authApi = refitService.InitRefitInstance<IAuthApi>();
+            this.navigationService = navigationService;
+            this.preferencesService = preferencesService;
+            this.loggingService = loggingService;
+            this.dialogService = dialogService;
+            this.taskHelperFactory = taskHelperFactory;
+            this.keyboardService = keyboardService;
         }
 
         public Client User
@@ -63,15 +64,15 @@ namespace MiBocata.Features.Register
                 return;
             }
 
-            KeyboardService.HideSoftKeyboard();
+            keyboardService.HideSoftKeyboard();
 
             if (!await ValidateAsync())
             {
                 return;
             }
 
-            var result = await TaskHelperFactory.
-                                CreateInternetAccessViewModelInstance(LoggingService, this).
+            var result = await taskHelperFactory.
+                                CreateInternetAccessViewModelInstance(loggingService, this).
                                 TryExecuteAsync(
                                 () => authApi.SignUp(new Models.Requests.ClientSignUpRequest()
                                 {
@@ -88,21 +89,21 @@ namespace MiBocata.Features.Register
 
         private async Task RegisterSuccessesful(Client result)
         {
-            PreferencesService.SetUser(result);
-            await NavigationService.NavigateToHome();
+            preferencesService.SetUser(result);
+            await navigationService.NavigateToHome();
         }
 
         private async Task<bool> ValidateAsync()
         {
             if (!ValidateHelper.IsValidEmail(User.Email))
             {
-                await DialogService.ShowMessage("Compruebe su email", string.Empty);
+                await dialogService.ShowMessage("Compruebe su email", string.Empty);
                 return false;
             }
 
             if (!ValidateHelper.IsValidPassword(User.Password))
             {
-                await DialogService.ShowMessage("La contraseña debe tener al menos 4 caracteres", string.Empty);
+                await dialogService.ShowMessage("La contraseña debe tener al menos 4 caracteres", string.Empty);
                 return false;
             }
 

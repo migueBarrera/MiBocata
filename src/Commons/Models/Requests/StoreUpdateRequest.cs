@@ -15,6 +15,6 @@ namespace Models.Requests
 
         public bool AutoAccept { get; set; }
 
-        public StoreLocation StoreLocation { get; set; }
+        public StoreLocationRequest StoreLocation { get; set; }
     }
 }

@@ -1,39 +1,23 @@
 ﻿using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
 using MiBocata.Framework;
 using MiBocata.Services.NavigationService;
 using MiBocata.Services.PreferencesService;
 using Models.Core;
+using PubSub;
 using Rg.Plugins.Popup.Services;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace MiBocata.Features.Stores
 {
-    public class AddProductViewModel : BaseViewModel
+    public class AddProductViewModel : CoreViewModel
     {
         private OrderProduct product;
+        private Hub Hub = Hub.Default;
 
-        public AddProductViewModel(
-            IMiBocataNavigationService navigationService,
-            IPreferencesService preferencesService,
-            ISessionService sessionService,
-            ILoggingService loggingService,
-            IDialogService dialogService,
-            IConnectivityService connectivityService,
-            IRefitService refitService,
-            ITaskHelperFactory taskHelperFactory,
-            IKeyboardService keyboardService) 
-            : base(
-                  navigationService,
-                  preferencesService,
-                  sessionService,
-                  loggingService,
-                  dialogService,
-                  connectivityService,
-                  refitService,
-                  taskHelperFactory,
-                  keyboardService)
+        public AddProductViewModel()
         {
         }
 

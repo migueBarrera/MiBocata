@@ -88,6 +88,7 @@ public class ShopkeepersController : MBControllerBase
             Id = shopkeeper.Id,
             Email = shopkeeper.Email,
             Name = shopkeeper.Name,
+            IdStore = shopkeeper.IdStore,
             Token = JwtSecurityTokenHelper.BuildToken(configuration["Jwt:Key"], shopkeeper),
         });
     }

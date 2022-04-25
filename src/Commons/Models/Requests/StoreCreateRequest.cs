@@ -11,10 +11,10 @@ namespace Models.Requests
 
         public string Image { get; set; } = string.Empty;
 
-        public List<Product> Products { get; set; }
+        //public List<Product> Products { get; set; }
 
         public bool AutoAccept { get; set; }
 
-        public StoreLocation StoreLocation { get; set; }
+        public StoreLocationRequest StoreLocation { get; set; }
     }
 }

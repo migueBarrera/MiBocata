@@ -18,7 +18,6 @@ using MiBocata.Services.NavigationService;
 using MiBocata.Services.NotificationService;
 using MiBocata.Services.PreferencesService;
 using MiBocata.Services.SessionService;
-using MiBocata.Services.TasksServices;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MiBocata.Framework
@@ -45,10 +44,9 @@ namespace MiBocata.Framework
             serviceCollection.AddTransient<IMiBocataNavigationService, MiBocataNavigationService>();
             serviceCollection.AddTransient<IPreferencesService, PreferencesService>();
             serviceCollection.AddTransient<INotificationService, EmptyNotificationService>();
-            serviceCollection.AddTransient<ISessionService, SessionService>();
+            serviceCollection.AddSingleton<ISessionService, SessionService>();
             serviceCollection.AddTransient<IDialogService, DialogService>();
             serviceCollection.AddTransient<IRefitService, RefitService>();
-            serviceCollection.AddTransient<ITaskHelperFactory, TaskHelperFactory>();
         }
     }
 }

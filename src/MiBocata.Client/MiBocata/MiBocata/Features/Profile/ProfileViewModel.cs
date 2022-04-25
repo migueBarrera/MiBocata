@@ -1,8 +1,6 @@
-﻿using Mibocata.Core.Features.Refit;
-using Mibocata.Core.Services.Interfaces;
+﻿using Mibocata.Core.Framework;
 using MiBocata.Framework;
 using MiBocata.Services.NavigationService;
-using MiBocata.Services.NotificationService;
 using MiBocata.Services.PreferencesService;
 using Models.Core;
 using System.Threading.Tasks;
@@ -10,33 +8,19 @@ using System.Windows.Input;
 
 namespace MiBocata.Features.Profile
 {
-    public class ProfileViewModel : BaseViewModel
+    public class ProfileViewModel : CoreViewModel
     {
         private Client client;
         private bool userIsLogged;
+        private readonly IMiBocataNavigationService navigationService;
+        private readonly IPreferencesService preferencesService;
 
         public ProfileViewModel(
-            INotificationService notificationService,
             IMiBocataNavigationService navigationService,
-            IPreferencesService preferencesService,
-            ISessionService sessionService,
-            ILoggingService loggingService,
-            IDialogService dialogService,
-            IConnectivityService connectivityService,
-            IRefitService refitService,
-            ITaskHelperFactory taskHelperFactory,
-            IKeyboardService keyboardService)
-            : base(
-                  navigationService,
-                  preferencesService,
-                  sessionService,
-                  loggingService,
-                  dialogService,
-                  connectivityService,
-                  refitService,
-                  taskHelperFactory,
-                  keyboardService)
+            IPreferencesService preferencesService)
         {
+            this.navigationService = navigationService;
+            this.preferencesService = preferencesService;
         }
 
         public bool UserIsLogged 
@@ -55,7 +39,7 @@ namespace MiBocata.Features.Profile
 
         public override Task InitializeAsync(object navigationData)
         {
-            Client = PreferencesService.GetUser();
+            Client = preferencesService.GetUser();
 
             UserIsLogged = Client != null;
 
@@ -64,18 +48,18 @@ namespace MiBocata.Features.Profile
 
         private async Task CloseSessionCommandAsync()
         {
-            PreferencesService.SetUser(null);
-            await NavigationService.NavigateToHome();
+            preferencesService.SetUser(null);
+            await navigationService.NavigateToHome();
         }
 
         private async Task OrdersCommandAsync()
         {
-            await NavigationService.NavigateToOrders();
+            await navigationService.NavigateToOrders();
         }
 
         private async Task EditProfileCommandAsync()
         {
-            await NavigationService.NavigateToEditProfile();
+            await navigationService.NavigateToEditProfile();
         }
     }
 }

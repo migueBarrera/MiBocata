@@ -1,13 +1,13 @@
 ﻿using System.Threading.Tasks;
 using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
-using MiBocata.Framework;
 using MiBocata.Services.NavigationService;
 using MiBocata.Services.PreferencesService;
 
 namespace MiBocata.Features.LogIn
 {
-    public class LogInViewModel : BaseViewModel
+    public class LogInViewModel : CoreViewModel
     {
         public LogInViewModel(
             IMiBocataNavigationService navigationService,
@@ -19,16 +19,6 @@ namespace MiBocata.Features.LogIn
             IRefitService refitService,
             ITaskHelperFactory taskHelperFactory,
             IKeyboardService keyboardService)
-            : base(
-                  navigationService,
-                  preferencesService,
-                  sessionService,
-                  loggingService,
-                  dialogService,
-                  connectivityService,
-                  refitService,
-                  taskHelperFactory,
-                  keyboardService)
         {
         }
 

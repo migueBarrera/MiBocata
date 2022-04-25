@@ -1,9 +1,8 @@
 ﻿using Mibocata.Core.Features.Clients;
 using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
 using MiBocata.Framework;
-using MiBocata.Services.NavigationService;
-using MiBocata.Services.NotificationService;
 using MiBocata.Services.PreferencesService;
 using Models.Core;
 using Models.Requests;
@@ -16,36 +15,29 @@ using Xamarin.Forms;
 
 namespace MiBocata.Features.Profile
 {
-    public class EditProfileViewModel : BaseViewModel
+    public class EditProfileViewModel : CoreViewModel
     {
         private MediaFile mediaFile;
         private Client client;
         private ImageSource productimage;
         private readonly IClientApi clientApi;
+        private readonly IPreferencesService preferencesService;
+        private readonly ILoggingService loggingService;
+        private readonly IDialogService dialogService;
+        private readonly ITaskHelperFactory taskHelperFactory;
 
         public EditProfileViewModel(
-              INotificationService notificationService,
-              IMiBocataNavigationService navigationService,
               IPreferencesService preferencesService,
-              ISessionService sessionService,
               ILoggingService loggingService,
               IDialogService dialogService,
-              IConnectivityService connectivityService,
               IRefitService refitService,
-              ITaskHelperFactory taskHelperFactory,
-              IKeyboardService keyboardService)
-          : base(
-                navigationService,
-                preferencesService,
-                sessionService,
-                loggingService,
-                dialogService,
-                connectivityService,
-                refitService,
-                taskHelperFactory,
-                keyboardService)
+              ITaskHelperFactory taskHelperFactory)
         {
-            clientApi = RefitService.InitRefitInstance<IClientApi>(isAutenticated: true);
+            clientApi = refitService.InitRefitInstance<IClientApi>(isAutenticated: true);
+            this.preferencesService = preferencesService;
+            this.loggingService = loggingService;
+            this.dialogService = dialogService;
+            this.taskHelperFactory = taskHelperFactory;
         }
 
         public ImageSource Productimage
@@ -77,7 +69,7 @@ namespace MiBocata.Features.Profile
 
         public override Task InitializeAsync(object navigationData)
         {
-            Client = PreferencesService.GetUser();
+            Client = preferencesService.GetUser();
             mediaFile = null;
             if (!string.IsNullOrEmpty(Client.Image))
             {
@@ -89,8 +81,8 @@ namespace MiBocata.Features.Profile
 
         private async Task SaveCommandExecute(object arg)
         {
-            var result = await TaskHelperFactory.
-                                    CreateInternetAccessViewModelInstance(LoggingService, this).
+            var result = await taskHelperFactory.
+                                    CreateInternetAccessViewModelInstance(loggingService, this).
                                     TryExecuteAsync(
                                     () => clientApi.UploadClient(Client.Id, ClientUpdateRequest.Parse(Client)));
 
@@ -105,9 +97,9 @@ namespace MiBocata.Features.Profile
                     }
                 }
 
-                PreferencesService.SetUser(Client);
+                preferencesService.SetUser(Client);
 
-                await DialogService.ShowAlertAsync("Usuario actualizado correctamente", string.Empty);
+                await dialogService.ShowAlertAsync("Usuario actualizado correctamente", string.Empty);
             }
         }
 
@@ -120,7 +112,7 @@ namespace MiBocata.Features.Profile
 
             var stream = new Refit.StreamPart(file.GetStream(), "image.jpeg", "image/jpeg"); ////TODO no estoy seguro si usar este formato
 
-            var result = await TaskHelperFactory.CreateInternetAccessViewModelInstance(LoggingService, this).
+            var result = await taskHelperFactory.CreateInternetAccessViewModelInstance(loggingService, this).
                                 TryExecuteAsync(() => clientApi.UploadPhoto(id, stream));
 
             return result.IsSuccess ? result.Value : string.Empty;

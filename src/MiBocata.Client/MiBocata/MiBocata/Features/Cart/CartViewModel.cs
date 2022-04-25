@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Mibocata.Core.Features.Orders;
 using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
 using MiBocata.Framework;
 using MiBocata.Services.NavigationService;
@@ -16,9 +17,13 @@ using Xamarin.Forms;
 
 namespace MiBocata.Features.Cart
 {
-    public class CartViewModel : BaseViewModel
+    public class CartViewModel : CoreViewModel
     {
-        private readonly INotificationService notificationService;
+        private readonly IMiBocataNavigationService navigationService;
+        private readonly IPreferencesService preferencesService;
+        private readonly ISessionService sessionService;
+        private readonly ILoggingService loggingService;
+        private readonly ITaskHelperFactory taskHelperFactory;
         private readonly IOrderApi orderApi;
         private Store store;
         private TimeSpan pickupTime;
@@ -27,29 +32,20 @@ namespace MiBocata.Features.Cart
         private ObservableCollection<OrderProduct> listCartProducts;
 
         public CartViewModel(
-            INotificationService notificationService,
             IMiBocataNavigationService navigationService,
             IPreferencesService preferencesService,
             ISessionService sessionService,
             ILoggingService loggingService,
             IDialogService dialogService,
-            IConnectivityService connectivityService,
             IRefitService refitService,
-            ITaskHelperFactory taskHelperFactory,
-            IKeyboardService keyboardService)
-            : base(
-                  navigationService,
-                  preferencesService,
-                  sessionService,
-                  loggingService,
-                  dialogService,
-                  connectivityService,
-                  refitService,
-                  taskHelperFactory,
-                  keyboardService)
+            ITaskHelperFactory taskHelperFactory)
         {
-            this.notificationService = notificationService;
-            this.orderApi = RefitService.InitRefitInstance<IOrderApi>(isAutenticated: true);
+            this.navigationService = navigationService;
+            this.preferencesService = preferencesService;
+            this.sessionService = sessionService;
+            this.loggingService = loggingService;
+            this.taskHelperFactory = taskHelperFactory;
+            this.orderApi = refitService.InitRefitInstance<IOrderApi>(isAutenticated: true);
         }
 
         public Store Store
@@ -91,11 +87,11 @@ namespace MiBocata.Features.Cart
 
         public override Task InitializeAsync(object navigationData)
         {
-            Store = SessionService.Get<Store>("KEY_SESSION_STORE");
-            ListCartProducts = SessionService.Get<ObservableCollection<OrderProduct>>("ListCartProducts");
+            Store = sessionService.Get<Store>("KEY_SESSION_STORE");
+            ListCartProducts = sessionService.Get<ObservableCollection<OrderProduct>>("ListCartProducts");
             PickupTime = DateTime.UtcNow.AddMinutes(15).TimeOfDay;
             CalcAmount();
-            client = PreferencesService.GetUser();
+            client = preferencesService.GetUser();
 
             return base.InitializeAsync(navigationData);
         }
@@ -133,22 +129,22 @@ namespace MiBocata.Features.Cart
                 State = store.AutoAccept ? OrderStates.AUTOACCEPTED : OrderStates.STARTED,
             };
 
-            var result = await TaskHelperFactory.
-                                    CreateInternetAccessViewModelInstance(LoggingService, this).
+            var result = await taskHelperFactory.
+                                    CreateInternetAccessViewModelInstance(loggingService, this).
                                     TryExecuteAsync(
                                     () => orderApi.Create(CreateOrderRequest.Parse(order)));
 
             if (result)
             {
-                SessionService.Save("ListCartProducts", new ObservableCollection<OrderProduct>());
-                await NavigationService.NavigateToHome();
+                sessionService.Save("ListCartProducts", new ObservableCollection<OrderProduct>());
+                await navigationService.NavigateToHome();
             }
         }
 
         public void RefresView()
         {
             CalcAmount();
-            SessionService.Save("ListCartProducts", ListCartProducts);
+            sessionService.Save("ListCartProducts", ListCartProducts);
         }
     }
 }

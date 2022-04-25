@@ -14,7 +14,7 @@ namespace MiBocata
         public App(IDependencies platformDependencies)
         {
             InitializeComponent();
-            this.DependencyService = ServicesCollection.GetServiceCollection(platformDependencies);
+            this.DependencyService = ServicesCollection.GetServiceCollection(typeof(App).Assembly, platformDependencies);
         }
 
         public static new App Current => Xamarin.Forms.Application.Current as App;

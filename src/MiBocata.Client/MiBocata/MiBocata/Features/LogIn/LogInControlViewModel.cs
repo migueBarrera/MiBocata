@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using Mibocata.Core.Features.Auth;
 using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
 using MiBocata.Framework;
 using MiBocata.Helpers;
@@ -12,33 +13,33 @@ using Models.Responses;
 
 namespace MiBocata.Features.LogIn
 {
-    public class LogInControlViewModel : BaseViewModel
+    public class LogInControlViewModel : CoreViewModel
     {
         private readonly IAuthApi authApi;
+        private readonly IMiBocataNavigationService navigationService;
+        private readonly IPreferencesService preferencesService;
+        private readonly ILoggingService loggingService;
+        private readonly IDialogService dialogService;
+        private readonly ITaskHelperFactory taskHelperFactory;
+        private readonly IKeyboardService keyboardService;
         private Client client;
 
         public LogInControlViewModel(
             IMiBocataNavigationService navigationService,
             IPreferencesService preferencesService,
-            ISessionService sessionService,
             ILoggingService loggingService,
             IDialogService dialogService,
-            IConnectivityService connectivityService,
             IRefitService refitService,
             ITaskHelperFactory taskHelperFactory,
             IKeyboardService keyboardService)
-            : base(
-                  navigationService,
-                  preferencesService,
-                  sessionService,
-                  loggingService,
-                  dialogService,
-                  connectivityService,
-                  refitService,
-                  taskHelperFactory,
-                  keyboardService)
         {
-            this.authApi = RefitService.InitRefitInstance<IAuthApi>();
+            this.authApi = refitService.InitRefitInstance<IAuthApi>();
+            this.navigationService = navigationService;
+            this.preferencesService = preferencesService;
+            this.loggingService = loggingService;
+            this.dialogService = dialogService;
+            this.taskHelperFactory = taskHelperFactory;
+            this.keyboardService = keyboardService;
         }
 
         public Client User
@@ -76,15 +77,15 @@ namespace MiBocata.Features.LogIn
                 return;
             }
 
-            KeyboardService.HideSoftKeyboard();
+            keyboardService.HideSoftKeyboard();
 
             if (!await ValidateAsync())
             {
                 return;
             }
 
-            var result = await TaskHelperFactory.
-                                    CreateInternetAccessViewModelInstance(LoggingService, this).
+            var result = await taskHelperFactory.
+                                    CreateInternetAccessViewModelInstance(loggingService, this).
                                     TryExecuteAsync(
                                     () => authApi.SignIn(new Models.Requests.ClientSignInRequest()
                                     {
@@ -102,13 +103,13 @@ namespace MiBocata.Features.LogIn
         {
             if (!ValidateHelper.IsValidEmail(User.Email))
             {
-                await DialogService.ShowAlertAsync("Compruebe su email", string.Empty);
+                await dialogService.ShowAlertAsync("Compruebe su email", string.Empty);
                 return false;
             }
 
             if (!ValidateHelper.IsValidPassword(User.Password))
             {
-                await DialogService.ShowAlertAsync("La contraseña debe tener al menos 4 caracteres", string.Empty);
+                await dialogService.ShowAlertAsync("La contraseña debe tener al menos 4 caracteres", string.Empty);
                 return false;
             }
 
@@ -117,13 +118,13 @@ namespace MiBocata.Features.LogIn
 
         private async Task LogInSuccessful(Client client)
         {
-            PreferencesService.SetUser(client);
-            await NavigationService.NavigateToHome();
+            preferencesService.SetUser(client);
+            await navigationService.NavigateToHome();
         }
 
         private async Task GoToRegisterCommandAsync()
         {
-            await NavigationService.NavigateToRegister();
+            await navigationService.NavigateToRegister();
         }
     }
 }

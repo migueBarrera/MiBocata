@@ -3,45 +3,34 @@ using System.Linq;
 using System.Threading.Tasks;
 using Mibocata.Core.Features.Orders;
 using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
-using MiBocata.Framework;
-using MiBocata.Services.NavigationService;
-using MiBocata.Services.NotificationService;
 using MiBocata.Services.PreferencesService;
 using Models.Core;
 using Models.Responses;
 
 namespace MiBocata.Features.Orders
 {
-    public class OrdersViewModel : BaseViewModel
+    public class OrdersViewModel : CoreViewModel
     {
         private readonly IOrderApi orderApi;
+        private readonly IPreferencesService preferencesService;
+        private readonly ILoggingService loggingService;
+        private readonly ITaskHelperFactory taskHelperFactory;
         private IEnumerable<Order> order;
         private Client client;
 
         public OrdersViewModel(
-            INotificationService notificationService,
-            IMiBocataNavigationService navigationService,
             IPreferencesService preferencesService,
-            ISessionService sessionService,
             ILoggingService loggingService,
-            IDialogService dialogService,
-            IConnectivityService connectivityService,
             IRefitService refitService,
             ITaskHelperFactory taskHelperFactory,
             IKeyboardService keyboardService)
-            : base(
-                  navigationService,
-                  preferencesService,
-                  sessionService,
-                  loggingService,
-                  dialogService,
-                  connectivityService,
-                  refitService,
-                  taskHelperFactory,
-                  keyboardService)
         {
-            this.orderApi = RefitService.InitRefitInstance<IOrderApi>(isAutenticated: true);
+            this.orderApi = refitService.InitRefitInstance<IOrderApi>(isAutenticated: true);
+            this.preferencesService = preferencesService;
+            this.loggingService = loggingService;
+            this.taskHelperFactory = taskHelperFactory;
         }
 
         public IEnumerable<Order> Orders
@@ -53,15 +42,15 @@ namespace MiBocata.Features.Orders
         public override async Task InitializeAsync(object navigationData = null)
         {
             await base.InitializeAsync(navigationData);
-            client = PreferencesService.GetUser();
+            client = preferencesService.GetUser();
             Orders = await GetOrders();
         }
 
         private async Task<List<Order>> GetOrders()
         {
             var list = new List<Order>();
-            var result = await TaskHelperFactory.
-                                    CreateInternetAccessViewModelInstance(LoggingService, this).
+            var result = await taskHelperFactory.
+                                    CreateInternetAccessViewModelInstance(loggingService, this).
                                     TryExecuteAsync(
                                     () => orderApi.GetAllByClient(client.Id));
 

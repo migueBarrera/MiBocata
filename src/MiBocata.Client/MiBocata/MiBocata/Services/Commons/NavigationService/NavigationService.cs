@@ -1,4 +1,5 @@
 ﻿using Mibocata.Core.Extensions;
+using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
 using MiBocata.Framework;
 using System;
@@ -23,11 +24,11 @@ namespace MiBocata.Services.NavigationService
         protected Application CurrentApplication => Application.Current;
 
         public Task NavigateToAsync<TViewModel>(bool cleanStack = false)
-            where TViewModel : BaseViewModel
+            where TViewModel : CoreViewModel
             => InternalNavigateToAsync<TViewModel>(typeof(TViewModel), null, cleanStack);
 
         public Task NavigateToAsync<TViewModel>(object parameter, bool cleanStack = false)
-            where TViewModel : BaseViewModel
+            where TViewModel : CoreViewModel
             => InternalNavigateToAsync<TViewModel>(typeof(TViewModel), parameter, cleanStack);
 
         public async Task NavigateBackAsync()
@@ -81,7 +82,7 @@ namespace MiBocata.Services.NavigationService
 
             var page = Activator.CreateInstance(pageType) as Page;
             var viewModel = App.Current.DependencyService.Resolve<TViewModel>()
-                            as BaseViewModel;
+                            as CoreViewModel;
             page.BindingContext = viewModel;
 
             return page;

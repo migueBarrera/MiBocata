@@ -3,10 +3,6 @@ using System.Windows.Input;
 using MiBocata.Businnes.Framework;
 using MiBocata.Businnes.Helpers;
 using MiBocata.Businnes.Services.Commons.Navigation;
-using MiBocata.Businnes.Services.Commons.Preferences;
-using Mibocata.Core.Features.Auth;
-using Mibocata.Core.Features.Refit;
-using Mibocata.Core.Features.Stores;
 using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
 using Models.Core;
@@ -17,31 +13,20 @@ namespace MiBocata.Businnes.Features.LogIn
     public class LogInViewModel : CoreViewModel
     {
         private Shopkeeper todoItem;
-        private readonly IAuthApi authApi;
-        private readonly IStoreApi storeApi;
+        private readonly ILogInService logInService;
         private readonly IMiBocataNavigationService miBocataNavigationService;
-        private readonly IPreferencesService preferencesService;
-        private readonly ILoggingService loggingService;
         private readonly IDialogService dialogService;
-        private readonly ITaskHelperFactory taskHelperFactory;
         private readonly IKeyboardService keyboardService;
 
         public LogInViewModel(
+            ILogInService logInService,
             IMiBocataNavigationService miBocataNavigationService,
-            IPreferencesService preferencesService,
-            ILoggingService loggingService,
             IDialogService dialogService,
-            IRefitService refitService,
-            ITaskHelperFactory taskHelperFactory, 
             IKeyboardService keyboardService)
         {
-            this.authApi = refitService.InitRefitInstance<IAuthApi>();
-            this.storeApi = refitService.InitRefitInstance<IStoreApi>(isAutenticated: true);
+            this.logInService = logInService;
             this.miBocataNavigationService = miBocataNavigationService;
-            this.preferencesService = preferencesService;
-            this.loggingService = loggingService;
             this.dialogService = dialogService;
-            this.taskHelperFactory = taskHelperFactory;
             this.keyboardService = keyboardService;
         }
 
@@ -100,25 +85,7 @@ namespace MiBocata.Businnes.Features.LogIn
                 return;
             }
 
-            var result = await taskHelperFactory.
-                CreateInternetAccessViewModelInstance(loggingService, this).
-                TryExecuteAsync(
-                () => authApi.SignIn(new Models.Requests.ShopkeeperSignInRequest()
-                {
-                    Email = User.Email,
-                    Password = User.Password,
-                }));
-
-            if (result)
-            {
-                //TODO
-                await LogInSuccessful(new Shopkeeper()
-                {
-                    Email = result.Value.Email,
-                    Name = result.Value.Name,
-                    Id = result.Value.Id,
-                });
-            }
+            await logInService.DoLoginAsync(User.Email, User.Password);
         }
 
         private async Task<bool> ValidateAsync()
@@ -136,33 +103,6 @@ namespace MiBocata.Businnes.Features.LogIn
             }
 
             return true;
-        }
-
-        private async Task LogInSuccessful(Shopkeeper shopkeeper)
-        {
-            preferencesService.SetUser(shopkeeper);
-
-            var pushToken = preferencesService.PushToken();
-
-            if (shopkeeper.IdStore != 0)
-            {
-                var store = await storeApi.Get(shopkeeper.IdStore);
-                preferencesService.SetStore(new Store()
-                {
-                    Id = store.Id,
-                    Name = store.Name,
-                    Image = store.Image,
-                    AutoAccept = store.AutoAccept,
-                    Products = store.Products,
-                });
-                ////store.PushToken = pushToken;
-                ////await StoreManager.DefaultManager.UpdateItemAsync(store);
-                await miBocataNavigationService.NavigateToHome();
-            }
-            else
-            {
-                await miBocataNavigationService.NavigateToChooseLocationStore();
-            }
         }
 
         private async Task GoToRegisterCommandAsync()
