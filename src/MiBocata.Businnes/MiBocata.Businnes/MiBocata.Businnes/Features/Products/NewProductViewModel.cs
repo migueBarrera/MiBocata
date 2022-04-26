@@ -6,7 +6,6 @@ using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
 using MiBocata.Businnes.Framework;
 using MiBocata.Businnes.Services.Commons.Navigation;
-using MiBocata.Businnes.Services.Commons.Preferences;
 using Models.Core;
 using Plugin.Media;
 using Plugin.Media.Abstractions;

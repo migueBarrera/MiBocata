@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:templates="clr-namespace:MiBocata.Businnes.Features.Products.Templates"
     Title="Productos"
-    Visual="Material"
+    
     mc:Ignorable="d">
     <ContentPage.Content>
         <Grid>

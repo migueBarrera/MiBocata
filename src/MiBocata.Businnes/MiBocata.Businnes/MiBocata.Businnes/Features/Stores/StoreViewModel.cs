@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using Mibocata.Core.Framework;
+using Mibocata.Core.Services.Interfaces;
 using MiBocata.Businnes.Features.Configuration;
 using MiBocata.Businnes.Features.LogIn;
 using MiBocata.Businnes.Features.Products;
 using MiBocata.Businnes.Framework;
 using MiBocata.Businnes.Services.Commons.Navigation;
-using MiBocata.Businnes.Services.Commons.Preferences;
 using Models.Core;
 
 namespace MiBocata.Businnes.Features.Stores
@@ -48,7 +48,7 @@ namespace MiBocata.Businnes.Features.Stores
 
         private async Task CloseSessionCommandAsync()
         {
-            preferencesService.SetUser(null);
+            preferencesService.SetShopkeeper(null);
             preferencesService.SetStore(null);
             await navigationService.NavigateToAsync<LogInViewModel>(clearStack: true);
         }

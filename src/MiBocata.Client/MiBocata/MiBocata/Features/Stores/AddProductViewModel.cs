@@ -1,9 +1,5 @@
-﻿using Mibocata.Core.Features.Refit;
-using Mibocata.Core.Framework;
-using Mibocata.Core.Services.Interfaces;
+﻿using Mibocata.Core.Framework;
 using MiBocata.Framework;
-using MiBocata.Services.NavigationService;
-using MiBocata.Services.PreferencesService;
 using Models.Core;
 using PubSub;
 using Rg.Plugins.Popup.Services;

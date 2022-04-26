@@ -5,7 +5,6 @@ using Mibocata.Core.Features.Orders;
 using Mibocata.Core.Features.Refit;
 using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
-using MiBocata.Services.PreferencesService;
 using Models.Core;
 using Models.Responses;
 
@@ -24,8 +23,7 @@ namespace MiBocata.Features.Orders
             IPreferencesService preferencesService,
             ILoggingService loggingService,
             IRefitService refitService,
-            ITaskHelperFactory taskHelperFactory,
-            IKeyboardService keyboardService)
+            ITaskHelperFactory taskHelperFactory)
         {
             this.orderApi = refitService.InitRefitInstance<IOrderApi>(isAutenticated: true);
             this.preferencesService = preferencesService;
@@ -42,7 +40,7 @@ namespace MiBocata.Features.Orders
         public override async Task InitializeAsync(object navigationData = null)
         {
             await base.InitializeAsync(navigationData);
-            client = preferencesService.GetUser();
+            client = preferencesService.GetClient();
             Orders = await GetOrders();
         }
 

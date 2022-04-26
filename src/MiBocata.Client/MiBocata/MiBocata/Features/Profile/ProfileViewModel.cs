@@ -1,7 +1,7 @@
 ﻿using Mibocata.Core.Framework;
+using Mibocata.Core.Services.Interfaces;
 using MiBocata.Framework;
 using MiBocata.Services.NavigationService;
-using MiBocata.Services.PreferencesService;
 using Models.Core;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -39,7 +39,7 @@ namespace MiBocata.Features.Profile
 
         public override Task InitializeAsync(object navigationData)
         {
-            Client = preferencesService.GetUser();
+            Client = preferencesService.GetClient();
 
             UserIsLogged = Client != null;
 
@@ -48,7 +48,7 @@ namespace MiBocata.Features.Profile
 
         private async Task CloseSessionCommandAsync()
         {
-            preferencesService.SetUser(null);
+            preferencesService.SetClient(null);
             await navigationService.NavigateToHome();
         }
 

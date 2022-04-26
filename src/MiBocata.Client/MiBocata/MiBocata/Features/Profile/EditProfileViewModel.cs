@@ -3,7 +3,6 @@ using Mibocata.Core.Features.Refit;
 using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
 using MiBocata.Framework;
-using MiBocata.Services.PreferencesService;
 using Models.Core;
 using Models.Requests;
 using Plugin.Media;
@@ -69,7 +68,7 @@ namespace MiBocata.Features.Profile
 
         public override Task InitializeAsync(object navigationData)
         {
-            Client = preferencesService.GetUser();
+            Client = preferencesService.GetClient();
             mediaFile = null;
             if (!string.IsNullOrEmpty(Client.Image))
             {
@@ -97,7 +96,7 @@ namespace MiBocata.Features.Profile
                     }
                 }
 
-                preferencesService.SetUser(Client);
+                preferencesService.SetClient(Client);
 
                 await dialogService.ShowAlertAsync("Usuario actualizado correctamente", string.Empty);
             }

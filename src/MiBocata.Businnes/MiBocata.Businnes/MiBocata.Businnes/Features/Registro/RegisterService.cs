@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using MiBocata.Businnes.Services.Commons.Navigation;
-using MiBocata.Businnes.Services.Commons.Preferences;
 using Mibocata.Core.Features.Auth;
 using Mibocata.Core.Features.Refit;
 using Mibocata.Core.Services.Interfaces;
@@ -56,7 +55,7 @@ namespace MiBocata.Businnes.Features.Registro
 
         private async Task RegisterSuccessesful(Shopkeeper result)
         {
-            preferencesService.SetUser(result);
+            preferencesService.SetShopkeeper(result);
             await miBocataNavigationService.NavigateToChooseLocationStore();
         }
     }

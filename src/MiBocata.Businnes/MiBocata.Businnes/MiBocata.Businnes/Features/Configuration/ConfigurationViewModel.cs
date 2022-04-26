@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using MiBocata.Businnes.Framework;
 using MiBocata.Businnes.Services.Commons.Navigation;
-using MiBocata.Businnes.Services.Commons.Preferences;
 using Mibocata.Core.Features.Refit;
 using Mibocata.Core.Features.Stores;
 using Mibocata.Core.Framework;

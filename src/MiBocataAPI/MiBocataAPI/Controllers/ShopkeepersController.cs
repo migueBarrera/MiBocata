@@ -72,7 +72,7 @@ public class ShopkeepersController : MBControllerBase
         var shopkeeper = _context
             .Shopkeeper
             .Where(a => a.Email == request.Email)
-            .Single();
+            .FirstOrDefault();
         if (shopkeeper == null)
         {
             return NotFound();

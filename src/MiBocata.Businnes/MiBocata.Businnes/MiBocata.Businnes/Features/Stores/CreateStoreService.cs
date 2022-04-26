@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using MiBocata.Businnes.Services.Commons.Navigation;
-using MiBocata.Businnes.Services.Commons.Preferences;
 using Mibocata.Core.Features.Stores;
 using Mibocata.Core.Services.Interfaces;
 using Models.Core;
@@ -49,14 +48,17 @@ namespace MiBocata.Businnes.Features.Stores
 
             if (result)
             {
+                var storeResponse = result.Value;
                 await OnCreateStoreSuccessful(new Store()
                 {
-                    Id = result.Value.Id,
-                    Name = result.Value.Name,
-                    Products = result.Value.Products?.Select(p => ProductsResponse.Parse(p)).ToList(),
-                    AutoAccept = result.Value.AutoAccept,
-                    Image = result.Value.Image,
-                    StoreLocation = StoreLocationResponse.Parse(result.Value.StoreLocation),
+                    Id = storeResponse.Id,
+                    Name = storeResponse.Name,
+                    Products = storeResponse.Products?.Select(p => ProductsResponse.Parse(p)).ToList(),
+                    AutoAccept = storeResponse.AutoAccept,
+                    Image = storeResponse.Image,
+                    StoreLocation = storeResponse.StoreLocation != null 
+                        ? StoreLocationResponse.Parse(storeResponse.StoreLocation) 
+                        : null,
                 });
             }
         }

@@ -2,8 +2,8 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Services.Interfaces;
 using MiBocata.Framework;
-using MiBocata.Services.PreferencesService;
 
 namespace MiBocata.Services.API.RefitServices
 {

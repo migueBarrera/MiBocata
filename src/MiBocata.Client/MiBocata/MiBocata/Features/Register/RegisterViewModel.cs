@@ -5,7 +5,6 @@ using Mibocata.Core.Services.Interfaces;
 using MiBocata.Framework;
 using MiBocata.Helpers;
 using MiBocata.Services.NavigationService;
-using MiBocata.Services.PreferencesService;
 using Models.Core;
 using Models.Responses;
 using System.Threading.Tasks;
@@ -89,7 +88,7 @@ namespace MiBocata.Features.Register
 
         private async Task RegisterSuccessesful(Client result)
         {
-            preferencesService.SetUser(result);
+            preferencesService.SetClient(result);
             await navigationService.NavigateToHome();
         }
 

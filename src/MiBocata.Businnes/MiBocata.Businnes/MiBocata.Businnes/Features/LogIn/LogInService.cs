@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using MiBocata.Businnes.Services.Commons.Navigation;
-using MiBocata.Businnes.Services.Commons.Preferences;
 using Mibocata.Core.Features.Auth;
 using Mibocata.Core.Features.Refit;
 using Mibocata.Core.Features.Stores;
@@ -61,7 +60,7 @@ namespace MiBocata.Businnes.Features.LogIn
 
         private async Task LogInSuccessful(Shopkeeper shopkeeper)
         {
-            preferencesService.SetUser(shopkeeper);
+            preferencesService.SetShopkeeper(shopkeeper);
 
             ////var pushToken = preferencesService.PushToken();
 

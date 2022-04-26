@@ -1,9 +1,4 @@
-﻿using Mibocata.Core.Features.Refit;
-using Mibocata.Core.Framework;
-using Mibocata.Core.Services.Interfaces;
-using MiBocata.Framework;
-using MiBocata.Services.NavigationService;
-using MiBocata.Services.PreferencesService;
+﻿using Mibocata.Core.Framework;
 
 namespace MiBocata.Features.Home
 {

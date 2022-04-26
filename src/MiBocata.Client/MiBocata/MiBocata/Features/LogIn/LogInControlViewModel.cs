@@ -7,7 +7,6 @@ using Mibocata.Core.Services.Interfaces;
 using MiBocata.Framework;
 using MiBocata.Helpers;
 using MiBocata.Services.NavigationService;
-using MiBocata.Services.PreferencesService;
 using Models.Core;
 using Models.Responses;
 
@@ -118,7 +117,7 @@ namespace MiBocata.Features.LogIn
 
         private async Task LogInSuccessful(Client client)
         {
-            preferencesService.SetUser(client);
+            preferencesService.SetClient(client);
             await navigationService.NavigateToHome();
         }
 

@@ -9,8 +9,6 @@ using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
 using MiBocata.Framework;
 using MiBocata.Services.NavigationService;
-using MiBocata.Services.NotificationService;
-using MiBocata.Services.PreferencesService;
 using Models.Core;
 using Models.Requests;
 using Xamarin.Forms;
@@ -91,7 +89,7 @@ namespace MiBocata.Features.Cart
             ListCartProducts = sessionService.Get<ObservableCollection<OrderProduct>>("ListCartProducts");
             PickupTime = DateTime.UtcNow.AddMinutes(15).TimeOfDay;
             CalcAmount();
-            client = preferencesService.GetUser();
+            client = preferencesService.GetClient();
 
             return base.InitializeAsync(navigationData);
         }

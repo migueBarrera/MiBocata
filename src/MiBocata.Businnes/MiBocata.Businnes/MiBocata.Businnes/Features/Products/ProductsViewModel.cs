@@ -1,16 +1,15 @@
-﻿using Mibocata.Core.Features.Products;
-using Mibocata.Core.Features.Refit;
-using Mibocata.Core.Framework;
-using Mibocata.Core.Services.Interfaces;
-using MiBocata.Businnes.Framework;
-using MiBocata.Businnes.Services.Commons.Navigation;
-using MiBocata.Businnes.Services.Commons.Preferences;
-using MiBocata.Businnes.Services.Commons.Products;
-using Models.Core;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using MiBocata.Businnes.Framework;
+using MiBocata.Businnes.Services.Commons.Navigation;
+using Mibocata.Core.Features.Products;
+using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Framework;
+using Mibocata.Core.Services.Interfaces;
+using Models.Core;
+using Models.Responses;
 
 namespace MiBocata.Businnes.Features.Products
 {
@@ -55,7 +54,7 @@ namespace MiBocata.Businnes.Features.Products
             set
                 {
                 SetAndRaisePropertyChanged(ref products, value);
-                HasProducts = Products?.Count != 0;
+                HasProducts = Products?.Any() ?? false;
             }
         }
 
@@ -73,7 +72,7 @@ namespace MiBocata.Businnes.Features.Products
 
             if (result)
             {
-                Products = new ObservableCollection<Product>(result.Value.Select((x) => new Product()));//todo
+                Products = new ObservableCollection<Product>(result.Value.Select((x) => ProductsResponse.Parse(x)));
             }
         }
 
