@@ -47,14 +47,7 @@ namespace MiBocata.Businnes.Features.LogIn
 
             if (result)
             {
-                await LogInSuccessful(new Shopkeeper()
-                {
-                    Email = result.Value.Email,
-                    Name = result.Value.Name,
-                    Id = result.Value.Id,
-                    IdStore = result.Value.IdStore,
-                    Token = result.Value.Token,
-                });
+                await LogInSuccessful(ShopkeeperSignInResponse.Parse(result.Value));
             }
         }
 
@@ -62,20 +55,10 @@ namespace MiBocata.Businnes.Features.LogIn
         {
             preferencesService.SetShopkeeper(shopkeeper);
 
-            ////var pushToken = preferencesService.PushToken();
-
             if (shopkeeper.IdStore != 0)
             {
-                var store = await storeApi.Get(shopkeeper.IdStore);
-                preferencesService.SetStore(new Store()
-                {
-                    Id = store.Id,
-                    Name = store.Name,
-                    Image = store.Image,
-                    AutoAccept = store.AutoAccept,
-                    Products = store.Products?.Select(pr => ProductsResponse.Parse(pr)).ToList(),
-                });
-                ////store.PushToken = pushToken;
+                var responseStore = await storeApi.Get(shopkeeper.IdStore);
+                preferencesService.SetStore(StoreResponse.Parse(responseStore));
                 await miBocataNavigationService.NavigateToHome();
             }
             else

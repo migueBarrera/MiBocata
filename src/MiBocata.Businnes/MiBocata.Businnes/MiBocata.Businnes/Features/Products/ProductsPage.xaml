@@ -26,15 +26,28 @@
                             <templates:ProductItemView />
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
-                    <CollectionView.EmptyView>
-                        <Grid>
-                            <Label
-                                FontSize="26"
-                                HorizontalOptions="Center"
-                                Text="No tienes ningún producto aún, ¡vamos añade uno!"
-                                VerticalOptions="Center" />
-                        </Grid>
-                    </CollectionView.EmptyView>
+                    <!--<CollectionView.EmptyView>
+                        --><!-- Bug on UWP--><!--
+                        <OnPlatform>
+                            <On Platform="Android,iOS">
+                                <Grid>
+                                    <Label
+                                        FontSize="26"
+                                        HorizontalOptions="Center"
+                                        Text="No tienes ningún producto aún, ¡vamos añade uno!"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                            </On>
+                            <On Platform="UWP">
+                                <Label
+                                    FontSize="26"
+                                    HorizontalOptions="Center"
+                                    Text="No tienes ningún producto aún, ¡vamos añade uno!"
+                                    VerticalOptions="Center" />
+                            </On>
+                        </OnPlatform>
+
+                    </CollectionView.EmptyView>-->
                 </CollectionView>
 
                 <ActivityIndicator
