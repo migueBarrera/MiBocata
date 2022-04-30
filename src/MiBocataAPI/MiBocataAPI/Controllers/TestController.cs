@@ -23,6 +23,7 @@ public class TestController : MBControllerBase
     [HttpGet("/create")]
     public string GetCreateDB()
     {
+        _context.Database.EnsureDeleted();
         _context.Database.EnsureCreated();
         return "Database Created";
     }

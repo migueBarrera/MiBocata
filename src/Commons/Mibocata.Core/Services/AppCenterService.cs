@@ -29,8 +29,10 @@ namespace Mibocata.Core.Services
 
         public void Initialize()
         {
-            AppCenter.LogLevel = LogLevel.Verbose;
-            AppCenter.Start(appCenterSecretService.GetSecret(), typeof(Analytics), typeof(Crashes));
+            AppCenter.Start(
+                appCenterSecretService.GetSecret(), 
+                typeof(Analytics), 
+                typeof(Crashes));
 
             Crashes.GetErrorAttachments =
                     report => GetAttatchment();

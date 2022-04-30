@@ -28,7 +28,7 @@ namespace Mibocata.Infrastructure.Data.Models.Mappers
                 Image = store.Image,
                 AutoAccept = store.AutoAccept,
                 Products = store.Products?.Select(p => StoreMapper.Parse(p)).ToList() ?? new System.Collections.Generic.List<ProductsResponse>(),
-                StoreLocation = StoreLocation.Parse(store.StoreLocation),
+                StoreLocation = StoreLocation.Parse(store.StoreLocation ?? new StoreLocation()),
             };
         }
 
