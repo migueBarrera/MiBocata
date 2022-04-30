@@ -80,7 +80,7 @@ public class StoresController : MBControllerBase
             Name = request.Name,
             //TODO review
             //Products = request.Products,
-            StoreLocation = StoreLocation.Parse(request.StoreLocation),
+            StoreLocation = StoreLocation.Parse(request.StoreLocation ?? new StoreLocationRequest()),
         };
 
         _context.Entry(store).State = EntityState.Modified;

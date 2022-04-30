@@ -40,6 +40,7 @@ namespace MiBocata.Framework
             serviceCollection.AddTransient<INotificationService, EmptyNotificationService>();
             serviceCollection.AddTransient<IDialogService, DialogService>();
             serviceCollection.AddTransient<IRefitService, RefitService>();
+            serviceCollection.AddTransient<IRegisterService, RegisterService>();
         }
     }
 }

@@ -42,7 +42,7 @@ namespace Mibocata.Infrastructure.Data.Models.Mappers
                 AutoAccept = request.AutoAccept,
                 //TODO review => Creo que no se necesita en este request
                 //Products = request.Products,
-                StoreLocation = StoreLocation.Parse(request.StoreLocation),
+                StoreLocation = StoreLocation.Parse(request.StoreLocation ?? new StoreLocationRequest()),
             };
         }
     }
