@@ -1,4 +1,5 @@
-﻿using Mibocata.Core.Framework;
+﻿using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Framework;
 using Mibocata.Core.Services;
 using Mibocata.Core.Services.Interfaces;
 using MiBocata.Businnes.Services.Commons.AuthenticationService;
@@ -21,6 +22,7 @@ namespace Mibocata.Core
             serviceCollection.AddTransient<IAuthenticationService, AuthenticationService>();
             serviceCollection.AddSingleton<ISessionService, SessionService>();
             serviceCollection.AddTransient<IPreferencesService, PreferencesService>();
+            serviceCollection.AddTransient<IRefitService, RefitService>();
 
 #if DEBUG
             serviceCollection.AddTransient<ILoggingService, ReleaseLoggingService>();

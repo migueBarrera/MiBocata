@@ -1,13 +1,13 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
-using Mibocata.Core.Framework;
-using Mibocata.Core.Services.Interfaces;
 using MiBocata.Businnes.Features.Configuration;
 using MiBocata.Businnes.Features.LogIn;
 using MiBocata.Businnes.Features.Products;
-using MiBocata.Businnes.Framework;
 using MiBocata.Businnes.Services.Commons.Navigation;
+using Mibocata.Core.Framework;
+using Mibocata.Core.Services.Interfaces;
 using Models.Core;
+using Xamarin.CommunityToolkit.ObjectModel;
 
 namespace MiBocata.Businnes.Features.Stores
 {
@@ -34,11 +34,11 @@ namespace MiBocata.Businnes.Features.Stores
             }
         }
 
-        public ICommand ConfigCommand => new AsyncCommand(_ => ConfigCommandAsync());
+        public ICommand ConfigCommand => new AsyncCommand(() => ConfigCommandAsync());
 
-        public ICommand ProductsCommand => new AsyncCommand(_ => ProductsCommandAsync());
+        public ICommand ProductsCommand => new AsyncCommand(() => ProductsCommandAsync());
 
-        public ICommand CloseSessionCommand => new AsyncCommand(_ => CloseSessionCommandAsync());
+        public ICommand CloseSessionCommand => new AsyncCommand(() => CloseSessionCommandAsync());
 
         public override Task InitializeAsync(object navigationData)
         {

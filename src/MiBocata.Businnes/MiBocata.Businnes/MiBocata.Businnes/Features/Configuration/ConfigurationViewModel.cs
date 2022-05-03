@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using MiBocata.Businnes.Framework;
+using MiBocata.Businnes.Features.Stores;
 using MiBocata.Businnes.Services.Commons.Navigation;
 using Mibocata.Core.Features.Refit;
 using Mibocata.Core.Features.Stores;
 using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
 using Models.Core;
+using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms.Maps;
-using static MiBocata.Businnes.Features.Stores.ChooseLocationViewModel;
 
 namespace MiBocata.Businnes.Features.Configuration
 {

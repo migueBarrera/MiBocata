@@ -1,30 +1,33 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using MiBocata.Businnes.Framework;
-using Mibocata.Core.Features.Refit;
 using Mibocata.Core.Services.Interfaces;
+using Refit;
 
-namespace MiBocata.Businnes.Services.API.RefitServices
+namespace Mibocata.Core.Features.Refit
 {
     public class RefitService : IRefitService
     {
         private IPreferencesService preferenceService;
+        private IAppSecretsService appSecretsService;
 
-        public RefitService(IPreferencesService preferenceService)
+        public RefitService(
+            IPreferencesService preferenceService,
+            IAppSecretsService appSecretsService)
         {
             this.preferenceService = preferenceService;
+            this.appSecretsService = appSecretsService;
         }
 
         public T InitRefitInstance<T>(bool isAutenticated = false)
         {
             var handler = WireHttpHandlers();
 
-            Refit.RefitSettings refitSettings = null;
+            RefitSettings refitSettings = null;
 
             var httpClient = GetClient(handler, isAutenticated);
 
-            return Refit.RestService.For<T>(httpClient, refitSettings);
+            return RestService.For<T>(httpClient, refitSettings);
         }
 
         private HttpClient GetClient(DelegatingHandler handler, bool isAutenticated)
@@ -50,7 +53,7 @@ namespace MiBocata.Businnes.Services.API.RefitServices
                 client = new HttpClient();
             }
 
-            client.BaseAddress = new Uri(DefaultSettings.URL_BASE);
+            client.BaseAddress = new Uri(appSecretsService.GetUrlBase());
             client.Timeout = TimeSpan.FromSeconds(5);
 
             return client;
@@ -60,17 +63,13 @@ namespace MiBocata.Businnes.Services.API.RefitServices
         {
             DelegatingHandler handler = null;
 
-#pragma warning disable CS0162 // Se detectó código inaccesible
-            if (DefaultSettings.DebugMode)
-            {
-                handler = new HttpLoggingHandler();
-            }
-
+#if DEBUG
+            handler = new HttpLoggingHandler();
+#endif
             ////if (DefaultSettings.ThrowExceptionsHttpRequests)
             ////{
             ////    handler = new HttpExceptionalHandler(handler);
             ////}
-#pragma warning restore CS0162 // Se detectó código inaccesible
 
             return handler;
         }

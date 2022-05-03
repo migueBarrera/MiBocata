@@ -5,6 +5,7 @@ using MiBocata.Services.NavigationService;
 using Models.Core;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.CommunityToolkit.ObjectModel;
 
 namespace MiBocata.Features.Profile
 {
@@ -31,11 +32,11 @@ namespace MiBocata.Features.Profile
 
         public Client Client { get => client; set => SetAndRaisePropertyChanged(ref client, value); }
 
-        public ICommand CloseSessionCommand => new AsyncCommand(_ => CloseSessionCommandAsync());
+        public ICommand CloseSessionCommand => new AsyncCommand(() => CloseSessionCommandAsync());
 
-        public ICommand OrdersCommand => new AsyncCommand(_ => OrdersCommandAsync());
+        public ICommand OrdersCommand => new AsyncCommand(() => OrdersCommandAsync());
 
-        public ICommand EditProfileCommand => new AsyncCommand(_ => EditProfileCommandAsync());
+        public ICommand EditProfileCommand => new AsyncCommand(() => EditProfileCommandAsync());
 
         public override Task InitializeAsync(object navigationData)
         {

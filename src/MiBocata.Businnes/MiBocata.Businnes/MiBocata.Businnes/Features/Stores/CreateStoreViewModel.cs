@@ -7,6 +7,7 @@ using Mibocata.Core.Services.Interfaces;
 using Models.Core;
 using Xamarin.Forms.Maps;
 using static MiBocata.Businnes.Features.Stores.ChooseLocationViewModel;
+using Xamarin.CommunityToolkit.ObjectModel;
 
 namespace MiBocata.Businnes.Features.Stores
 {
@@ -29,7 +30,7 @@ namespace MiBocata.Businnes.Features.Stores
 
         public IEnumerable<Model> Locations { get => locations; set => SetAndRaisePropertyChanged(ref locations, value); }
 
-        public ICommand NextCommand => new AsyncCommand(_ => NextCommandAsync());
+        public ICommand NextCommand => new AsyncCommand(() => NextCommandAsync());
 
         public override Task InitializeAsync(object navigationData)
         {

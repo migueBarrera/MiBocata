@@ -6,6 +6,7 @@ using MiBocata.Businnes.Services.Commons.Navigation;
 using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
 using Models.Core;
+using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 
 namespace MiBocata.Businnes.Features.LogIn
@@ -28,6 +29,10 @@ namespace MiBocata.Businnes.Features.LogIn
             this.miBocataNavigationService = miBocataNavigationService;
             this.dialogService = dialogService;
             this.keyboardService = keyboardService;
+
+            CallUsCommand = new AsyncCommand(() => CallUsCommandd(), () => !IsBusy);
+            DoLoginCommand = new AsyncCommand(() => DoLoginCommandAsync(), () => !IsBusy);
+            GoToRegisterCommand = new AsyncCommand(() => GoToRegisterCommandAsync(), () => !IsBusy);
         }
 
         public Shopkeeper User
@@ -36,11 +41,11 @@ namespace MiBocata.Businnes.Features.LogIn
             set => SetAndRaisePropertyChanged(ref todoItem, value);
         }
 
-        public ICommand CallUsCommand => new AsyncCommand(_ => CallUsCommandd());
+        public ICommand CallUsCommand { get; }
 
-        public ICommand DoLoginCommand => new AsyncCommand(_ => DoLoginCommandAsync());
+        public ICommand DoLoginCommand { get; }
 
-        public ICommand GoToRegisterCommand => new AsyncCommand(_ => GoToRegisterCommandAsync());
+        public ICommand GoToRegisterCommand { get; }
 
         public override Task InitializeAsync(object navigationData)
         {

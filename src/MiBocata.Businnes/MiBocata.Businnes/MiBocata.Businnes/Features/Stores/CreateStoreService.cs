@@ -1,12 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using MiBocata.Businnes.Services.Commons.Navigation;
+using Mibocata.Core.Features.Refit;
 using Mibocata.Core.Features.Stores;
 using Mibocata.Core.Services.Interfaces;
 using Models.Core;
 using Models.Requests;
 using Models.Responses;
-using System.Linq;
-using Mibocata.Core.Features.Refit;
 
 namespace MiBocata.Businnes.Features.Stores
 {
@@ -46,14 +47,16 @@ namespace MiBocata.Businnes.Features.Stores
                                         StoreLocation = StoreLocationRequest.Parse(store.StoreLocation),
                                     }));
 
-            if (result)
+            if (result.IsSuccess)
             {
                 var storeResponse = result.Value;
                 await OnCreateStoreSuccessful(new Store()
                 {
                     Id = storeResponse.Id,
                     Name = storeResponse.Name,
-                    Products = storeResponse.Products?.Select(p => ProductsResponse.Parse(p)).ToList(),
+                    Products = storeResponse.Products != null
+                        ? storeResponse.Products?.Select(p => ProductsResponse.Parse(p)).ToList()
+                        : new List<Product>(),
                     AutoAccept = storeResponse.AutoAccept,
                     Image = storeResponse.Image,
                     StoreLocation = storeResponse.StoreLocation != null 

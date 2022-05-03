@@ -38,7 +38,7 @@ namespace Mibocata.Core.Services
 
         public bool IsLogged()
         {
-            return GetShopkeeper() != null;
+            return GetShopkeeper() != null || GetClient() != null;
         }
 
         public string PushToken()

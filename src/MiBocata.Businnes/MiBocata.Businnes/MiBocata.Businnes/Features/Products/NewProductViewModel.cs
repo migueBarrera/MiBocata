@@ -9,6 +9,7 @@ using MiBocata.Businnes.Services.Commons.Navigation;
 using Models.Core;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
+using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 
 namespace MiBocata.Businnes.Features.Products
@@ -66,9 +67,9 @@ namespace MiBocata.Businnes.Features.Products
             get => productimage; set => SetAndRaisePropertyChanged(ref productimage, value);
         }
 
-        public ICommand TakeImageCommand => new AsyncCommand(_ => TakeImageCommandAsync());
+        public ICommand TakeImageCommand => new AsyncCommand(() => TakeImageCommandAsync());
 
-        public ICommand CreateProductCommand => new AsyncCommand(_ => CreateProductCommandAsync());
+        public ICommand CreateProductCommand => new AsyncCommand(() => CreateProductCommandAsync());
 
         public override Task InitializeAsync(object navigationData)
         {

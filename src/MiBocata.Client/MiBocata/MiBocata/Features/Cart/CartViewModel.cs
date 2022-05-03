@@ -11,6 +11,7 @@ using MiBocata.Framework;
 using MiBocata.Services.NavigationService;
 using Models.Core;
 using Models.Requests;
+using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 
 namespace MiBocata.Features.Cart

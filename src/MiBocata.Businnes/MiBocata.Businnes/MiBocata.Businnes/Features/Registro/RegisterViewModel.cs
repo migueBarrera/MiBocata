@@ -7,6 +7,7 @@ using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
 using Models.Core;
 using Xamarin.Forms;
+using Xamarin.CommunityToolkit.ObjectModel;
 
 namespace MiBocata.Businnes.Features.Registro
 {
@@ -36,9 +37,9 @@ namespace MiBocata.Businnes.Features.Registro
             set => SetAndRaisePropertyChanged(ref todoItem, value);
         }
 
-        public ICommand RegisterCommand => new AsyncCommand(_ => RegisterCommandAsync());
+        public ICommand RegisterCommand => new AsyncCommand(() => RegisterCommandAsync());
 
-        public ICommand BackCommand => new AsyncCommand(_ => BackCommandAsync());
+        public ICommand BackCommand => new AsyncCommand(() => BackCommandAsync());
 
         public ICommand CallUsCommand => new Command(_ => CallUsCommandd());
 

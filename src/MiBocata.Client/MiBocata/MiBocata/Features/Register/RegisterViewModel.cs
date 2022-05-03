@@ -1,10 +1,10 @@
 ﻿using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
-using MiBocata.Framework;
 using MiBocata.Helpers;
 using Models.Core;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.CommunityToolkit.ObjectModel;
 
 namespace MiBocata.Features.Register
 {
@@ -32,7 +32,7 @@ namespace MiBocata.Features.Register
             set => SetAndRaisePropertyChanged(ref user, value);
         }
 
-        public ICommand RegisterCommand => new AsyncCommand(_ => RegisterCommandAsync());
+        public ICommand RegisterCommand => new AsyncCommand(() => RegisterCommandAsync());
 
         public override async Task InitializeAsync(object navigationData)
         {

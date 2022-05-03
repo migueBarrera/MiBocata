@@ -9,6 +9,7 @@ using MiBocata.Helpers;
 using MiBocata.Services.NavigationService;
 using Models.Core;
 using Models.Responses;
+using Xamarin.CommunityToolkit.ObjectModel;
 
 namespace MiBocata.Features.LogIn
 {
@@ -47,9 +48,9 @@ namespace MiBocata.Features.LogIn
             set => SetAndRaisePropertyChanged(ref client, value);
         }
 
-        public ICommand DoLoginCommand => new AsyncCommand(_ => DoLoginCommandAsync());
+        public ICommand DoLoginCommand => new AsyncCommand(() => DoLoginCommandAsync());
 
-        public ICommand GoToRegisterCommand => new AsyncCommand(_ => GoToRegisterCommandAsync());
+        public ICommand GoToRegisterCommand => new AsyncCommand(() => GoToRegisterCommandAsync());
 
         public override Task InitializeAsync(object navigationData = null)
         {

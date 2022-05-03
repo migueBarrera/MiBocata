@@ -9,6 +9,7 @@ using Mibocata.Core.Services.Interfaces;
 using Models.Core;
 using Xamarin.Forms;
 using Mibocata.Core.Framework;
+using Xamarin.CommunityToolkit.ObjectModel;
 
 namespace MiBocata.Businnes.Features.Orders
 {
@@ -44,7 +45,7 @@ namespace MiBocata.Businnes.Features.Orders
             set => SetAndRaisePropertyChanged(ref orders, value);
         }
 
-        public ICommand RefreshCommand => new AsyncCommand(_ => RefreshCommandAsync());
+        public ICommand RefreshCommand => new AsyncCommand(() => RefreshCommandAsync());
 
         public ICommand OpenChatCommand => new Command<Order>(OpenChatCommandAsync);
 
@@ -61,7 +62,7 @@ namespace MiBocata.Businnes.Features.Orders
 
         private async void OpenChatCommandAsync(Order order)
         {
-            if (string.IsNullOrWhiteSpace(order.Client.Phone))
+            if (string.IsNullOrWhiteSpace(order?.Client?.Phone))
             {
                 return;
             }

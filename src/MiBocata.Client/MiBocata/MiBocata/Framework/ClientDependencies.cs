@@ -1,5 +1,4 @@
-﻿using Mibocata.Core.Features.Refit;
-using Mibocata.Core.Framework;
+﻿using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
 using MiBocata.Features.Cart;
 using MiBocata.Features.Home;
@@ -9,7 +8,6 @@ using MiBocata.Features.Profile;
 using MiBocata.Features.Register;
 using MiBocata.Features.Stores;
 using MiBocata.Services;
-using MiBocata.Services.API.RefitServices;
 using MiBocata.Services.Commons.NotificationService;
 using MiBocata.Services.DialogService;
 using MiBocata.Services.NavigationService;
@@ -35,11 +33,11 @@ namespace MiBocata.Framework
             serviceCollection.AddTransient<AddProductViewModel>();
 
             serviceCollection.AddTransient<IAppCenterSecretService, AppCenterSecretService>();
+            serviceCollection.AddTransient<IAppSecretsService, AppSecretsService>();
             serviceCollection.AddTransient<INavigationService, NavigationService>();
             serviceCollection.AddTransient<IMiBocataNavigationService, MiBocataNavigationService>();
             serviceCollection.AddTransient<INotificationService, EmptyNotificationService>();
             serviceCollection.AddTransient<IDialogService, DialogService>();
-            serviceCollection.AddTransient<IRefitService, RefitService>();
             serviceCollection.AddTransient<IRegisterService, RegisterService>();
         }
     }

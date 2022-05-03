@@ -10,6 +10,7 @@ using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
 using Models.Core;
 using Models.Responses;
+using Xamarin.CommunityToolkit.ObjectModel;
 
 namespace MiBocata.Businnes.Features.Products
 {
@@ -46,7 +47,7 @@ namespace MiBocata.Businnes.Features.Products
             set => SetAndRaisePropertyChanged(ref hasProducts, value);
         }
 
-        public ICommand NewProductCommand => new AsyncCommand(_ => NewProductCommandAsync());
+        public ICommand NewProductCommand => new AsyncCommand(() => NewProductCommandAsync());
 
         public ObservableCollection<Product> Products
         {

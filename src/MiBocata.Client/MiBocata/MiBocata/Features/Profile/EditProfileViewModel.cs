@@ -2,7 +2,6 @@
 using Mibocata.Core.Features.Refit;
 using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
-using MiBocata.Framework;
 using Models.Core;
 using Models.Requests;
 using Plugin.Media;
@@ -10,6 +9,7 @@ using Plugin.Media.Abstractions;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 
 namespace MiBocata.Features.Profile
@@ -46,9 +46,9 @@ namespace MiBocata.Features.Profile
 
         public Client Client { get => client; set => SetAndRaisePropertyChanged(ref client, value); }
 
-        public ICommand TakeImageCommand => new AsyncCommand(_ => TakeImageCommandAsync());
+        public ICommand TakeImageCommand => new AsyncCommand(() => TakeImageCommandAsync());
 
-        public ICommand SaveCommand => new AsyncCommand(SaveCommandExecute);
+        public ICommand SaveCommand => new AsyncCommand(() => SaveCommandExecute());
 
         private async Task TakeImageCommandAsync()
         {
@@ -78,7 +78,7 @@ namespace MiBocata.Features.Profile
             return base.InitializeAsync(navigationData);
         }
 
-        private async Task SaveCommandExecute(object arg)
+        private async Task SaveCommandExecute()
         {
             var result = await taskHelperFactory.
                                     CreateInternetAccessViewModelInstance(loggingService, this).

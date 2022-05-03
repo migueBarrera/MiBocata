@@ -1,10 +1,10 @@
 ﻿using Mibocata.Core.Framework;
-using MiBocata.Framework;
 using Models.Core;
 using PubSub;
 using Rg.Plugins.Popup.Services;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.CommunityToolkit.ObjectModel;
 
 namespace MiBocata.Features.Stores
 {
