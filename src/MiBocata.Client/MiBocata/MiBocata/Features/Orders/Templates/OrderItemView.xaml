@@ -1,62 +1,61 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentView
     x:Class="MiBocata.Features.Orders.Templates.OrderItemView"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-    mc:Ignorable="d">
+               xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
     <ContentView.Content>
-        <pancakeview:PancakeView
+        <!--<pancakeview:PancakeView
             Margin="6"
             BackgroundColor="White"
             CornerRadius="12">
-            <Grid Margin="16,8">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Label Text="{Binding Store.Name}" TextColor="Black" />
-                <!--<Label HorizontalTextAlignment="End" Text="{Binding OrderState,Converter={StaticResource TextOrderStateConverter}}" TextColor="Blue"/>-->
-                <Label
+           
+        </pancakeview:PancakeView>-->
+        <Grid Margin="16,8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Label Text="{Binding Store.Name}" TextColor="Black" />
+            <!--<Label HorizontalTextAlignment="End" Text="{Binding OrderState,Converter={StaticResource TextOrderStateConverter}}" TextColor="Blue"/>-->
+            <Label
                     Grid.Row="1"
                     Margin="8,0,0,0"
                     FontAttributes="Italic">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <FormattedString.Spans>
-                                <Span Text="{Binding Store.StoreLocation.Locality}" />
-                                <Span Text=", " />
-                                <Span Text="{Binding Store.StoreLocation.Thoroughfare}" />
-                                <Span Text=", " />
-                                <Span Text="{Binding Store.StoreLocation.FeatureName}" />
-                            </FormattedString.Spans>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                <BoxView
+                <Label.FormattedText>
+                    <FormattedString>
+                        <FormattedString.Spans>
+                            <Span Text="{Binding Store.StoreLocation.Locality}" />
+                            <Span Text=", " />
+                            <Span Text="{Binding Store.StoreLocation.Thoroughfare}" />
+                            <Span Text=", " />
+                            <Span Text="{Binding Store.StoreLocation.FeatureName}" />
+                        </FormattedString.Spans>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <BoxView
                     Grid.Row="2"
                     BackgroundColor="Gray"
                     HeightRequest="1"
                     WidthRequest="50" />
-                <StackLayout Grid.Row="3" BindableLayout.ItemsSource="{Binding OrderProducts}">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout Orientation="Horizontal">
-                                <pancakeview:PancakeView
+            <StackLayout Grid.Row="3" BindableLayout.ItemsSource="{Binding OrderProducts}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Horizontal">
+                            <!--<pancakeview:PancakeView
                                     Padding="2"
                                     CornerRadius="2">
-                                    <Label Text="{Binding Quantity}" />
-                                </pancakeview:PancakeView>
-                                <Label Text="{Binding Name}" VerticalOptions="Center" />
-                            </StackLayout>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </StackLayout>
-            </Grid>
-        </pancakeview:PancakeView>
+                                <Label Text="{Binding Quantity}" />
+                            </pancakeview:PancakeView>-->
+                                <Label Text="{Binding Quantity}" />
+                            <Label Text="{Binding Name}" VerticalOptions="Center" />
+                        </StackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+        </Grid>
     </ContentView.Content>
 </ContentView>

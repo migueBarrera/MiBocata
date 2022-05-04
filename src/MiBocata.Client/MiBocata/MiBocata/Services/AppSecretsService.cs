@@ -1,13 +1,9 @@
-﻿using Mibocata.Core.Services.Interfaces;
-using MiBocata.Framework;
+﻿namespace MiBocata.Services;
 
-namespace MiBocata.Services
+internal class AppSecretsService : IAppSecretsService
 {
-    internal class AppSecretsService : IAppSecretsService
+    public string GetUrlBase()
     {
-        public string GetUrlBase()
-        {
-            return DefaultSettings.URL_BASE;
-        }
+        return DefaultSettings.URL_BASE;
     }
 }

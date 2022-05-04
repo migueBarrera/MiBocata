@@ -1,30 +1,27 @@
-﻿using Mibocata.Core.Extensions;
-using MiBocata.Features.LogIn;
-using MiBocata.Framework;
+﻿using MiBocata.Features.LogIn;
 
-namespace MiBocata.Features.Profile
+namespace MiBocata.Features.Profile;
+
+public partial class ProfilePage : BaseContentPage
 {
-    public partial class ProfilePage : BaseContentPage
+    public ProfilePage()
     {
-        public ProfilePage()
-        {
-            InitializeComponent();
+        InitializeComponent();
 
-            BindingContext = App.Current.DependencyService.Resolve<ProfileViewModel>();
-        }
+        //BindingContext = App.Current.DependencyService.Resolve<ProfileViewModel>();
+    }
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
 
-            ((LogInControlViewModel)MyLoginControlProfile.BindingContext).InitializeAsync();
-        }
+        ((LogInControlViewModel)MyLoginControlProfile.BindingContext).InitializeAsync();
+    }
 
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
 
-            ((LogInControlViewModel)MyLoginControlProfile.BindingContext).UnitializeAsync();
-        }
+        ((LogInControlViewModel)MyLoginControlProfile.BindingContext).UnitializeAsync();
     }
 }

@@ -8,6 +8,6 @@ namespace MiBocata.Businnes.Services.Commons.AuthenticationService
         {
         }
 
-        public bool IsLoggedIn => Xamarin.Essentials.Preferences.Get("key_shopkeeper", string.Empty) != string.Empty;
+        public bool IsLoggedIn => Preferences.Get("key_shopkeeper", string.Empty) != string.Empty;
     }
 }

@@ -1,26 +1,23 @@
-﻿using MiBocata.Framework;
+﻿namespace MiBocata.Features.LogIn;
 
-namespace MiBocata.Features.LogIn
+public partial class LogInPage : BaseContentPage
 {
-    public partial class LogInPage : BaseContentPage
+    public LogInPage()
     {
-        public LogInPage()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
 
-            ((LogInControlViewModel)MyLoginControl.BindingContext).InitializeAsync();
-        }
+        ((LogInControlViewModel)MyLoginControl.BindingContext).InitializeAsync();
+    }
 
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
 
-            ((LogInControlViewModel)MyLoginControl.BindingContext).UnitializeAsync();
-        }
+        ((LogInControlViewModel)MyLoginControl.BindingContext).UnitializeAsync();
     }
 }

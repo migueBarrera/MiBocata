@@ -24,8 +24,8 @@ namespace Mibocata.Core.Services
         public ITaskHelper CreateInternetAccessViewModelInstance(ILoggingService logger, CoreViewModel viewModel)
         {
             return CreateInternetAccessViewModelInstance(logger)
-                .WhenStarting(() => Xamarin.Essentials.MainThread.BeginInvokeOnMainThread(() => viewModel.IsBusy = true))
-                .WhenFinished(() => Xamarin.Essentials.MainThread.BeginInvokeOnMainThread(() => viewModel.IsBusy = false));
+                .WhenStarting(() => MainThread.BeginInvokeOnMainThread(() => viewModel.IsBusy = true))
+                .WhenFinished(() => MainThread.BeginInvokeOnMainThread(() => viewModel.IsBusy = false));
         }
     }
 }

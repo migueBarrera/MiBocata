@@ -5,7 +5,6 @@ using MiBocata.Features.Orders;
 using MiBocata.Features.Profile;
 using MiBocata.Features.Register;
 using MiBocata.Features.Stores;
-using System.Threading.Tasks;
 
 namespace MiBocata.Services.NavigationService
 {

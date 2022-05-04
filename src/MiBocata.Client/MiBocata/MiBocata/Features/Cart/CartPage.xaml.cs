@@ -1,12 +1,9 @@
-﻿using MiBocata.Framework;
+﻿namespace MiBocata.Features.Cart;
 
-namespace MiBocata.Features.Cart
+public partial class CartPage : BaseContentPage
 {
-    public partial class CartPage : BaseContentPage
+    public CartPage()
     {
-        public CartPage()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

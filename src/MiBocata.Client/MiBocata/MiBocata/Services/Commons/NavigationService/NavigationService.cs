@@ -1,13 +1,7 @@
-﻿using Mibocata.Core.Extensions;
-using Mibocata.Core.Framework;
-using Mibocata.Core.Services.Interfaces;
-using MiBocata.Framework;
-using System;
+﻿using Mibocata.Core.Framework;
 using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
-using System.Threading.Tasks;
-using Xamarin.Forms;
 
 namespace MiBocata.Services.NavigationService
 {
@@ -81,9 +75,9 @@ namespace MiBocata.Services.NavigationService
             }
 
             var page = Activator.CreateInstance(pageType) as Page;
-            var viewModel = App.Current.DependencyService.Resolve<TViewModel>()
-                            as CoreViewModel;
-            page.BindingContext = viewModel;
+            //var viewModel = App.Current.DependencyService.Resolve<TViewModel>()
+            //                as CoreViewModel;
+            //page.BindingContext = viewModel;
 
             return page;
         }

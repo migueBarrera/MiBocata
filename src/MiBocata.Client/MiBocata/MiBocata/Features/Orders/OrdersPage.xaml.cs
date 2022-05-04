@@ -1,10 +1,9 @@
-﻿namespace MiBocata.Features.Orders
+﻿namespace MiBocata.Features.Orders;
+
+public partial class OrdersPage
 {
-    public partial class OrdersPage
+    public OrdersPage()
     {
-        public OrdersPage()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

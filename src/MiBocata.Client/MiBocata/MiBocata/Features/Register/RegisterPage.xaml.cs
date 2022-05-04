@@ -1,10 +1,9 @@
-﻿namespace MiBocata.Features.Register
+﻿namespace MiBocata.Features.Register;
+
+public partial class RegisterPage
 {
-    public partial class RegisterPage
+    public RegisterPage()
     {
-        public RegisterPage()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

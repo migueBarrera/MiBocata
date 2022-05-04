@@ -1,12 +1,9 @@
-﻿using MiBocata.Framework;
+﻿namespace MiBocata.Features.Stores;
 
-namespace MiBocata.Features.Stores
+public partial class StoreDetailPage : BaseContentPage
 {
-    public partial class StoreDetailPage : BaseContentPage
+    public StoreDetailPage()
     {
-        public StoreDetailPage()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

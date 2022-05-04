@@ -1,14 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentView
     x:Class="MiBocata.Features.Cart.Templates.CartItemTemplate"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:MiBocata.Controls"
-    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-    xmlns:viewModels="clr-namespace:MiBocata.Features.Cart"
-    mc:Ignorable="d">
+    xmlns:viewModels="clr-namespace:MiBocata.Features.Cart">
     <ContentView.Content>
         <Grid>
             <Grid.RowDefinitions>
@@ -20,7 +17,7 @@
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <pancakeview:PancakeView
+            <!--<pancakeview:PancakeView
                 Grid.RowSpan="3"
                 CornerRadius="10"
                 HeightRequest="100"
@@ -30,7 +27,7 @@
                     HeightRequest="100"
                     Source="{Binding Image}"
                     WidthRequest="100" />
-            </pancakeview:PancakeView>
+            </pancakeview:PancakeView>-->
             <Label
                 Grid.Column="1"
                 FontAttributes="Bold"
@@ -54,7 +51,7 @@
                     PropertyChanged="NumericUpDown_PropertyChanged"
                     WidthRequest="100"
                     Value="{Binding Quantity, Mode=TwoWay}" />
-                <Button
+                <!--<Button
                     Padding="0"
                     BackgroundColor="Transparent"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:CartViewModel}}, Path=RemoveItemCommand}"
@@ -62,7 +59,7 @@
                     HeightRequest="30"
                     HorizontalOptions="End"
                     ImageSource="outline_delete_outline_black_24.png"
-                    WidthRequest="30" />
+                    WidthRequest="30" />-->
             </Grid>
         </Grid>
     </ContentView.Content>

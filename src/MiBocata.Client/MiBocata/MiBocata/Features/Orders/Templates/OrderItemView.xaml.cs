@@ -1,10 +1,9 @@
-﻿namespace MiBocata.Features.Orders.Templates
+﻿namespace MiBocata.Features.Orders.Templates;
+
+public partial class OrderItemView
 {
-    public partial class OrderItemView
+    public OrderItemView()
     {
-        public OrderItemView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

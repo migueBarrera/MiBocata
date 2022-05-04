@@ -1,7 +1,4 @@
-﻿using System.Threading.Tasks;
-using Xamarin.Essentials;
-
-namespace Mibocata.Core.Services.Interfaces
+﻿namespace Mibocata.Core.Services.Interfaces
 {
     public interface IGeocodingService
     {

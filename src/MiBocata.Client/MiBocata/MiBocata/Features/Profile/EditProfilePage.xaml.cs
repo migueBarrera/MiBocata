@@ -1,10 +1,9 @@
-﻿namespace MiBocata.Features.Profile
+﻿namespace MiBocata.Features.Profile;
+
+public partial class EditProfilePage
 {
-    public partial class EditProfilePage
+    public EditProfilePage()
     {
-        public EditProfilePage()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

@@ -1,130 +1,121 @@
-﻿using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Mibocata.Core.Features.Auth;
 using Mibocata.Core.Features.Refit;
-using Mibocata.Core.Framework;
-using Mibocata.Core.Services.Interfaces;
-using MiBocata.Framework;
-using MiBocata.Helpers;
 using MiBocata.Services.NavigationService;
-using Models.Core;
-using Models.Responses;
-using Xamarin.CommunityToolkit.ObjectModel;
 
-namespace MiBocata.Features.LogIn
+namespace MiBocata.Features.LogIn;
+
+public class LogInControlViewModel : CoreViewModel
 {
-    public class LogInControlViewModel : CoreViewModel
+    private readonly IAuthApi authApi;
+    private readonly IMiBocataNavigationService navigationService;
+    private readonly IPreferencesService preferencesService;
+    private readonly ILoggingService loggingService;
+    private readonly IDialogService dialogService;
+    private readonly ITaskHelperFactory taskHelperFactory;
+    private readonly IKeyboardService keyboardService;
+    private Models.Core.Client client;
+
+    public LogInControlViewModel(
+        IMiBocataNavigationService navigationService,
+        IPreferencesService preferencesService,
+        ILoggingService loggingService,
+        IDialogService dialogService,
+        IRefitService refitService,
+        ITaskHelperFactory taskHelperFactory,
+        IKeyboardService keyboardService)
     {
-        private readonly IAuthApi authApi;
-        private readonly IMiBocataNavigationService navigationService;
-        private readonly IPreferencesService preferencesService;
-        private readonly ILoggingService loggingService;
-        private readonly IDialogService dialogService;
-        private readonly ITaskHelperFactory taskHelperFactory;
-        private readonly IKeyboardService keyboardService;
-        private Client client;
+        this.authApi = refitService.InitRefitInstance<IAuthApi>();
+        this.navigationService = navigationService;
+        this.preferencesService = preferencesService;
+        this.loggingService = loggingService;
+        this.dialogService = dialogService;
+        this.taskHelperFactory = taskHelperFactory;
+        this.keyboardService = keyboardService;
+    }
 
-        public LogInControlViewModel(
-            IMiBocataNavigationService navigationService,
-            IPreferencesService preferencesService,
-            ILoggingService loggingService,
-            IDialogService dialogService,
-            IRefitService refitService,
-            ITaskHelperFactory taskHelperFactory,
-            IKeyboardService keyboardService)
-        {
-            this.authApi = refitService.InitRefitInstance<IAuthApi>();
-            this.navigationService = navigationService;
-            this.preferencesService = preferencesService;
-            this.loggingService = loggingService;
-            this.dialogService = dialogService;
-            this.taskHelperFactory = taskHelperFactory;
-            this.keyboardService = keyboardService;
-        }
+    public Models.Core.Client User
+    {
+        get => client;
+        set => SetAndRaisePropertyChanged(ref client, value);
+    }
 
-        public Client User
-        {
-            get => client;
-            set => SetAndRaisePropertyChanged(ref client, value);
-        }
+    public ICommand DoLoginCommand => new AsyncCommand(() => DoLoginCommandAsync());
 
-        public ICommand DoLoginCommand => new AsyncCommand(() => DoLoginCommandAsync());
+    public ICommand GoToRegisterCommand => new AsyncCommand(() => GoToRegisterCommandAsync());
 
-        public ICommand GoToRegisterCommand => new AsyncCommand(() => GoToRegisterCommandAsync());
-
-        public override Task InitializeAsync(object navigationData = null)
-        {
-            User = new Client();
+    public override Task InitializeAsync(object navigationData = null)
+    {
+        User = new Models.Core.Client();
 
 #pragma warning disable CS0162 // Unreachable code detected
-            if (DefaultSettings.DebugMode)
+        if (DefaultSettings.DebugMode)
+        {
+            User = new Models.Core.Client()
             {
-                User = new Client()
-                {
-                    Email = "mbmdevelop@gmail.com",
-                    Password = "123456",
-                };
-            }
+                Email = "mbmdevelop@gmail.com",
+                Password = "123456",
+            };
+        }
 #pragma warning restore CS0162 // Unreachable code detected
 
-            return base.InitializeAsync(navigationData);
-        }
+        return base.InitializeAsync(navigationData);
+    }
 
-        private async Task DoLoginCommandAsync()
+    private async Task DoLoginCommandAsync()
+    {
+        if (IsBusy)
         {
-            if (IsBusy)
-            {
-                return;
-            }
-
-            keyboardService.HideSoftKeyboard();
-
-            if (!await ValidateAsync())
-            {
-                return;
-            }
-
-            var result = await taskHelperFactory.
-                                    CreateInternetAccessViewModelInstance(loggingService, this).
-                                    TryExecuteAsync(
-                                    () => authApi.SignIn(new Models.Requests.ClientSignInRequest()
-                                    {
-                                        Email = User.Email, 
-                                        Password = User.Password,
-                                    }));
-
-            if (result)
-            {
-                await LogInSuccessful(ClientSignInResponse.Parse(result.Value));
-            }
+            return;
         }
 
-        private async Task<bool> ValidateAsync()
+        keyboardService.HideSoftKeyboard();
+
+        if (!await ValidateAsync())
         {
-            if (!ValidateHelper.IsValidEmail(User.Email))
-            {
-                await dialogService.ShowAlertAsync("Compruebe su email", string.Empty);
-                return false;
-            }
-
-            if (!ValidateHelper.IsValidPassword(User.Password))
-            {
-                await dialogService.ShowAlertAsync("La contraseña debe tener al menos 4 caracteres", string.Empty);
-                return false;
-            }
-
-            return true;
+            return;
         }
 
-        private async Task LogInSuccessful(Client client)
+        var result = await taskHelperFactory.
+                                CreateInternetAccessViewModelInstance(loggingService, this).
+                                TryExecuteAsync(
+                                () => authApi.SignIn(new Models.Requests.ClientSignInRequest()
+                                {
+                                    Email = User.Email, 
+                                    Password = User.Password,
+                                }));
+
+        if (result)
         {
-            preferencesService.SetClient(client);
-            await navigationService.NavigateToHome();
+            await LogInSuccessful(ClientSignInResponse.Parse(result.Value));
+        }
+    }
+
+    private async Task<bool> ValidateAsync()
+    {
+        if (!ValidateHelper.IsValidEmail(User.Email))
+        {
+            await dialogService.ShowAlertAsync("Compruebe su email", string.Empty);
+            return false;
         }
 
-        private async Task GoToRegisterCommandAsync()
+        if (!ValidateHelper.IsValidPassword(User.Password))
         {
-            await navigationService.NavigateToRegister();
+            await dialogService.ShowAlertAsync("La contraseña debe tener al menos 4 caracteres", string.Empty);
+            return false;
         }
+
+        return true;
+    }
+
+    private async Task LogInSuccessful(Models.Core.Client client)
+    {
+        preferencesService.SetClient(client);
+        await navigationService.NavigateToHome();
+    }
+
+    private async Task GoToRegisterCommandAsync()
+    {
+        await navigationService.NavigateToRegister();
     }
 }

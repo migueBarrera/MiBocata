@@ -1,16 +1,12 @@
-﻿using Mibocata.Core.Extensions;
-using MiBocata.Framework;
-using Xamarin.Forms;
+﻿
+namespace MiBocata.Features.LogIn;
 
-namespace MiBocata.Features.LogIn
+public partial class LogInControlView : ContentView
 {
-    public partial class LogInControlView : ContentView
+    public LogInControlView()
     {
-        public LogInControlView()
-        {
-            InitializeComponent();
+        InitializeComponent();
 
-            BindingContext = App.Current.DependencyService.Resolve<LogInControlViewModel>();
-        }
+        //BindingContext = App.Current.DependencyService.Resolve<LogInControlViewModel>();
     }
 }

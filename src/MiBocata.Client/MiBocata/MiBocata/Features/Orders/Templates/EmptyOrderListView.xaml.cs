@@ -1,10 +1,9 @@
-﻿namespace MiBocata.Features.Orders.Templates
+﻿namespace MiBocata.Features.Orders.Templates;
+
+public partial class EmptyOrderListView
 {
-    public partial class EmptyOrderListView
+    public EmptyOrderListView()
     {
-        public EmptyOrderListView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

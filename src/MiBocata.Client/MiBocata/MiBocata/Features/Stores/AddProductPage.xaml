@@ -1,14 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<pages:PopupPage
+<framework:BaseContentPage
     x:Class="MiBocata.Features.Stores.AddProductPage"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
-    xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-    Visual="Material"
-    mc:Ignorable="d">
+               xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:framework="clr-namespace:MiBocata.Framework">
     <ContentPage.Content>
         <Frame
             x:Name="FrameContainer"
@@ -19,14 +14,14 @@
                 Padding="10,5"
                 IsClippedToBounds="True"
                 Spacing="3">
-                <pancakeview:PancakeView
+                <!--<pancakeview:PancakeView
                     Margin="10"
                     CornerRadius="18"
                     HeightRequest="150"
                     HorizontalOptions="Center"
                     WidthRequest="150">
                     <Image Aspect="AspectFill" Source="{Binding Product.Image}" />
-                </pancakeview:PancakeView>
+                </pancakeview:PancakeView>-->
 
                 <Label
                     FontSize="14"
@@ -51,4 +46,4 @@
             </StackLayout>
         </Frame>
     </ContentPage.Content>
-</pages:PopupPage>
+</framework:BaseContentPage>

@@ -1,38 +1,36 @@
-﻿using System;
-using System.Net.Mail;
+﻿using System.Net.Mail;
 
-namespace MiBocata.Helpers
+namespace MiBocata.Helpers;
+
+public class ValidateHelper
 {
-    public class ValidateHelper
+    public static bool IsEmpty(string value)
     {
-        public static bool IsEmpty(string value)
+        return string.IsNullOrWhiteSpace(value);
+    }
+
+    public static bool IsValidEmail(string email)
+    {
+        if (IsEmpty(email))
         {
-            return string.IsNullOrWhiteSpace(value);
+            return false;
         }
 
-        public static bool IsValidEmail(string email)
+        try
         {
-            if (IsEmpty(email))
-            {
-                return false;
-            }
+            MailAddress m = new MailAddress(email);
 
-            try
-            {
-                MailAddress m = new MailAddress(email);
-
-                return true;
-            }
-            catch (FormatException e)
-            {
-                System.Console.WriteLine(e.Message);
-                return false;
-            }
+            return true;
         }
-
-        public static bool IsValidPassword(string pass)
+        catch (FormatException e)
         {
-            return !IsEmpty(pass) && pass.Length >= 4;
+            System.Console.WriteLine(e.Message);
+            return false;
         }
+    }
+
+    public static bool IsValidPassword(string pass)
+    {
+        return !IsEmpty(pass) && pass.Length >= 4;
     }
 }

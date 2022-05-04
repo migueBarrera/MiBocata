@@ -1,10 +1,9 @@
-﻿namespace MiBocata.Features.Stores
+﻿namespace MiBocata.Features.Stores;
+
+public partial class AddProductPage
 {
-    public partial class AddProductPage
+    public AddProductPage()
     {
-        public AddProductPage()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

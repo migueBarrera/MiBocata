@@ -15,24 +15,24 @@ namespace Mibocata.Core.Services
 
         public Store GetStore()
         {
-            var value = Xamarin.Essentials.Preferences.Get(KEY_STORE, string.Empty);
+            var value = Preferences.Get(KEY_STORE, string.Empty);
             return JsonConvert.DeserializeObject<Store>(value);
         }
 
         public string GetToken()
         {
-            return Xamarin.Essentials.Preferences.Get(KEY_API_TOKEN, string.Empty);
+            return Preferences.Get(KEY_API_TOKEN, string.Empty);
         }
 
         public Shopkeeper GetShopkeeper()
         {
-            var value = Xamarin.Essentials.Preferences.Get(KEY_SHOPKEEPER, string.Empty);
+            var value = Preferences.Get(KEY_SHOPKEEPER, string.Empty);
             return JsonConvert.DeserializeObject<Shopkeeper>(value);
         }
 
         public Client GetClient()
         {
-            var value = Xamarin.Essentials.Preferences.Get(KEY_USER, string.Empty);
+            var value = Preferences.Get(KEY_USER, string.Empty);
             return JsonConvert.DeserializeObject<Client>(value);
         }
 
@@ -43,24 +43,24 @@ namespace Mibocata.Core.Services
 
         public string PushToken()
         {
-            return Xamarin.Essentials.Preferences.Get(KEY_PUSH_TOKEN, string.Empty);
+            return Preferences.Get(KEY_PUSH_TOKEN, string.Empty);
         }
 
         public void SetPushToken(string token)
         {
-            Xamarin.Essentials.Preferences.Set(KEY_PUSH_TOKEN, token);
+            Preferences.Set(KEY_PUSH_TOKEN, token);
         }
 
         public void SetStore(Store store)
         {
             if (store == null)
             {
-                Xamarin.Essentials.Preferences.Set(KEY_STORE, string.Empty);
+                Preferences.Set(KEY_STORE, string.Empty);
             }
             else
             {
                 string output = JsonConvert.SerializeObject(store);
-                Xamarin.Essentials.Preferences.Set(KEY_STORE, output);
+                Preferences.Set(KEY_STORE, output);
             }
         }
 
@@ -68,14 +68,14 @@ namespace Mibocata.Core.Services
         {
             if (shopkeeper == null)
             {
-                Xamarin.Essentials.Preferences.Set(KEY_SHOPKEEPER, string.Empty);
-                Xamarin.Essentials.Preferences.Set(KEY_API_TOKEN, string.Empty);
+                Preferences.Set(KEY_SHOPKEEPER, string.Empty);
+                Preferences.Set(KEY_API_TOKEN, string.Empty);
             }
             else
             {
                 string output = JsonConvert.SerializeObject(shopkeeper);
-                Xamarin.Essentials.Preferences.Set(KEY_SHOPKEEPER, output);
-                Xamarin.Essentials.Preferences.Set(KEY_API_TOKEN, shopkeeper.Token);
+                Preferences.Set(KEY_SHOPKEEPER, output);
+                Preferences.Set(KEY_API_TOKEN, shopkeeper.Token);
             }
         }
 
@@ -83,14 +83,14 @@ namespace Mibocata.Core.Services
         {
             if (client == null)
             {
-                Xamarin.Essentials.Preferences.Set(KEY_USER, string.Empty);
-                Xamarin.Essentials.Preferences.Set(KEY_API_TOKEN, string.Empty);
+                Preferences.Set(KEY_USER, string.Empty);
+                Preferences.Set(KEY_API_TOKEN, string.Empty);
             }
             else
             {
                 string output = JsonConvert.SerializeObject(client);
-                Xamarin.Essentials.Preferences.Set(KEY_USER, output);
-                Xamarin.Essentials.Preferences.Set(KEY_API_TOKEN, client.Token);
+                Preferences.Set(KEY_USER, output);
+                Preferences.Set(KEY_API_TOKEN, client.Token);
             }
         }
     }

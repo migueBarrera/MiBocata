@@ -1,17 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentView
     x:Class="MiBocata.Features.LogIn.LogInControlView"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Visual="Material"
-    mc:Ignorable="d">
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <ContentView.Content>
         <Grid>
             <StackLayout Margin="16">
                 <Image
-                    Grid.Column="1"
                     Margin="0,4,4,0"
                     Source="robotfoot.png"
                     WidthRequest="150" />

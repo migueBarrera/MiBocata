@@ -1,26 +1,23 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+<ContentView    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-             mc:Ignorable="d"
              x:Class="MiBocata.Controls.NumericUpDown">
     <ContentView.Resources>
         <ResourceDictionary>
 
-            <Style TargetType="Label">
+            <!--<Style TargetType="Label">
                 <Setter Property="FontSize" Value="16" />
                 <Setter Property="TextColor" Value="Black" />
                 <Setter Property="HorizontalOptions" Value="Center" />
                 <Setter Property="VerticalOptions" Value="Center" />
                 <Setter Property="Margin" Value="0, 0" />
-            </Style>
+            </Style>-->
 
         </ResourceDictionary>
     </ContentView.Resources>
     <ContentView.Content>
-        <pancakeview:PancakeView
+        <!--<pancakeview:PancakeView
             HeightRequest="24"
             CornerRadius="24"
             BackgroundColor="White">
@@ -54,6 +51,6 @@
                     </Label.GestureRecognizers>
                 </Label>
             </Grid>
-        </pancakeview:PancakeView>
+        </pancakeview:PancakeView>-->
     </ContentView.Content>
 </ContentView>

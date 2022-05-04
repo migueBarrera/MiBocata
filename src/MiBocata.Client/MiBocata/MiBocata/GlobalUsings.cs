@@ -1,0 +1,13 @@
+﻿global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Threading.Tasks;
+global using MvvmHelpers.Commands;
+global using Mibocata.Core.Services.Interfaces;
+global using MiBocata.Framework;
+global using MiBocata.Services;
+global using Models.Core;
+global using Mibocata.Core.Framework;
+global using MiBocata.Helpers;
+global using Models.Responses;
+global using System.Globalization;

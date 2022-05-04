@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace MiBocata.Services.NotificationService
+﻿namespace MiBocata.Services.NotificationService
 {
     public interface INotificationService
     {

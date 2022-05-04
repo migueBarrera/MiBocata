@@ -1,7 +1,6 @@
 ﻿using Mibocata.Core.Services.Interfaces;
 using System;
 using System.Threading.Tasks;
-using Xamarin.Essentials;
 
 namespace Mibocata.Core.Services
 {

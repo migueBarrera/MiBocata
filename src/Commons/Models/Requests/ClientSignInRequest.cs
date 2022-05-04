@@ -1,9 +1,8 @@
-﻿namespace Models.Requests
-{
-    public class ClientSignInRequest
-    {
-        public string Email { get; set; }
+﻿namespace Models.Requests;
 
-        public string Password { get; set; }
-    }
+public class ClientSignInRequest
+{
+    public string Email { get; set; }
+
+    public string Password { get; set; }
 }

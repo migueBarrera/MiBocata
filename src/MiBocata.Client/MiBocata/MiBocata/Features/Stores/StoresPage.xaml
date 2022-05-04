@@ -1,12 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <framework:BaseContentPage
     x:Class="MiBocata.Features.Stores.StoresPage"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:MiBocata.Converters"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:framework="clr-namespace:MiBocata.Framework"
-    xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:stores="clr-namespace:MiBocata.Features.Stores"
     mc:Ignorable="d">
@@ -18,7 +17,7 @@
     <ContentPage.Content>
 
         <Grid>
-            <maps:Map
+            <!--<maps:Map
                 x:Name="MyMap"
                 HeightRequest="200"
                 InfoWindowClicked="MyMap_InfoWindowClicked"
@@ -36,7 +35,7 @@
                             Position="{Binding Position}" />
                     </DataTemplate>
                 </maps:Map.ItemTemplate>
-            </maps:Map>
+            </maps:Map>-->
         </Grid>
     </ContentPage.Content>
 </framework:BaseContentPage>

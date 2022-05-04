@@ -1,10 +1,9 @@
-﻿namespace MiBocata.Features.Stores.Templates
+﻿namespace MiBocata.Features.Stores.Templates;
+
+public partial class StoreDetailItemView
 {
-    public partial class StoreDetailItemView
+    public StoreDetailItemView()
     {
-        public StoreDetailItemView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

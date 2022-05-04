@@ -1,9 +1,4 @@
-﻿using Mibocata.Core.Services.Interfaces;
-using System;
-using System.Threading.Tasks;
-using Xamarin.Forms;
-
-namespace MiBocata.Services.DialogService
+﻿namespace MiBocata.Services.DialogService
 {
     public class DialogService : IDialogService
     {

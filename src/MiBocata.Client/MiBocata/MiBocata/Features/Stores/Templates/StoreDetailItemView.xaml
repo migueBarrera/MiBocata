@@ -1,13 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentView
     x:Class="MiBocata.Features.Stores.Templates.StoreDetailItemView"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-    xmlns:viewModels="clr-namespace:MiBocata.Features.Stores"
-    mc:Ignorable="d">
+    xmlns:viewModels="clr-namespace:MiBocata.Features.Stores">
     <ContentView.Resources>
         <ResourceDictionary>
 
@@ -33,11 +31,11 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <pancakeview:PancakeView
+                <!--<pancakeview:PancakeView
                     Grid.Row="0"
                     CornerRadius="18">
                     <Image Aspect="AspectFill" Source="{Binding Image}" />
-                </pancakeview:PancakeView>
+                </pancakeview:PancakeView>-->
                 <Label
                     Grid.Row="1"
                     Style="{StaticResource TitleStyle}"

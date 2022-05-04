@@ -1,15 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <framework:BaseContentPage
     x:Class="MiBocata.Features.Profile.ProfilePage"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:framework="clr-namespace:MiBocata.Framework"
-    xmlns:logIn="clr-namespace:MiBocata.Features.LogIn"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    xmlns:logIn="clr-namespace:MiBocata.Features.LogIn">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="ButtonStyle" TargetType="Label">
@@ -23,7 +18,7 @@
         <ScrollView>
             <Grid>
                 <StackLayout IsVisible="{Binding UserIsLogged}">
-                    <ffimageloading:CachedImage
+                    <!--<ffimageloading:CachedImage
                         Margin="0,16,0,24"
                         ErrorPlaceholder="profile_placeholder.png"
                         HeightRequest="90"
@@ -35,7 +30,7 @@
                         <ffimageloading:CachedImage.Transformations>
                             <fftransformations:CircleTransformation />
                         </ffimageloading:CachedImage.Transformations>
-                    </ffimageloading:CachedImage>
+                    </ffimageloading:CachedImage>-->
                     <BoxView BackgroundColor="LightGray" HeightRequest="1" />
                     <Label Style="{StaticResource ButtonStyle}">
                         <Label.FormattedText>

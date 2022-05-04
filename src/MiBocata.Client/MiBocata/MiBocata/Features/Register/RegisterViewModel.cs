@@ -1,78 +1,71 @@
-﻿using Mibocata.Core.Framework;
-using Mibocata.Core.Services.Interfaces;
-using MiBocata.Helpers;
-using Models.Core;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Xamarin.CommunityToolkit.ObjectModel;
+﻿using System.Windows.Input;
 
-namespace MiBocata.Features.Register
+namespace MiBocata.Features.Register;
+
+public class RegisterViewModel : CoreViewModel
 {
-    public class RegisterViewModel : CoreViewModel
+    private Models.Core.Client user;
+
+    private readonly IDialogService dialogService;
+    private readonly IRegisterService registerService;
+    private readonly IKeyboardService keyboardService;
+
+    public RegisterViewModel(
+        IDialogService dialogService,
+        IRegisterService registerService,
+        IKeyboardService keyboardService)
     {
-        private Client user;
+        this.dialogService = dialogService;
+        this.registerService = registerService;
+        this.keyboardService = keyboardService;
+    }
 
-        private readonly IDialogService dialogService;
-        private readonly IRegisterService registerService;
-        private readonly IKeyboardService keyboardService;
+    public Models.Core.Client User
+    {
+        get => user;
+        set => SetAndRaisePropertyChanged(ref user, value);
+    }
 
-        public RegisterViewModel(
-            IDialogService dialogService,
-            IRegisterService registerService,
-            IKeyboardService keyboardService)
+    public ICommand RegisterCommand => new AsyncCommand(() => RegisterCommandAsync());
+
+    public override async Task InitializeAsync(object navigationData)
+    {
+        User = new Models.Core.Client();
+
+        await base.InitializeAsync(navigationData);
+    }
+
+    private async Task RegisterCommandAsync()
+    {
+        if (IsBusy)
         {
-            this.dialogService = dialogService;
-            this.registerService = registerService;
-            this.keyboardService = keyboardService;
+            return;
         }
 
-        public Client User
+        keyboardService.HideSoftKeyboard();
+
+        if (!await ValidateAsync())
         {
-            get => user;
-            set => SetAndRaisePropertyChanged(ref user, value);
+            return;
         }
 
-        public ICommand RegisterCommand => new AsyncCommand(() => RegisterCommandAsync());
+        await registerService.DoRegisterAsync(user.Email, user.Password, user.Name);
+    }
 
-        public override async Task InitializeAsync(object navigationData)
+    private async Task<bool> ValidateAsync()
+    {
+        if (!ValidateHelper.IsValidEmail(User.Email))
         {
-            User = new Client();
-
-            await base.InitializeAsync(navigationData);
+            await dialogService.ShowMessage("Compruebe su email", string.Empty);
+            return false;
         }
 
-        private async Task RegisterCommandAsync()
+        if (!ValidateHelper.IsValidPassword(User.Password))
         {
-            if (IsBusy)
-            {
-                return;
-            }
-
-            keyboardService.HideSoftKeyboard();
-
-            if (!await ValidateAsync())
-            {
-                return;
-            }
-
-            await registerService.DoRegisterAsync(user.Email, user.Password, user.Name);
+            await dialogService.ShowMessage("La contraseña debe tener al menos 4 caracteres", string.Empty);
+            return false;
         }
 
-        private async Task<bool> ValidateAsync()
-        {
-            if (!ValidateHelper.IsValidEmail(User.Email))
-            {
-                await dialogService.ShowMessage("Compruebe su email", string.Empty);
-                return false;
-            }
-
-            if (!ValidateHelper.IsValidPassword(User.Password))
-            {
-                await dialogService.ShowMessage("La contraseña debe tener al menos 4 caracteres", string.Empty);
-                return false;
-            }
-
-            return true;
-        }
+        return true;
     }
 }
