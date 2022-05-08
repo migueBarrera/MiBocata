@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<framework:CorePage
+    x:Class="MiBocata.Features.Profile.ProfilePage"
+              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:framework="clr-namespace:Mibocata.Core.Framework;assembly=Mibocata.Core"
+    xmlns:logIn="clr-namespace:MiBocata.Features.LogIn">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ButtonStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="Margin" Value="8,4,0,4" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid>
+                <StackLayout IsVisible="{Binding UserIsLogged}">
+                    <!--<ffimageloading:CachedImage
+                        Margin="0,16,0,24"
+                        ErrorPlaceholder="profile_placeholder.png"
+                        HeightRequest="90"
+                        HorizontalOptions="Center"
+                        LoadingPlaceholder="profile_placeholder.png"
+                        Source="{Binding Client.Image}"
+                        VerticalOptions="Center"
+                        WidthRequest="90">
+                        <ffimageloading:CachedImage.Transformations>
+                            <fftransformations:CircleTransformation />
+                        </ffimageloading:CachedImage.Transformations>
+                    </ffimageloading:CachedImage>-->
+                    <Image
+                        Source="profile_placeholder.png"
+                        HeightRequest="90"
+                        WidthRequest="90"
+                         Margin="0,16,0,24"
+                        HorizontalOptions="Center"/>
+                    <BoxView BackgroundColor="LightGray" HeightRequest="1" />
+                    <HorizontalStackLayout
+                        Margin="8,4,0,4"
+                        Spacing="4">
+                        <Label 
+                            FontSize="24"
+                            TextColor="Black"
+                            Text="Hello "
+                            FontAttributes="Bold"/>
+
+                        <Label 
+                            FontSize="24"
+                            TextColor="Black"
+                            Text="{Binding Client.Name}"
+                            FontAttributes="Bold"/>
+
+                    </HorizontalStackLayout>
+                 
+                    <BoxView BackgroundColor="LightGray" HeightRequest="1" />
+                    <Label Style="{StaticResource ButtonStyle}" Text="Edit profile">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding EditProfileCommand}" NumberOfTapsRequired="1" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <BoxView BackgroundColor="LightGray" HeightRequest="1" />
+                    <Label Style="{StaticResource ButtonStyle}" Text="My orders">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OrdersCommand}" NumberOfTapsRequired="1" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <BoxView BackgroundColor="LightGray" HeightRequest="1" />
+                    <Label Style="{StaticResource ButtonStyle}" Text="Close sesion">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CloseSessionCommand}" NumberOfTapsRequired="1" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <BoxView BackgroundColor="LightGray" HeightRequest="1" />
+                </StackLayout>
+
+                <Grid IsVisible="{Binding UserIsLogged, Converter={StaticResource NegateBoolConverter}}">
+                    <logIn:LogInControlView x:Name="MyLoginControlProfile" BindingContext="{Binding LoginControlViewModel}"/>
+                </Grid>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</framework:CorePage>

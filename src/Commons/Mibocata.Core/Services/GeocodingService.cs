@@ -1,56 +1,51 @@
 ﻿using Mibocata.Core.Services.Interfaces;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Xamarin.Essentials;
 
-namespace Mibocata.Core.Services
+namespace Mibocata.Core.Services;
+
+public class GeocodingService : IGeocodingService
 {
-    public class GeocodingService : IGeocodingService
+    private readonly ILoggingService loggingService;
+
+    public GeocodingService(ILoggingService loggingService)
     {
-        private readonly ILoggingService loggingService;
+        this.loggingService = loggingService;
+    }
 
-        public GeocodingService(ILoggingService loggingService)
+    public async Task<Placemark> GetPlaceMark(double latidude, double longitude)
+    {
+        try
         {
-            this.loggingService = loggingService;
+            var placemarks = await Geocoding.GetPlacemarksAsync(latidude, longitude);
+
+            var placemark = placemarks?.FirstOrDefault();
+            if (placemark != null)
+            {
+                var geocodeAddress =
+                    $"AdminArea:       {placemark.AdminArea}\n" +
+                    $"CountryCode:     {placemark.CountryCode}\n" +
+                    $"CountryName:     {placemark.CountryName}\n" +
+                    $"FeatureName:     {placemark.FeatureName}\n" +
+                    $"Locality:        {placemark.Locality}\n" +
+                    $"PostalCode:      {placemark.PostalCode}\n" +
+                    $"SubAdminArea:    {placemark.SubAdminArea}\n" +
+                    $"SubLocality:     {placemark.SubLocality}\n" +
+                    $"SubThoroughfare: {placemark.SubThoroughfare}\n" +
+                    $"Thoroughfare:    {placemark.Thoroughfare}\n";
+
+                loggingService.Debug(geocodeAddress);
+            }
+
+            return placemark;
         }
-
-        public async Task<Placemark> GetPlaceMark(double latidude, double longitude)
+        catch (FeatureNotSupportedException ex)
         {
-            try
-            {
-                var placemarks = await Geocoding.GetPlacemarksAsync(latidude, longitude);
-
-                var placemark = placemarks?.FirstOrDefault();
-                if (placemark != null)
-                {
-                    var geocodeAddress =
-                        $"AdminArea:       {placemark.AdminArea}\n" +
-                        $"CountryCode:     {placemark.CountryCode}\n" +
-                        $"CountryName:     {placemark.CountryName}\n" +
-                        $"FeatureName:     {placemark.FeatureName}\n" +
-                        $"Locality:        {placemark.Locality}\n" +
-                        $"PostalCode:      {placemark.PostalCode}\n" +
-                        $"SubAdminArea:    {placemark.SubAdminArea}\n" +
-                        $"SubLocality:     {placemark.SubLocality}\n" +
-                        $"SubThoroughfare: {placemark.SubThoroughfare}\n" +
-                        $"Thoroughfare:    {placemark.Thoroughfare}\n";
-
-                    loggingService.Debug(geocodeAddress);
-                }
-
-                return placemark;
-            }
-            catch (FeatureNotSupportedException ex)
-            {
-                loggingService.Error(ex);
-                return null;
-            }
-            catch (Exception ex)
-            {
-                loggingService.Error(ex);
-                return null;
-            }
+            loggingService.Error(ex);
+            return null;
+        }
+        catch (Exception ex)
+        {
+            loggingService.Error(ex);
+            return null;
         }
     }
 }

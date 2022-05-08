@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="MiBocata.Features.Cart.Templates.CartItemTemplate"
+                 xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MiBocata.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:MiBocata.Features.Cart">
+    <ContentView.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!--<pancakeview:PancakeView
+                Grid.RowSpan="3"
+                CornerRadius="10"
+                HeightRequest="100"
+                WidthRequest="100">
+                <Image
+                    Aspect="AspectFill"
+                    HeightRequest="100"
+                    Source="{Binding Image}"
+                    WidthRequest="100" />
+            </pancakeview:PancakeView>-->
+            <Label
+                Grid.Column="1"
+                FontAttributes="Bold"
+                FontSize="Large"
+                Text="{Binding Name}"
+                TextColor="Black" />
+            <StackLayout
+                Grid.Row="1"
+                Grid.Column="1"
+                Orientation="Horizontal">
+                <Label x:Name="QuantityLabel" Text="{Binding Quantity}" />
+                <Label Text="unidades a" />
+                <Label Text="{Binding UnitPrice, StringFormat='{0:C0}'}" TextColor="Red" />
+            </StackLayout>
+            <Grid Grid.Row="2" Grid.Column="1">
+                <controls:NumericUpDown
+                    x:Name="NumericUpDown"
+                    HeightRequest="25"
+                    HorizontalOptions="Start"
+                    Minimum="1"
+                    PropertyChanged="NumericUpDown_PropertyChanged"
+                    WidthRequest="100"
+                    Value="{Binding Quantity, Mode=TwoWay}" />
+                <!--<Button
+                    Padding="0"
+                    BackgroundColor="Transparent"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:CartViewModel}}, Path=RemoveItemCommand}"
+                    CommandParameter="{Binding}"
+                    HeightRequest="30"
+                    HorizontalOptions="End"
+                    ImageSource="outline_delete_outline_black_24.png"
+                    WidthRequest="30" />-->
+            </Grid>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

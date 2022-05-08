@@ -1,54 +1,50 @@
 ﻿using Mibocata.Core.Services.Interfaces;
 using Serilog;
-using System;
-using System.Collections.Generic;
-using System.IO;
 
-namespace Mibocata.Core.Services
+namespace Mibocata.Core.Services;
+
+internal class FileLoggingService : IFileLoggingService
 {
-    internal class FileLoggingService : IFileLoggingService
+    private readonly ILogFileSystemService logFileSystemService;
+
+    public const string LogTag = "mibocata";
+    private const string LogFolderName = "logs";
+    private const string LogTemplateFilename = "log.txt";
+
+    public FileLoggingService(ILogFileSystemService logFileSystemService)
     {
-        private readonly ILogFileSystemService logFileSystemService;
+        this.logFileSystemService = logFileSystemService;
+    }
 
-        public const string LogTag = "mibocata";
-        private const string LogFolderName = "logs";
-        private const string LogTemplateFilename = "log.txt";
+    public void Init()
+    {
+        var logFilePath = Path.Combine(logFileSystemService.LogFolderPath, LogTemplateFilename);
 
-        public FileLoggingService(ILogFileSystemService logFileSystemService)
-        {
-            this.logFileSystemService = logFileSystemService;
-        }
+        Log.Logger = new LoggerConfiguration()
+            //.WriteTo.AndroidLog()
+            .Enrich.WithProperty(Serilog.Core.Constants.SourceContextPropertyName, LogTag)
+            .WriteTo.File(
+                logFilePath,
+                rollingInterval: RollingInterval.Day,
+                rollOnFileSizeLimit: true,
+                retainedFileCountLimit: 110)
+            .CreateLogger();
 
-        public void Init()
-        {
-            var logFilePath = Path.Combine(logFileSystemService.LogFolderPath, LogTemplateFilename);
+        LogInfo($"{nameof(FileLoggingService)} init; path: {logFilePath}");
+    }
 
-            Log.Logger = new LoggerConfiguration()
-                //.WriteTo.AndroidLog()
-                .Enrich.WithProperty(Serilog.Core.Constants.SourceContextPropertyName, LogTag)
-                .WriteTo.File(
-                    logFilePath,
-                    rollingInterval: RollingInterval.Day,
-                    rollOnFileSizeLimit: true,
-                    retainedFileCountLimit: 110)
-                .CreateLogger();
+    public void LogInfo(string message)
+    {
+        Log.Information(message);
+    }
 
-            LogInfo($"{nameof(FileLoggingService)} init; path: {logFilePath}");
-        }
+    public void LogWarning(string message)
+    {
+        Log.Warning(message);
+    }
 
-        public void LogInfo(string message)
-        {
-            Log.Information(message);
-        }
-
-        public void LogWarning(string message)
-        {
-            Log.Warning(message);
-        }
-
-        public void LogError(string message, Exception ex = null, IDictionary<string, string> properties = null)
-        {
-            Log.Error(ex, message, properties);
-        }
+    public void LogError(string message, Exception ex = null, IDictionary<string, string> properties = null)
+    {
+        Log.Error(ex, message, properties);
     }
 }

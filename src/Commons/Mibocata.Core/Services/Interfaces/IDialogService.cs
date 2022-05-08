@@ -1,11 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿namespace Mibocata.Core.Services.Interfaces;
 
-namespace Mibocata.Core.Services.Interfaces
+public interface IDialogService
 {
-    public interface IDialogService
-    {
-        Task ShowMessage(string title, string content);
+    Task ShowMessage(string title, string content);
 
-        Task ShowAlertAsync(string title, string content);
-    }
+    Task ShowAlertAsync(string title, string content);
 }

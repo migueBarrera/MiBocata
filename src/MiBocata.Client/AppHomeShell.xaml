@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell
+    x:Class="MiBocata.AppHomeShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MiBocata"
+        xmlns:profile="clr-namespace:MiBocata.Features.Profile"
+    xmlns:stores="clr-namespace:MiBocata.Features.Stores"
+    xmlns:signIn="clr-namespace:MiBocata.Features.LogIn"
+    xmlns:register="clr-namespace:MiBocata.Features.Register"
+    TabBarBackgroundColor="Blue"
+    Shell.TabBarForegroundColor="Blue"
+    Shell.FlyoutBehavior="Disabled">
+
+    <TabBar Route="TabBar">
+        <ShellContent
+           Title="Stores"
+            Icon="round_store_black_24.png"
+            ContentTemplate="{DataTemplate stores:StoresPage}"
+            Route="StoresPage" />
+        <ShellContent
+           Title="Profile"
+            Icon="round_perm_identity_black_24.png"
+            ContentTemplate="{DataTemplate profile:ProfilePage}"
+            Route="ProfilePage" />
+    </TabBar>
+
+    <ShellContent
+           Title="Edit profile"
+            ContentTemplate="{DataTemplate profile:EditProfilePage}"
+            Route="EditProfilePage" />
+    
+    <ShellContent
+           Title="Edit profile"
+            ContentTemplate="{DataTemplate stores:StoreDetailPage}"
+            Route="StoreDetailPage" />
+
+</Shell>

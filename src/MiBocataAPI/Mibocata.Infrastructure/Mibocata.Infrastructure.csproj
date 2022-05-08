@@ -6,11 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Commons\Models\Models.csproj" />
+    <AdditionalFiles Remove="C:\Users\mbarrera\Git\MiBocata\src\MiBocataAPI\\CodeAnalysis\Menees.Analyzers.Settings.xml" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Helpers\" />
+    <ProjectReference Include="..\..\Commons\Models\Models.csproj" />
   </ItemGroup>
 
 </Project>

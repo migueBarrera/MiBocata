@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<framework:CorePage
+    x:Class="MiBocata.Features.Register.RegisterPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:framework="clr-namespace:Mibocata.Core.Framework;assembly=Mibocata.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Sign up">
+
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Image
+                    Grid.Column="1"
+                    Margin="0,4,14,0"
+                    Source="robotfoot.png"
+                    WidthRequest="150"
+                    HeightRequest="200" />
+                <Label
+                    Grid.Row="1"
+                    Margin="32,-34,0,0"
+                    FontSize="32"
+                    Text="Join"
+                    TextColor="Black" />
+                <Label
+                    Grid.Row="2"
+                    Margin="58,-14,0,0"
+                    FontSize="32"
+                    Text="us"
+                    TextColor="Black" />
+                <StackLayout
+                    Grid.Row="3"
+                    Grid.ColumnSpan="2"
+                    Margin="16,0">
+                    <Entry
+                        Keyboard="Email"
+                        Placeholder="Email"
+                        Text="{Binding User.Email}" />
+                    <Entry
+                        IsPassword="True"
+                        Placeholder="Password"
+                        Text="{Binding User.Password}" />
+                    <Entry 
+                        Placeholder="Name" 
+                        Text="{Binding User.Name}" />
+                    <Entry
+                        Keyboard="Telephone"
+                        Placeholder="Phone"
+                        Text="{Binding User.Phone}" />
+
+                    <Button
+                    Margin="16"
+                    Command="{Binding RegisterCommand}"
+                    Text="Sign Up!"
+                    TextColor="White" />
+                </StackLayout>
+               
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+
+</framework:CorePage>

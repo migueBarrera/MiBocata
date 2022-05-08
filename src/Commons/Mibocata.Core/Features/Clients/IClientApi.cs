@@ -1,6 +1,5 @@
 ﻿using Models.Requests;
 using Refit;
-using System.Threading.Tasks;
 
 namespace Mibocata.Core.Features.Clients
 {

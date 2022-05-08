@@ -1,7 +1,6 @@
-﻿namespace Mibocata.Core.Services.Interfaces
+﻿namespace Mibocata.Core.Services.Interfaces;
+
+public interface IAppCenterSecretService
 {
-    public interface IAppCenterSecretService
-    {
-        string GetSecret();
-    }
+    string GetSecret();
 }

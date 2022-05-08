@@ -1,161 +1,157 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Mibocata.Core.Services.Interfaces;
+﻿using Mibocata.Core.Services.Interfaces;
 using OperationResult;
 using Refit;
 using static OperationResult.Helpers;
 
-namespace Mibocata.Core.Services
+namespace Mibocata.Core.Services;
+
+public class TaskHelper : ITaskHelper
 {
-    public class TaskHelper : ITaskHelper
+    private readonly IDialogService dialogsService;
+    private readonly IConnectivityService connectivityService;
+
+    private bool checkInternetAccess;
+    private Action whenStarting;
+    private Action whenFinished;
+    private Func<Exception, Task<bool>> errorHandler;
+    private ILoggingService logger;
+
+    public TaskHelper(
+        IDialogService dialogsService,
+        IConnectivityService connectivityService)
     {
-        private readonly IDialogService dialogsService;
-        private readonly IConnectivityService connectivityService;
+        this.dialogsService = dialogsService;
+        this.connectivityService = connectivityService;
+    }
 
-        private bool checkInternetAccess;
-        private Action whenStarting;
-        private Action whenFinished;
-        private Func<Exception, Task<bool>> errorHandler;
-        private ILoggingService logger;
+    public ITaskHelper CheckInternetBeforeStarting(bool check)
+    {
+        checkInternetAccess = check;
 
-        public TaskHelper(
-            IDialogService dialogsService,
-            IConnectivityService connectivityService)
+        return this;
+    }
+
+    public ITaskHelper WhenStarting(Action action)
+    {
+        whenStarting = action;
+
+        return this;
+    }
+
+    public ITaskHelper WhenFinished(Action action)
+    {
+        whenFinished = action;
+
+        return this;
+    }
+
+    public ITaskHelper WithLogging(ILoggingService logger)
+    {
+        this.logger = logger;
+
+        return this;
+    }
+
+    public ITaskHelper WithErrorHandling(Func<Exception, Task<bool>> handler)
+    {
+        errorHandler = handler;
+
+        return this;
+    }
+
+    public async Task<Status> TryExecuteAsync(Func<Task> task)
+    {
+        var taskWrapper = new Func<Task<object>>(() => WrapTaskAsync(task));
+        var result = await TryExecuteAsync(taskWrapper);
+
+        if (result)
         {
-            this.dialogsService = dialogsService;
-            this.connectivityService = connectivityService;
+            return Ok();
         }
 
-        public ITaskHelper CheckInternetBeforeStarting(bool check)
+        return Error();
+    }
+
+    public async Task<Result<T>> TryExecuteAsync<T>(Func<Task<T>> task)
+    {
+        if (checkInternetAccess)
         {
-            checkInternetAccess = check;
+            bool abort = await ExecuteInternetAccessLoopAsync();
 
-            return this;
-        }
-
-        public ITaskHelper WhenStarting(Action action)
-        {
-            whenStarting = action;
-
-            return this;
-        }
-
-        public ITaskHelper WhenFinished(Action action)
-        {
-            whenFinished = action;
-
-            return this;
-        }
-
-        public ITaskHelper WithLogging(ILoggingService logger)
-        {
-            this.logger = logger;
-
-            return this;
-        }
-
-        public ITaskHelper WithErrorHandling(Func<Exception, Task<bool>> handler)
-        {
-            errorHandler = handler;
-
-            return this;
-        }
-
-        public async Task<Status> TryExecuteAsync(Func<Task> task)
-        {
-            var taskWrapper = new Func<Task<object>>(() => WrapTaskAsync(task));
-            var result = await TryExecuteAsync(taskWrapper);
-
-            if (result)
+            if (abort)
             {
-                return Ok();
+                return Error();
+            }
+        }
+
+        whenStarting?.Invoke();
+
+        Result<T> result = Error();
+
+        try
+        {
+            var actualResult = await task();
+            result = Ok(actualResult);
+        }
+        catch (Exception exception)
+        {
+            logger?.Error(exception);
+
+            var isAlreadyHandled = false;
+
+            if (errorHandler != null)
+            {
+                isAlreadyHandled = await errorHandler.Invoke(exception);
             }
 
-            return Error();
-        }
+            if (!isAlreadyHandled)
+            {
+                isAlreadyHandled = await HandleCommonExceptionsAsync(exception);
+            }
 
-        public async Task<Result<T>> TryExecuteAsync<T>(Func<Task<T>> task)
+            if (!isAlreadyHandled)
+            {
+                throw;
+            }
+        }
+        finally
         {
-            if (checkInternetAccess)
-            {
-                bool abort = await ExecuteInternetAccessLoopAsync();
-
-                if (abort)
-                {
-                    return Error();
-                }
-            }
-
-            whenStarting?.Invoke();
-
-            Result<T> result = Error();
-
-            try
-            {
-                var actualResult = await task();
-                result = Ok(actualResult);
-            }
-            catch (Exception exception)
-            {
-                logger?.Error(exception);
-
-                var isAlreadyHandled = false;
-
-                if (errorHandler != null)
-                {
-                    isAlreadyHandled = await errorHandler.Invoke(exception);
-                }
-
-                if (!isAlreadyHandled)
-                {
-                    isAlreadyHandled = await HandleCommonExceptionsAsync(exception);
-                }
-
-                if (!isAlreadyHandled)
-                {
-                    throw;
-                }
-            }
-            finally
-            {
-                whenFinished?.Invoke();
-            }
-
-            return result;
+            whenFinished?.Invoke();
         }
 
-        private static async Task<object> WrapTaskAsync(Func<Task> innerTask)
+        return result;
+    }
+
+    private static async Task<object> WrapTaskAsync(Func<Task> innerTask)
+    {
+        await innerTask();
+
+        return new object();
+    }
+
+    private async Task<bool> ExecuteInternetAccessLoopAsync()
+    {
+        while (!connectivityService.IsThereInternet)
         {
-            await innerTask();
-
-            return new object();
+            await dialogsService.ShowAlertAsync(
+                "This application requires an active Internet connection to work.",
+                "There is no internet access");
         }
 
-        private async Task<bool> ExecuteInternetAccessLoopAsync()
+        return !connectivityService.IsThereInternet;
+    }
+
+    private async Task<bool> HandleCommonExceptionsAsync(Exception exception)
+    {
+        if (exception is HttpRequestException || exception is ApiException)
         {
-            while (!connectivityService.IsThereInternet)
-            {
-                await dialogsService.ShowAlertAsync(
-                    "This application requires an active Internet connection to work.",
-                    "There is no internet access");
-            }
+            await dialogsService.ShowAlertAsync(
+                "An error was detected while communicating with server. Please, try again later.",
+                "Data error");
 
-            return !connectivityService.IsThereInternet;
+            return true;
         }
 
-        private async Task<bool> HandleCommonExceptionsAsync(Exception exception)
-        {
-            if (exception is HttpRequestException || exception is ApiException)
-            {
-                await dialogsService.ShowAlertAsync(
-                    "An error was detected while communicating with server. Please, try again later.",
-                    "Data error");
-
-                return true;
-            }
-
-            return false;
-        }
+        return false;
     }
 }

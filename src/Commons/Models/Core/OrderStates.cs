@@ -1,11 +1,10 @@
-﻿namespace Models.Core
+﻿namespace Models.Core;
+
+public enum OrderStates
 {
-    public enum OrderStates
-    {
-        DEFAULT,
-        ACCEPTED,
-        REJECTED,
-        AUTOACCEPTED,
-        STARTED,
-    }
+    DEFAULT,
+    ACCEPTED,
+    REJECTED,
+    AUTOACCEPTED,
+    STARTED,
 }

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="MiBocata.Features.Stores.Templates.StoreDetailItemView"
+               xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:MiBocata.Features.Stores">
+    <ContentView.Resources>
+        <ResourceDictionary>
+
+            <Style x:Key="TitleStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="Margin" Value="0, 12, 0, 6" />
+            </Style>
+
+            <Style x:Key="SubTitleStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="TextColor" Value="Gray" />
+                <Setter Property="Margin" Value="0, 0, 0, 18" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <Grid BackgroundColor="#FFFFFF" HeightRequest="250">
+            <Grid Margin="12,4,12,0" RowSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="155" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <!--<pancakeview:PancakeView
+                    Grid.Row="0"
+                    CornerRadius="18">
+                    
+                </pancakeview:PancakeView>-->
+                <Image Aspect="AspectFill" Source="food.jpg" />
+                <Label
+                    Grid.Row="1"
+                    Style="{StaticResource TitleStyle}"
+                    Text="{Binding UnitPrice, StringFormat='{0:C0}'}" />
+                <Label
+                    Grid.Row="2"
+                    Style="{StaticResource SubTitleStyle}"
+                    Text="{Binding Name}" />
+
+                <ImageButton
+                    Grid.Row="1"
+                    BackgroundColor="Transparent"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:StoreDetailViewModel}}, Path=AddRemoveItemCommand}"
+                    CommandParameter="{Binding}"
+                    HorizontalOptions="End"
+                    Source="round_add_circle_outline_black_24.png"
+                    VerticalOptions="Center" />
+            </Grid>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

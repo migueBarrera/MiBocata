@@ -1,15 +1,12 @@
-﻿using System;
+﻿namespace Mibocata.Core.Services.Interfaces;
 
-namespace Mibocata.Core.Services.Interfaces
+public interface ILoggingService
 {
-    public interface ILoggingService
-    {
-        void Initialize();
+    void Initialize();
 
-        void Debug(string message);
+    void Debug(string message);
 
-        void Warning(string message);
+    void Warning(string message);
 
-        void Error(Exception exception);
-    }
+    void Error(Exception exception);
 }

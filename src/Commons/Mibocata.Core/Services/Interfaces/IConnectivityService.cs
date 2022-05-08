@@ -1,7 +1,6 @@
-﻿namespace Mibocata.Core.Services.Interfaces
+﻿namespace Mibocata.Core.Services.Interfaces;
+
+public interface IConnectivityService
 {
-    public interface IConnectivityService
-    {
-        bool IsThereInternet { get; }
-    }
+    bool IsThereInternet { get; }
 }

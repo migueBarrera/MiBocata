@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="MiBocata.Businnes.Features.Orders.Templates.OrderItemView"
+   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:MiBocata.Businnes.Features.Orders">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="FontSize" Value="{OnPlatform Android=13, UWP=16}" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="CornerRadius" Value="12" />
+                <Setter Property="Padding" Value="{OnPlatform Android=2, UWP=8}" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <!--<pancakeview:PancakeView
+            Margin="6"
+            BackgroundColor="White"
+            BorderColor="Black"
+            BorderThickness="1"
+            CornerRadius="12">
+            <StackLayout Margin="16,8" Orientation="Vertical">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    --><!--<ffimageloading:CachedImage
+                        Margin="0,0,0,0"
+                        ErrorPlaceholder="profile_placeholder.png"
+                        HeightRequest="40"
+                        HorizontalOptions="Center"
+                        LoadingPlaceholder="profile_placeholder.png"
+                        Source="{Binding Client.Image}"
+                        VerticalOptions="Center"
+                        WidthRequest="40">
+                        <ffimageloading:CachedImage.Transformations>
+                            <fftransformations:CircleTransformation />
+                        </ffimageloading:CachedImage.Transformations>
+                    </ffimageloading:CachedImage>--><!--
+                    <Label
+                        Grid.Column="1"
+                        FontSize="Medium"
+                        Text="{Binding Client.Name}"
+                        TextColor="Black"
+                        VerticalOptions="Center"
+                        VerticalTextAlignment="Center" />
+                    <Label
+                        Grid.Column="2"
+                        FontAttributes="Bold"
+                        FontSize="Large"
+                        HorizontalOptions="End"
+                        HorizontalTextAlignment="End"
+                        Text="{Binding Amount, StringFormat='{0:C0}'}"
+                        VerticalTextAlignment="Center" />
+                </Grid>
+                <Grid>
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span
+                                    FontSize="16"
+                                    Text="Hora de recojida: "
+                                    TextColor="Black" />
+                                <Span Text="{Binding PickupTime, StringFormat='{}{0:hh\:mm}'}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        HorizontalTextAlignment="End"
+                        Text="{Binding State, Converter={StaticResource TextOrderStateConverter}}"
+                        TextColor="{Binding State, Converter={StaticResource TextColorStateConverter}}" />
+                </Grid>
+                <BoxView
+                    BackgroundColor="Gray"
+                    HeightRequest="1"
+                    WidthRequest="50" />
+                <StackLayout BindableLayout.ItemsSource="{Binding OrderProducts}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Orientation="Horizontal">
+                                <pancakeview:PancakeView
+                                    Padding="2"
+                                    BorderColor="Gray"
+                                    CornerRadius="2">
+                                    <Label Text="{Binding Quantity}" />
+                                </pancakeview:PancakeView>
+                                <Label Text="{Binding Name}" VerticalOptions="Center" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+                <Grid ColumnSpacing="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Grid.Column="0"
+                        BackgroundColor="#25d366"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:OrderViewModel}}, Path=OpenChatCommand}"
+                        CommandParameter="{Binding}"
+                        IsVisible="{Binding Client.Phone, Converter={StaticResource NegateIsNullOrEmptyConverter}}"
+                        Style="{StaticResource Key=ButtonStyle}"
+                        Text="Chat" />
+                    <Button
+                        Grid.Column="1"
+                        BackgroundColor="Red"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:OrderViewModel}}, Path=CancelOrderCommand}"
+                        CommandParameter="{Binding}"
+                        IsVisible="{Binding State, Converter={StaticResource AcceptedOrderStateConverter}}"
+                        Style="{StaticResource Key=ButtonStyle}"
+                        Text="Rechazar" />
+
+                    <Button
+                        Grid.Column="2"
+                        BackgroundColor="Green"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:OrderViewModel}}, Path=AcceptOrderCommand}"
+                        CommandParameter="{Binding}"
+                        IsVisible="{Binding State, Converter={StaticResource AcceptedOrderStateConverter}}"
+                        Style="{StaticResource Key=ButtonStyle}"
+                        Text="Aceptar" />
+
+                </Grid>
+            </StackLayout>
+        </pancakeview:PancakeView>-->
+    </ContentView.Content>
+</ContentView>
