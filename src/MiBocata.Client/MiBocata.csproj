@@ -38,8 +38,6 @@
 
     <!-- Images -->
     <MauiImage Include="Resources\Images\*" />
-    <AdditionalFiles Remove="C:\Users\mbarrera\Git\MiBocata\src\MiBocata.Client\\CodeAnalysis\Menees.Analyzers.Settings.xml" />
-    <MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
 
     <!-- Custom Fonts -->
     <!--<MauiFont Include="Resources\Fonts\*" />-->
@@ -52,42 +50,11 @@
     <PackageReference Include="CSharp.OperationResult" Version="0.1.6" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
-    <!--<PackageReference Include="PubSub" Version="4.0.2" />-->
-    <!--<PackageReference Include="Rg.Plugins.Popup" Version="1.2.0.223" />-->
-    <!--<PackageReference Include="Serilog" Version="2.11.0" />
-    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />-->
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Commons\Mibocata.Core\Mibocata.Core.csproj" />
-    <ProjectReference Include="..\..\..\Commons\Models\Models.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Services\Commons\NotificationService\OneSignalService.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Resources\Images\defaultstore.jpg" />
-    <None Remove="Resources\Images\food.jpg" />
-    <None Remove="Resources\Images\outline_shopping_cart_black.png" />
-    <None Remove="Resources\Images\profile_placeholder.png" />
-    <None Remove="Resources\Images\robotfoot.png" />
-    <None Remove="Resources\Images\round_add_circle_outline_black_24.png" />
-    <None Remove="Resources\Images\round_perm_identity_black_24.png" />
-    <None Remove="Resources\Images\round_remove_circle_outline_black_24.png" />
-    <None Remove="Resources\Images\round_store_black_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="AppHomeShell.xaml.cs">
-      <DependentUpon>AppHomeShell.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <MauiXaml Update="AppHomeShell.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="AppShell.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
+    <ProjectReference Include="..\Commons\Mibocata.Core\Mibocata.Core.csproj" />
+    <ProjectReference Include="..\Commons\Models\Models.csproj" />
   </ItemGroup>
 
 </Project>

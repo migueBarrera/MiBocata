@@ -50,8 +50,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\Commons\Mibocata.Core\Mibocata.Core.csproj" />
-		<ProjectReference Include="..\..\..\Commons\Models\Models.csproj" />
+		<ProjectReference Include="..\Commons\Mibocata.Core\Mibocata.Core.csproj" />
+		<ProjectReference Include="..\Commons\Models\Models.csproj" />
 	</ItemGroup>
 
 </Project>

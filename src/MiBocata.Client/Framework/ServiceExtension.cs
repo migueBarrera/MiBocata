@@ -4,9 +4,7 @@ using MiBocata.Features.Orders;
 using MiBocata.Features.Profile;
 using MiBocata.Features.Register;
 using MiBocata.Features.Stores;
-using MiBocata.Services.Commons.NotificationService;
 using MiBocata.Services.DialogService;
-using MiBocata.Services.NotificationService;
 
 namespace MiBocata.Framework;
 
@@ -45,7 +43,6 @@ internal static class ServiceExtension
     {
         builder.Services.AddTransient<IAppCenterSecretService, AppCenterSecretService>();
         builder.Services.AddTransient<IAppSecretsService, AppSecretsService>();
-        builder.Services.AddTransient<INotificationService, EmptyNotificationService>();
         builder.Services.AddTransient<IDialogService, DialogService>();
         builder.Services.AddTransient<IRegisterService, RegisterService>();
 
