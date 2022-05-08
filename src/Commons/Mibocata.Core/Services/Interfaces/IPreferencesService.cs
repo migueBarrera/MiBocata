@@ -1,27 +1,26 @@
 ﻿using Models.Core;
 
-namespace Mibocata.Core.Services.Interfaces
+namespace Mibocata.Core.Services.Interfaces;
+
+public interface IPreferencesService
 {
-    public interface IPreferencesService
-    {
-        void SetShopkeeper(Shopkeeper shopkeeper);
+    void SetShopkeeper(Shopkeeper shopkeeper);
 
-        void SetClient(Client client);
+    void SetClient(Client client);
 
-        Shopkeeper GetShopkeeper();
+    Shopkeeper GetShopkeeper();
 
-        Client GetClient();
+    Client GetClient();
 
-        string GetToken();
+    string GetToken();
 
-        void SetStore(Store store);
+    void SetStore(Store store);
 
-        Store GetStore();
+    Store GetStore();
 
-        void SetPushToken(string token);
+    void SetPushToken(string token);
 
-        string PushToken();
+    string PushToken();
 
-        bool IsLogged();
-    }
+    bool IsLogged();
 }

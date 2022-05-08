@@ -1,6 +1,4 @@
-﻿using Microsoft.UI.Xaml;
-
-namespace MiBocata.WinUI;
+﻿namespace MiBocata.WinUI;
 
 public partial class App : MauiWinUIApplication
 {

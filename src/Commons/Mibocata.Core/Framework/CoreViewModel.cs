@@ -1,6 +1,9 @@
 ﻿namespace Mibocata.Core.Framework;
 
-public class CoreViewModel : ObservableObject, INavigationAwareViewModel
+public class CoreViewModel : 
+    ObservableObject, 
+    INavigationAwareViewModel,
+    IBusyViewModel
 {
     private bool isBusy;
 

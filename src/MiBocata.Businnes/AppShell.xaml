@@ -11,7 +11,7 @@
     <ShellContent
         Title="Sign in"
         ContentTemplate="{DataTemplate signIn:LogInPage}"
-        Route="MainPage" />
+        Route="LogInPage" />
 
     <ShellContent
         Title="Sign up"

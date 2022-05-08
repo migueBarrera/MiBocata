@@ -1,5 +1,4 @@
-﻿using MiBocata.Businnes.Framework;
-using Mibocata.Core.Services.Interfaces;
+﻿using Mibocata.Core.Services.Interfaces;
 
 namespace MiBocata.Businnes.Services
 {

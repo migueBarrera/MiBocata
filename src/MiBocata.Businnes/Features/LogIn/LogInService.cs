@@ -1,11 +1,11 @@
-﻿using MiBocata.Businnes.Services.Commons.Navigation;
-using Mibocata.Core.Features.Auth;
+﻿using Mibocata.Core.Features.Auth;
 using Mibocata.Core.Features.Refit;
 using Mibocata.Core.Features.Stores;
 using Mibocata.Core.Services.Interfaces;
 using Models.Core;
 using Models.Responses;
 using MiBocata.Features.LogIn;
+using Mibocata.Core.Framework;
 
 namespace MiBocata.Businnes.Features.LogIn;
 
@@ -13,13 +13,11 @@ public class LogInService : ILogInService
 {
     private readonly IAuthApi authApi;
     private readonly IStoreApi storeApi;
-    private readonly IMiBocataNavigationService miBocataNavigationService;
     private readonly IPreferencesService preferencesService;
     private readonly ILoggingService loggingService;
     private readonly ITaskHelperFactory taskHelperFactory;
 
     public LogInService(
-        IMiBocataNavigationService miBocataNavigationService,
         IPreferencesService preferencesService,
         ILoggingService loggingService,
         ITaskHelperFactory taskHelperFactory,
@@ -27,16 +25,18 @@ public class LogInService : ILogInService
     {
         this.authApi = refitService.InitRefitInstance<IAuthApi>();
         this.storeApi = refitService.InitRefitInstance<IStoreApi>(isAutenticated: true);
-        this.miBocataNavigationService = miBocataNavigationService;
         this.preferencesService = preferencesService;
         this.loggingService = loggingService;
         this.taskHelperFactory = taskHelperFactory;
     }
 
-    public async Task DoLoginAsync(string email, string pass)
+    public async Task DoLoginAsync(
+        IBusyViewModel busyViewModel,
+        string email, 
+        string pass)
     {
         var result = await taskHelperFactory.
-           CreateInternetAccessViewModelInstance(loggingService/*, this*/).
+           CreateInternetAccessViewModelInstance(loggingService, busyViewModel).
            TryExecuteAsync(
            () => authApi.SignIn(new Models.Requests.ShopkeeperSignInRequest()
            {
@@ -58,11 +58,11 @@ public class LogInService : ILogInService
         {
             var responseStore = await storeApi.Get(shopkeeper.IdStore);
             preferencesService.SetStore(StoreResponse.Parse(responseStore));
-            await miBocataNavigationService.NavigateToHome();
+            App.Current.MainPage = new AppHomeShell();
         }
         else
         {
-            await miBocataNavigationService.NavigateToChooseLocationStore();
+            //await miBocataNavigationService.NavigateToChooseLocationStore();
         }
     }
 }

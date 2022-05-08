@@ -5,12 +5,7 @@
              x:Name="HelpYou">
   <ContentView.Content>
         <StackLayout Orientation="Horizontal" Margin="16,32" >
-            <!--<pancakeview:PancakeView
-                CornerRadius="18"
-                HasShadow="True"
-                BorderThickness="0">
-                <Image Source="https://cdn.dribbble.com/users/1104048/screenshots/6509120/artboard_2.png" Aspect="AspectFill" HeightRequest="86" WidthRequest="86"/>
-            </pancakeview:PancakeView>-->
+            <Image Source="https://cdn.dribbble.com/users/1104048/screenshots/6509120/artboard_2.png" Aspect="AspectFill" HeightRequest="86" WidthRequest="86"/>
             <StackLayout Orientation="Vertical">
                 <Label Text="¿Necesitas ayuda?¿Más información?" TextColor="Black" FontSize="Large"/>
                 <Label Text="Te atendemos encantados via llamadas o WhatsApp, pulsa en este recuadro" FontSize="12" />

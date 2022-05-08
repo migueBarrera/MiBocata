@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Models.Requests;
+﻿using Models.Requests;
 using Models.Responses;
 using Refit;
 

@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
-using MiBocata.Businnes.Services.Commons.Navigation;
 using Mibocata.Core.Features.Products;
 using Mibocata.Core.Features.Refit;
 using Mibocata.Core.Framework;
@@ -15,7 +14,6 @@ namespace MiBocata.Businnes.Features.Products
         private bool hasProducts;
         private Store store;
 
-        private readonly INavigationService navigationService;
         private readonly IPreferencesService preferencesService;
         private readonly ILoggingService loggingService;
         private readonly ITaskHelperFactory taskHelperFactory;
@@ -24,13 +22,11 @@ namespace MiBocata.Businnes.Features.Products
         private ObservableCollection<Product> products;
 
         public ProductsViewModel(
-            INavigationService navigationService,
             IPreferencesService preferencesService,
             ILoggingService loggingService,
             IRefitService refitService,
             ITaskHelperFactory taskHelperFactory)
         {
-            this.navigationService = navigationService;
             this.preferencesService = preferencesService;
             this.loggingService = loggingService;
             this.taskHelperFactory = taskHelperFactory;
@@ -75,7 +71,7 @@ namespace MiBocata.Businnes.Features.Products
 
         private async Task NewProductCommandAsync()
         {
-            await navigationService.NavigateToAsync<NewProductViewModel>();
+            //TODO await navigationService.NavigateToAsync<NewProductViewModel>();
         }
     }
 }

@@ -1,11 +1,9 @@
-﻿namespace MiBocata.Businnes.Features.LogIn.Templates
+﻿namespace MiBocata.Businnes.Features.LogIn.Templates;
+
+public partial class HelpYouView
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class HelpYouView : ContentView
+    public HelpYouView()
     {
-        public HelpYouView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

@@ -1,10 +1,9 @@
-﻿namespace Mibocata.Core.Services.Interfaces
-{
-    public interface ILogFileSystemService
-    {
-        //string LogFolderName();
-        //string LogTemplateFilename;
+﻿namespace Mibocata.Core.Services.Interfaces;
 
-        string LogFolderPath { get; }
-    }
+public interface ILogFileSystemService
+{
+    //string LogFolderName();
+    //string LogTemplateFilename;
+
+    string LogFolderPath { get; }
 }

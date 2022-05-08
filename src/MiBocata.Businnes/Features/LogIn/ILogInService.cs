@@ -1,6 +1,8 @@
-﻿namespace MiBocata.Features.LogIn;
+﻿using Mibocata.Core.Framework;
+
+namespace MiBocata.Features.LogIn;
 
 public interface ILogInService
 {
-    Task DoLoginAsync(string email, string pass);
+    Task DoLoginAsync(IBusyViewModel busyViewModel, string email, string pass);
 }

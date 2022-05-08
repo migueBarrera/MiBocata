@@ -1,9 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿namespace Mibocata.Core.Services.Interfaces;
 
-namespace Mibocata.Core.Services.Interfaces
+public interface IGeolocationService
 {
-    public interface IGeolocationService
-    {
-        Task<Location> GetLastKnownLocationAsync();
-    }
+    Task<Location> GetLastKnownLocationAsync();
 }

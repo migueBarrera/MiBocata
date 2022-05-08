@@ -1,7 +1,6 @@
-﻿namespace Mibocata.Core.Services.Interfaces
+﻿namespace Mibocata.Core.Services.Interfaces;
+
+public interface IKeyboardService
 {
-    public interface IKeyboardService
-    {
-        void HideSoftKeyboard();
-    }
+    void HideSoftKeyboard();
 }

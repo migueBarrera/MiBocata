@@ -1,10 +1,6 @@
-﻿using System.IO;
-using System.Threading.Tasks;
+﻿namespace Mibocata.Core.Services.Interfaces;
 
-namespace Mibocata.Core.Services.Interfaces
+public interface IImagesService
 {
-    public interface IImagesService
-    {
-        Task<string> UploadImage(Stream simageStream);
-    }
+    Task<string> UploadImage(Stream simageStream);
 }

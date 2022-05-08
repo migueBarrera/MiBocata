@@ -1,7 +1,6 @@
-﻿namespace Mibocata.Core.Services.Interfaces
+﻿namespace Mibocata.Core.Services.Interfaces;
+
+public interface IGeocodingService
 {
-    public interface IGeocodingService
-    {
-        Task<Placemark> GetPlaceMark(double latidude, double longitude);
-    }
+    Task<Placemark> GetPlaceMark(double latidude, double longitude);
 }

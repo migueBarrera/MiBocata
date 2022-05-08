@@ -1,4 +1,5 @@
-﻿using MiBocata.Businnes;
+﻿using Mibocata.Core;
+using MiBocata.Businnes;
 using MiBocata.Framework;
 
 public static class MauiProgram
@@ -9,6 +10,7 @@ public static class MauiProgram
 		builder
 			.UseMauiApp<App>()
 			.ConfigureEssentials()
+			.ConfigureCoreServices()
 			.ConfigureServices()
 			.ConfigureViewModels()
 			.ConfigurePages()

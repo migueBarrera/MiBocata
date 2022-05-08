@@ -1,13 +1,12 @@
-﻿namespace Mibocata.Core.Services.Interfaces
+﻿namespace Mibocata.Core.Services.Interfaces;
+
+public interface ISessionService
 {
-    public interface ISessionService
-    {
-        void Save<T>(string key, T data);
+    void Save<T>(string key, T data);
 
-        T Get<T>(string key);
+    T Get<T>(string key);
 
-        void Remove(string key);
+    void Remove(string key);
 
-        void Clear();
-    }
+    void Clear();
 }

@@ -1,11 +1,11 @@
 ﻿using System.Windows.Input;
 using MiBocata.Businnes.Framework;
 using MiBocata.Businnes.Helpers;
-using MiBocata.Businnes.Services.Commons.Navigation;
 using Mibocata.Core.Framework;
-using Mibocata.Core.Services.Interfaces;
 using Models.Core;
 using MiBocata.Features.LogIn;
+using Mibocata.Core.Services.Interfaces;
+using MiBocata.Businnes.Features.Registro;
 
 namespace MiBocata.Businnes.Features.LogIn;
 
@@ -13,18 +13,15 @@ public class LogInViewModel : CoreViewModel
 {
     private Shopkeeper todoItem;
     private readonly ILogInService logInService;
-    private readonly IMiBocataNavigationService miBocataNavigationService;
     private readonly IDialogService dialogService;
     private readonly IKeyboardService keyboardService;
 
     public LogInViewModel(
         ILogInService logInService,
-        IMiBocataNavigationService miBocataNavigationService,
         IDialogService dialogService,
         IKeyboardService keyboardService)
     {
         this.logInService = logInService;
-        this.miBocataNavigationService = miBocataNavigationService;
         this.dialogService = dialogService;
         this.keyboardService = keyboardService;
 
@@ -55,7 +52,7 @@ public class LogInViewModel : CoreViewModel
             User = new Shopkeeper()
             {
                 Email = "mbmdevelop@gmail.com",
-                Password = "123456",
+                Password = "12345",
             };
         }
 #pragma warning restore CS0162 // Unreachable code detected
@@ -65,7 +62,7 @@ public class LogInViewModel : CoreViewModel
 
     private async Task CallUsCommandd()
     {
-        if (Device.RuntimePlatform == Device.UWP)
+        if (DeviceInfo.Platform == DevicePlatform.WinUI)
         {
             await dialogService.ShowAlertAsync("603033613", "Llamenos sin compromiso");
             return;
@@ -88,7 +85,7 @@ public class LogInViewModel : CoreViewModel
             return;
         }
 
-        await logInService.DoLoginAsync(User.Email, User.Password);
+        await logInService.DoLoginAsync(this, User.Email, User.Password);
     }
 
     private async Task<bool> ValidateAsync()
@@ -110,6 +107,6 @@ public class LogInViewModel : CoreViewModel
 
     private async Task GoToRegisterCommandAsync()
     {
-        await miBocataNavigationService.NavigateToRegister();
+        await Shell.Current.GoToAsync($"{nameof(RegisterPage)}");
     }
 }

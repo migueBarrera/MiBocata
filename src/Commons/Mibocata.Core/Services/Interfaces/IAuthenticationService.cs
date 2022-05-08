@@ -1,7 +1,6 @@
-﻿namespace Mibocata.Core.Services.Interfaces
+﻿namespace Mibocata.Core.Services.Interfaces;
+
+public interface IAuthenticationService
 {
-    public interface IAuthenticationService
-    {
-        bool IsLoggedIn { get; }
-    }
+    bool IsLoggedIn { get; }
 }
