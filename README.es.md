@@ -1,5 +1,6 @@
 # Mibocata - Aplicacción de ejemplo
 
+[![es](https://img.shields.io/badge/lang-es-green.svg)](https://github.com/migueBarrera/MiBocata/blob/master/README.es.md)
 [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/migueBarrera/MiBocata/blob/master/README.md)
 
 ### Este repositorio contiene una serie de proyectos que representan todo el sofware de una empresa ficticia tipo JustEat, Glovo u otras.
