@@ -1,26 +1,16 @@
-# MiBocata - Ejemplos de Aplicaciones de Referencia
+# Mibocata - Sample Application
 
-### Este repositorio contiene una serie de proyectos que representan todo el sofware de una empresa ficticia tipo JustEat, Glovo u otras.
-### Contiene el backend, aplicación de gestion de pedidos y store enfocada al empresario y aplicación enfocada a los clientes que realizarán pedidos a las tiendas.
+[![es](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/migueBarrera/MiBocata/blob/master/README.es.md)
 
-## Tecnologías
-* El backend usa Asp .net core Api con base de datos MySql
-* El acceso a datos se realiza con Entity Framework Core y los modelos son compartidos en todos los proyectos
-* Ambas apps (Businnes y Client) estan realizadas en Xamarin Forms
-* Bussines implementa UWP , IOS y Android
-* Client implementa IOS y Android
-------
+### This repository contains a series of projects that represent all the software of a fictitious company like JustEat, Glovo or others.
+### Contains the backend, order and store management application focused on the entrepreneur and application focused on the customers who will place orders to the stores.
 
-|CI Tool                    |Build Status|
-|---------------------------|---|
-| App Center, Android Client    |  [![Build status](https://build.appcenter.ms/v0.1/apps/10197ac5-31b7-420c-8192-1c21b668a542/branches/master/badge)](https://appcenter.ms)|
-| App Center, Android Businnes  | [![Build status](https://build.appcenter.ms/v0.1/apps/4111f84e-a2af-47b0-a910-6d3b202a37be/branches/master/badge)](https://appcenter.ms)  |
-
-Puedes descargar la app apuntando al backend en mi repositorio publicado
-
-* [Android Client](https://install.appcenter.ms/orgs/mibocata/apps/mibocata.android.client/distribution_groups/public)
-* [Android Businnes](https://install.appcenter.ms/orgs/mibocata/apps/mibocata.android.busnnes/distribution_groups/public)
-
+## Technologies
+* Both apps (Businnes and Client) are made with [.NET 6 MAUI](https://docs.microsoft.com/es-es/dotnet/maui/what-is-maui)
+* Bussines implements WinUI, IOS and Android.
+* Client implements IOS and Android
+* Backend uses Asp .net6 Api with MySql database
+* Data access is done with Entity Framework Core and models are shared in all projects.
 ------
 
 ### Screenshots
@@ -40,21 +30,13 @@ Puedes descargar la app apuntando al backend en mi repositorio publicado
 ------
 
 ### TODO
-- [ ] CI/CD en todas las plataformas
-- [ ] Pasar CI/CD a los pipelines de DevOps
-- [ ] Poner al mismo nivel los proyectos IOS
-- [ ] Añadir unit test
-- [ ] Añadir visual test
-- [ ] Añadir modelo de la base de datos al repo
+- [ ] End port to .net maui
 
 # Contributing
-Este proyecto acepta cualquier tipo de aporte de todos los usuarios. Solo tienes que hacer tu Pull Request.
-
-# Did you like it?
-
-<a href='https://ko-fi.com/Y8Y41MNBQ' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
-
-Your caffeine helps me a lot :sparkles:
+This project accepts any kind of contribution from all users. Just make your Pull Request.
 
 **Happy coding! :sparkles: :camel: :boom:**
 
+
+
+Translated with www.DeepL.com/Translator (free version)
