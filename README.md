@@ -1,4 +1,4 @@
-# Mibocata - Sample Application
+# Mibocata - .NET MAUI Sample Application
 
 [![es](https://img.shields.io/badge/lang-es-green.svg)](https://github.com/migueBarrera/MiBocata/blob/master/README.es.md)
 [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/migueBarrera/MiBocata/blob/master/README.md)
