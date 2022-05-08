@@ -1,6 +1,5 @@
-﻿namespace Models.Requests
+﻿namespace Models.Requests;
+
+public class UpdateOrderRequest
 {
-    public class UpdateOrderRequest
-    {
-    }
 }

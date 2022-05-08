@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace Mibocata.Core.Framework
 {
-    public abstract class BaseBindable : INotifyPropertyChanged
+    public abstract class ObservableObject : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

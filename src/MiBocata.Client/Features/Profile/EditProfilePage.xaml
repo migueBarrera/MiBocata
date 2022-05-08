@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<framework:CorePage
+    x:Class="MiBocata.Features.Profile.EditProfilePage"
+               xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:framework="clr-namespace:Mibocata.Core.Framework;assembly=Mibocata.Core"
+    Title="Editar perfil"
+    Visual="Material">
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid>
+                <Grid Margin="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <StackLayout>
+                        <!--<ffimageloading:CachedImage
+                            Margin="0,16,0,24"
+                            ErrorPlaceholder="profile_placeholder.png"
+                            HeightRequest="90"
+                            HorizontalOptions="Center"
+                            LoadingPlaceholder="profile_placeholder.png"
+                            Source="{Binding Productimage}"
+                            VerticalOptions="Center"
+                            WidthRequest="90">
+                            <ffimageloading:CachedImage.Transformations>
+                                <fftransformations:CircleTransformation />
+                            </ffimageloading:CachedImage.Transformations>
+                            <ffimageloading:CachedImage.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding TakeImageCommand}" />
+                            </ffimageloading:CachedImage.GestureRecognizers>
+                        </ffimageloading:CachedImage>-->
+                        <Entry
+                            Keyboard="Email"
+                            Placeholder="Email"
+                            Text="{Binding Client.Email}" />
+                        <Entry Placeholder="Nombre" Text="{Binding Client.Name}" />
+                        <Entry
+                            Keyboard="Telephone"
+                            Placeholder="Telefono"
+                            Text="{Binding Client.Phone}" />
+
+                    </StackLayout>
+
+                    <Grid Grid.Row="1">
+                        <Button Command="{Binding SaveCommand}" Text="Guardar" />
+                    </Grid>
+                </Grid>
+
+                <ActivityIndicator
+                    HorizontalOptions="Center"
+                    IsRunning="{Binding IsBusy}"
+                    IsVisible="{Binding IsBusy}"
+                    VerticalOptions="Center" />
+            </Grid>
+
+
+        </ScrollView>
+    </ContentPage.Content>
+</framework:CorePage>

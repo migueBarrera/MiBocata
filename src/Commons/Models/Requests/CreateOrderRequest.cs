@@ -1,8 +1,4 @@
-﻿using Models.Core;
-using System;
-using System.Collections.Generic;
-
-namespace Models.Requests;
+﻿namespace Models.Requests;
 
 public class CreateOrderRequest
 {

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<framework:CorePage
+    x:Class="MiBocata.Features.Stores.StoresPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:framework="clr-namespace:Mibocata.Core.Framework;assembly=Mibocata.Core"
+    xmlns:local="clr-namespace:MiBocata.Features.Stores">
+    <ContentPage.Content>
+
+        <CollectionView
+            ItemsSource="{Binding Stores}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <VerticalStackLayout
+                            Margin="8">
+                            <Image
+                                Source="defaultstore.jpg"
+                                Aspect="AspectFill"
+                                HeightRequest="150"/>
+                            <Label 
+                                Text="{Binding Description}"
+                                FontAttributes="Bold"
+                                FontSize="16"
+                                TextColor="Black"/>
+                        </VerticalStackLayout>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                Command="{Binding GoToStoreDetailCommand, Source={RelativeSource AncestorType={x:Type local:StoresViewModel}}}"
+                                CommandParameter="{Binding .}"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </ContentPage.Content>
+</framework:CorePage>

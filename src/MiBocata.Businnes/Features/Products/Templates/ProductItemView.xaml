@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="MiBocata.Businnes.Features.Products.Templates.ProductItemView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <ContentView.Content>
+        <Grid Margin="16" ColumnSpacing="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <!--<ffimageloading:CachedImage
+                ErrorPlaceholder="profile_placeholder.png"
+                HeightRequest="60"
+                HorizontalOptions="Center"
+                LoadingPlaceholder="profile_placeholder.png"
+                Source="{Binding Image}"
+                VerticalOptions="Center"
+                WidthRequest="60">
+                <ffimageloading:CachedImage.Transformations>
+                    <fftransformations:CircleTransformation />
+                </ffimageloading:CachedImage.Transformations>
+            </ffimageloading:CachedImage>-->
+            <StackLayout Grid.Column="1" Spacing="0">
+                <Label
+                    FontSize="Large"
+                    Text="{Binding Name}"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+                <Label
+                    FontSize="Medium"
+                    Text="{Binding Description}"
+                    VerticalOptions="Center" />
+            </StackLayout>
+
+            <Label
+                Grid.Column="2"
+                FontAttributes="Bold"
+                FontSize="Large"
+                Text="{Binding UnitPrice, StringFormat='{0:C0}'}"
+                TextColor="Black"
+                VerticalOptions="Center" />
+        </Grid>
+    </ContentView.Content>
+</ContentView>

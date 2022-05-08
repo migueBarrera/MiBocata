@@ -1,6 +1,4 @@
-﻿using Models.Core;
-
-namespace Models.Requests;
+﻿namespace Models.Requests;
 
 public class ClientUpdateRequest
 {
