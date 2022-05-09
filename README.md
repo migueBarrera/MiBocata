@@ -38,6 +38,3 @@ This project accepts any kind of contribution from all users. Just make your Pul
 
 **Happy coding! :sparkles: :camel: :boom:**
 
-
-
-Translated with www.DeepL.com/Translator (free version)
