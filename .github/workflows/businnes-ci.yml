@@ -2,12 +2,12 @@ name: CI BUSINNES
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
     paths:
       - 'src/MiBocata.Businnes/**'
       - '.github/workflows/businnes-ci.yml'
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
     paths:
       - 'src/MiBocata.Businnes/**'
       - '.github/workflows/businnes-ci.yml'

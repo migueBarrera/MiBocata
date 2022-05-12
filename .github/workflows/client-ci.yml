@@ -2,12 +2,12 @@ name: CI CLIENT
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
     paths:
       - 'src/MiBocata.Client/**'
       - '.github/workflows/client-ci.yml'
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
     paths:
       - 'src/MiBocata.Client/**'
       - '.github/workflows/client-ci.yml'
