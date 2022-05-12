@@ -31,12 +31,14 @@
                     Margin="32,-34,0,0"
                     FontSize="32"
                     Text="Join"
+                    FontAttributes="Bold"
                     TextColor="Black" />
                 <Label
                     Grid.Row="2"
                     Margin="58,-14,0,0"
                     FontSize="32"
                     Text="us"
+                    FontAttributes="Bold"
                     TextColor="Black" />
                 <StackLayout
                     Grid.Row="3"

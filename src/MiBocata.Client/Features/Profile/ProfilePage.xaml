@@ -42,16 +42,20 @@
                         Margin="8,4,0,4"
                         Spacing="4">
                         <Label 
-                            FontSize="24"
+                            >
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <FormattedString.Spans>
+                                        <Span Text="Hello " FontSize="28"
                             TextColor="Black"
-                            Text="Hello "
                             FontAttributes="Bold"/>
-
-                        <Label 
-                            FontSize="24"
+                                        <Span Text="{Binding Client.Name}" FontSize="28"
                             TextColor="Black"
-                            Text="{Binding Client.Name}"
                             FontAttributes="Bold"/>
+                                    </FormattedString.Spans>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
 
                     </HorizontalStackLayout>
                  

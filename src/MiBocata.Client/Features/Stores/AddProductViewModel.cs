@@ -5,9 +5,11 @@ namespace MiBocata.Features.Stores;
 public class AddProductViewModel : CoreViewModel
 {
     private OrderProduct product;
+    private readonly ISessionService sessionService;
 
-    public AddProductViewModel()
+    public AddProductViewModel(ISessionService sessionService)
     {
+        this.sessionService = sessionService;
     }
 
     public OrderProduct Product
@@ -21,7 +23,7 @@ public class AddProductViewModel : CoreViewModel
     private async Task AddCommandExecute()
     {
         //await Hub.PublishAsync(Product);
-        //await PopupNavigation.Instance.PopAllAsync();
+        await Shell.Current.GoToAsync("..");
     }
 
     public override Task OnAppearingAsync()
@@ -32,6 +34,8 @@ public class AddProductViewModel : CoreViewModel
         //{
         //    Product = OrderProduct.Parse(p);
         //}
+        var p = sessionService.Get<Product>("AddProduct");
+        Product = OrderProduct.Parse(p);
 
         return base.OnAppearingAsync();
     }

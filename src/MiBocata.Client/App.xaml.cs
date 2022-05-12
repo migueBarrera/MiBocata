@@ -21,5 +21,6 @@ public partial class App : Application
         Routing.RegisterRoute(nameof(EditProfilePage), typeof(EditProfilePage));
         Routing.RegisterRoute(nameof(OrdersPage), typeof(OrdersPage));
         Routing.RegisterRoute(nameof(StoreDetailPage), typeof(StoreDetailPage));
+        Routing.RegisterRoute(nameof(AddProductPage), typeof(AddProductPage));
     }
 }

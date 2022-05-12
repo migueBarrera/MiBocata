@@ -2,8 +2,9 @@
 
 public partial class AddProductPage
 {
-    public AddProductPage()
+    public AddProductPage(AddProductViewModel viewModel)
     {
         InitializeComponent();
+        BindingContext = viewModel;
     }
 }

@@ -31,8 +31,13 @@
             Route="EditProfilePage" />
     
     <ShellContent
-           Title="Edit profile"
+            Title="Store detail"
             ContentTemplate="{DataTemplate stores:StoreDetailPage}"
             Route="StoreDetailPage" />
+    
+    <ShellContent
+           Title="Add product"
+            ContentTemplate="{DataTemplate stores:AddProductPage}"
+            Route="AddProductPage" />
 
 </Shell>

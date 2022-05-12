@@ -1,0 +1,50 @@
+name: CI BUSINNES
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'src/MiBocata.Businnes/**'
+      - '.github/workflows/businnes-ci.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'src/MiBocata.Businnes/**'
+      - '.github/workflows/businnes-ci.yml'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  CSPROJ_PATH: src/MiBocata.Businnes/MiBocata.Businnes.csproj
+
+jobs:
+  build-mobile:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup .NET 6
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 6.0.x
+          include-prerelease: true
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Install MAUI Workloads
+        run: |
+          dotnet workload install maui --source https://api.nuget.org/v3/index.json
+
+      - name: Build MAUI Mobile app
+        shell: pwsh
+        run: |
+          dotnet build ${{ env.CSPROJ_PATH }} -bl:mobile.binlog
+
+      - name: Archive build log
+        uses: actions/upload-artifact@v2
+        with:
+          name: logs
+          path: '*.binlog'

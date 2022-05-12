@@ -12,7 +12,6 @@ public class StoreDetailViewModel : CoreViewModel
     private readonly IPreferencesService preferencesService;
     private readonly ISessionService sessionService;
     private readonly IDialogService dialogService;
-   // private Hub Hub = Hub.Default;
 
     public StoreDetailViewModel(
         IPreferencesService preferencesService,
@@ -23,6 +22,10 @@ public class StoreDetailViewModel : CoreViewModel
         this.preferencesService = preferencesService;
         this.sessionService = sessionService;
         this.dialogService = dialogService;
+
+        AddRemoveItemCommand = new AsyncCommand<Product>(AddRemoveItemCommandAsync);
+
+        GoToCartCommand = new AsyncCommand(async () => await GoToCartCommandAsync());
     }
 
     public Store Store
@@ -30,16 +33,16 @@ public class StoreDetailViewModel : CoreViewModel
         get => store;
         set => SetAndRaisePropertyChanged(ref store, value);
     }
-    
+
     public int CountItems
     {
         get => countItems;
         set => SetAndRaisePropertyChanged(ref countItems, value);
     }
 
-    public ICommand AddRemoveItemCommand => new AsyncCommand<Product>(AddRemoveItemCommandAsync);
+    public ICommand AddRemoveItemCommand { get; set; }
 
-    public ICommand GoToCartCommand => new AsyncCommand(async () => await GoToCartCommandAsync());
+    public ICommand GoToCartCommand { get; set; }
 
     public override Task OnAppearingAsync()
     {
@@ -68,6 +71,8 @@ public class StoreDetailViewModel : CoreViewModel
 
     private async Task AddRemoveItemCommandAsync(Product product)
     {
+        sessionService.Save("AddProduct", product);
+        await Shell.Current.GoToAsync(nameof(AddProductPage));
         //await App.De.Resolve<INavigationService>().NavigateToPopupAsync<AddProductViewModel>(product, false);
     }
 

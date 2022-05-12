@@ -17,7 +17,7 @@
                     HorizontalOptions="Center"
                     Text="¡Welcome!"
                     TextColor="Black" />
-                <Entry Placeholder="Correo electrónico" Text="{Binding User.Email}" />
+                <Entry Placeholder="Email" Text="{Binding User.Email}" />
                 <Entry
                     IsPassword="True"
                     Placeholder="Password"
