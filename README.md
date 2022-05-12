@@ -3,6 +3,10 @@
 [![es](https://img.shields.io/badge/lang-es-green.svg)](https://github.com/migueBarrera/MiBocata/blob/master/README.es.md)
 [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/migueBarrera/MiBocata/blob/master/README.md)
 
+
+[![CI BUSINNES](https://github.com/migueBarrera/MiBocata/actions/workflows/businnes-ci.yml/badge.svg?branch=master)](https://github.com/migueBarrera/MiBocata/actions/workflows/businnes-ci.yml)
+[![CI CLIENT](https://github.com/migueBarrera/MiBocata/actions/workflows/client-ci.yml/badge.svg?branch=master)](https://github.com/migueBarrera/MiBocata/actions/workflows/client-ci.yml)
+
 ### This repository contains a series of projects that represent all the software of a fictitious company like JustEat, Glovo or others.
 ### Contains the backend, order and store management application focused on the entrepreneur and application focused on the customers who will place orders to the stores.
 
