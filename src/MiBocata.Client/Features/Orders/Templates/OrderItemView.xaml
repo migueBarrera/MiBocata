@@ -45,12 +45,7 @@
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Orientation="Horizontal">
-                            <!--<pancakeview:PancakeView
-                                    Padding="2"
-                                    CornerRadius="2">
-                                <Label Text="{Binding Quantity}" />
-                            </pancakeview:PancakeView>-->
-                                <Label Text="{Binding Quantity}" />
+                            <Label Text="{Binding Quantity}" />
                             <Label Text="{Binding Name}" VerticalOptions="Center" />
                         </StackLayout>
                     </DataTemplate>

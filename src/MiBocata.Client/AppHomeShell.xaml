@@ -4,9 +4,10 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:MiBocata"
-        xmlns:profile="clr-namespace:MiBocata.Features.Profile"
+    xmlns:profile="clr-namespace:MiBocata.Features.Profile"
     xmlns:stores="clr-namespace:MiBocata.Features.Stores"
     xmlns:signIn="clr-namespace:MiBocata.Features.LogIn"
+    xmlns:cart="clr-namespace:MiBocata.Features.Cart"
     xmlns:register="clr-namespace:MiBocata.Features.Register"
     TabBarBackgroundColor="Blue"
     Shell.TabBarForegroundColor="Blue"
@@ -39,5 +40,10 @@
            Title="Add product"
             ContentTemplate="{DataTemplate stores:AddProductPage}"
             Route="AddProductPage" />
+    
+    <ShellContent
+           Title="Cart"
+            ContentTemplate="{DataTemplate cart:CartPage}"
+            Route="CartPage" />
 
 </Shell>

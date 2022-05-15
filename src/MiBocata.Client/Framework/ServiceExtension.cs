@@ -20,6 +20,7 @@ internal static class ServiceExtension
         builder.Services.AddTransient<OrdersPage>();
         builder.Services.AddTransient<StoreDetailPage>();
         builder.Services.AddTransient<AddProductPage>();
+        builder.Services.AddTransient<CartPage>();
 
         return builder;
     }

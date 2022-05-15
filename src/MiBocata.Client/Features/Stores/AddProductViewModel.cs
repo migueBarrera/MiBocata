@@ -23,7 +23,7 @@ public class AddProductViewModel : CoreViewModel
     private async Task AddCommandExecute()
     {
         //await Hub.PublishAsync(Product);
-        await Shell.Current.GoToAsync("..");
+        await Shell.Current.Navigation.PopAsync();
     }
 
     public override Task OnAppearingAsync()

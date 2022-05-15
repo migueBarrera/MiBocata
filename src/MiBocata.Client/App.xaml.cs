@@ -1,4 +1,5 @@
-﻿using MiBocata.Features.LogIn;
+﻿using MiBocata.Features.Cart;
+using MiBocata.Features.LogIn;
 using MiBocata.Features.Orders;
 using MiBocata.Features.Profile;
 using MiBocata.Features.Register;
@@ -22,5 +23,6 @@ public partial class App : Application
         Routing.RegisterRoute(nameof(OrdersPage), typeof(OrdersPage));
         Routing.RegisterRoute(nameof(StoreDetailPage), typeof(StoreDetailPage));
         Routing.RegisterRoute(nameof(AddProductPage), typeof(AddProductPage));
+        Routing.RegisterRoute(nameof(CartPage), typeof(CartPage));
     }
 }

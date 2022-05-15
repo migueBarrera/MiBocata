@@ -1,6 +1,6 @@
 ﻿namespace MiBocata.Features.Cart.Templates;
 
-public partial class CartItemTemplate : ContentView
+public partial class CartItemTemplate
 {
     public CartItemTemplate()
     {

@@ -72,7 +72,8 @@ public class StoreDetailViewModel : CoreViewModel
     private async Task AddRemoveItemCommandAsync(Product product)
     {
         sessionService.Save("AddProduct", product);
-        await Shell.Current.GoToAsync(nameof(AddProductPage));
+        //await Shell.Current.GoToAsync(nameof(AddProductPage));
+        AddProduct(OrderProduct.Parse(product));
         //await App.De.Resolve<INavigationService>().NavigateToPopupAsync<AddProductViewModel>(product, false);
     }
 

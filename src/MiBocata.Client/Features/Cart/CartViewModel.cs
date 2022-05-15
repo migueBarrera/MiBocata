@@ -33,7 +33,11 @@ public class CartViewModel : CoreViewModel
         this.loggingService = loggingService;
         this.taskHelperFactory = taskHelperFactory;
         this.orderApi = refitService.InitRefitInstance<IOrderApi>(isAutenticated: true);
-    }
+
+
+        MakeOrderCommand = new AsyncCommand(async () => await MakeOrderCommandAsync());
+        RemoveItemCommand = new AsyncCommand<OrderProduct>(RemoveItemCommandExecute);
+}
 
     public Store Store
     {
@@ -59,17 +63,19 @@ public class CartViewModel : CoreViewModel
         set => SetAndRaisePropertyChanged(ref listCartProducts, value);
     }
 
-    public ICommand MakeOrderCommand => new AsyncCommand(async () => await MakeOrderCommandAsync());
+    public ICommand MakeOrderCommand {get; set;}
 
-    public ICommand RemoveItemCommand => new AsyncCommand<OrderProduct>(RemoveItemCommandExecute);
+    public ICommand RemoveItemCommand { get; set; }
 
-    private async Task RemoveItemCommandExecute(OrderProduct orderProduct)
+    private Task RemoveItemCommandExecute(OrderProduct orderProduct)
     {
         var data = ListCartProducts.Where(x => x.IdOriginalProduct == orderProduct.IdOriginalProduct).FirstOrDefault();
         var index = ListCartProducts.IndexOf(data);
         ListCartProducts.RemoveAt(index);
         CalcAmount();
         RefresView();
+
+        return Task.CompletedTask;
     }
 
     public override Task OnAppearingAsync()
@@ -124,7 +130,7 @@ public class CartViewModel : CoreViewModel
         if (result)
         {
             sessionService.Save("ListCartProducts", new ObservableCollection<OrderProduct>());
-            await Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync("///StoresPage");
         }
     }
 

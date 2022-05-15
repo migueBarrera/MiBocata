@@ -17,17 +17,12 @@
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <!--<pancakeview:PancakeView
+            <Image
                 Grid.RowSpan="3"
-                CornerRadius="10"
-                HeightRequest="100"
-                WidthRequest="100">
-                <Image
                     Aspect="AspectFill"
                     HeightRequest="100"
-                    Source="{Binding Image}"
+                    Source="food.jpg"
                     WidthRequest="100" />
-            </pancakeview:PancakeView>-->
             <Label
                 Grid.Column="1"
                 FontAttributes="Bold"
