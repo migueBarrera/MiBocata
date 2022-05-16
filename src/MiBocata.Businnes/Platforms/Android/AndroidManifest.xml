@@ -13,5 +13,6 @@
 		android:allowBackup="true"
 		android:icon="@mipmap/appicon"
 		android:roundIcon="@mipmap/appicon_round"
+		android:usesCleartextTraffic="true"
 		android:supportsRtl="true"></application>
 </manifest>

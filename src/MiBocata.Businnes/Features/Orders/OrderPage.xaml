@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <framework:CorePage
     x:Class="MiBocata.Businnes.Features.Orders.OrderPage"
-   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:framework="clr-namespace:Mibocata.Core.Framework;assembly=Mibocata.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:templates="clr-namespace:MiBocata.Businnes.Features.Orders.Templates"
@@ -11,9 +11,6 @@
     <framework:CorePage.ToolbarItems>
         <ToolbarItem Command="{Binding RefreshCommand}" Text="Actualizar" />
     </framework:CorePage.ToolbarItems>
-    <!--<NavigationPage.TitleView>
-        <Label Text="Hello" />
-    </NavigationPage.TitleView>-->
     <ContentPage.Content>
         <Grid>
             <CollectionView ItemsSource="{Binding Orders}" SelectionMode="None">
@@ -27,6 +24,7 @@
                         <Label
                             HorizontalOptions="Center"
                             Text="No tienes pedidos aún"
+                            TextColor="Black"
                             VerticalOptions="Center" />
                     </Grid>
                 </CollectionView.EmptyView>

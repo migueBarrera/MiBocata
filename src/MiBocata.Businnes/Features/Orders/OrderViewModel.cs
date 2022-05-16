@@ -5,6 +5,7 @@ using Mibocata.Core.Features.Refit;
 using Mibocata.Core.Services.Interfaces;
 using Models.Core;
 using Mibocata.Core.Framework;
+using Models.Responses;
 
 namespace MiBocata.Businnes.Features.Orders
 {
@@ -64,7 +65,7 @@ namespace MiBocata.Businnes.Features.Orders
 
             var uriString = $"whatsapp://send?phone=+{34}{order.Client.Phone}";
 
-            //await Xamarin.Essentials.Launcher.TryOpenAsync(uriString);
+            await Launcher.TryOpenAsync(uriString);
         }
 
         private async Task CancelOrderCommandExecute(Order order)
@@ -94,7 +95,7 @@ namespace MiBocata.Businnes.Features.Orders
         private async Task GetOrders()
         {
             var list = await orderApi.GetAllByStore(store.Id);
-            Orders = new ObservableCollection<Order>(list.Select((x) => new Order())); //todo mapper
+            Orders = new ObservableCollection<Order>(list.Select((x) => OrdersResponse.Parse(x)));
         }
 
         private async Task UpdateOrder(Order order, OrderStates states)

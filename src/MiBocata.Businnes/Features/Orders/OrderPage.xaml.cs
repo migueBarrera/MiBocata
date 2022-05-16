@@ -2,21 +2,10 @@
 
 public partial class OrderPage
 {
-    private bool isAlreadyInitialized;
-
-    public OrderPage()
+    public OrderPage(OrderViewModel viewModel)
     {
         InitializeComponent();
 
-        //BindingContext = App.Current.DependencyService.Resolve<OrderViewModel>();
-    }
-
-    protected override void OnAppearing()
-    {
-        if (!isAlreadyInitialized)
-        {
-            base.OnAppearing();
-            isAlreadyInitialized = true;
-        }
+        BindingContext = viewModel;
     }
 }

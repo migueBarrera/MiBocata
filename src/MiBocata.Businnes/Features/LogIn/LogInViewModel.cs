@@ -67,8 +67,8 @@ public class LogInViewModel : CoreViewModel
             await dialogService.ShowAlertAsync("603033613", "Llamenos sin compromiso");
             return;
         }
-
-        //Xamarin.Essentials.PhoneDialer.Open("603033613");
+        
+        //PhoneDialer.Open("603033613");
     }
 
     private async Task DoLoginCommandAsync()
