@@ -24,54 +24,54 @@ on:
         required: true
 
 jobs:
-  windows-build-windows:
-    runs-on: windows-latest
+  # windows-build-windows:
+  #   runs-on: windows-latest
 
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup .NET 6
-        uses: actions/setup-dotnet@v2
-        with:
-          dotnet-version: 6.0.x
-          include-prerelease: true
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Setup .NET 6
+  #       uses: actions/setup-dotnet@v2
+  #       with:
+  #         dotnet-version: 6.0.x
+  #         include-prerelease: true
 
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
+  #     - name: Add msbuild to PATH
+  #       uses: microsoft/setup-msbuild@v1.1
 
-      - name: Install MAUI Workloads
-        run: |
-          dotnet workload install maui --source https://api.nuget.org/v3/index.json
+  #     - name: Install MAUI Workloads
+  #       run: |
+  #         dotnet workload install maui --source https://api.nuget.org/v3/index.json
 
-      # BUILD
-      - name: Restore dependencies
-        shell: pwsh
-        run: |
-          dotnet restore ${{ inputs.csproj }}
+  #     # BUILD
+  #     - name: Restore dependencies
+  #       shell: pwsh
+  #       run: |
+  #         dotnet restore ${{ inputs.csproj }}
 
-      - name: Build Maui WinUI project
-        shell: pwsh
-        run: |
-          dotnet publish ${{ inputs.csproj }} -c Release -f net6.0-windows10.0.19041.0
+  #     - name: Build Maui WinUI project
+  #       shell: pwsh
+  #       run: |
+  #         dotnet publish ${{ inputs.csproj }} -c Release -f net6.0-windows10.0.19041.0
 
-      - name: Create artifacts folder
-        shell: pwsh
-        run: |
-           cd ${{ github.workspace }}
-           mkdir -p artifacts_windows
+  #     - name: Create artifacts folder
+  #       shell: pwsh
+  #       run: |
+  #          cd ${{ github.workspace }}
+  #          mkdir -p artifacts_windows
 
-      - name: Copy WinUI msix package
-        shell: pwsh
-        run: |
-           Get-Childitem –Path ${{ github.workspace }} -Include *.msix -File -Recurse | Copy-Item -Destination artifacts_windows
+  #     - name: Copy WinUI msix package
+  #       shell: pwsh
+  #       run: |
+  #          Get-Childitem –Path ${{ github.workspace }} -Include *.msix -File -Recurse | Copy-Item -Destination artifacts_windows
 
-      #POST-BUILD
-      - name: Publish build artifacts
-        uses: actions/upload-artifact@v2
-        with:     
-          name: "WinUI .NET MAUI artifacts" 
-          path: "artifacts_windows/*"
-          if-no-files-found: error
-          retention-days: 90
+  #     #POST-BUILD
+  #     - name: Publish build artifacts
+  #       uses: actions/upload-artifact@v2
+  #       with:     
+  #         name: "WinUI .NET MAUI artifacts" 
+  #         path: "artifacts_windows/*"
+  #         if-no-files-found: error
+  #         retention-days: 90
 
   macos-build-android-macos-ios:
     runs-on: macos-12
@@ -105,11 +105,11 @@ jobs:
         run: |
           dotnet restore ${{ inputs.csproj }}
 
-      - name: Build MacCatalyst App
-        shell: bash
-        run: |
-          dotnet build ${{ inputs.csproj }} -f net6.0-maccatalyst -c Release
-          dotnet publish ${{ inputs.csproj }} -f net6.0-maccatalyst -c Release -p:BuildIpa=True  
+      # - name: Build MacCatalyst App
+      #   shell: bash
+      #   run: |
+      #     dotnet build ${{ inputs.csproj }} -f net6.0-maccatalyst -c Release
+      #     dotnet publish ${{ inputs.csproj }} -f net6.0-maccatalyst -c Release -p:BuildIpa=True  
 
       - name: Build MAUI Android
         shell: pwsh
@@ -134,10 +134,10 @@ jobs:
         run: |
            Get-Childitem –Path ${{ github.workspace }} -Include *.aab -File -Recurse | Copy-Item -Destination artifacts_macos
 
-      - name: Copy MacOS package
-        shell: pwsh
-        run: |
-           Get-Childitem –Path ${{ github.workspace }} -Include *.pkg -File -Recurse | Copy-Item -Destination artifacts_macos
+      # - name: Copy MacOS package
+      #   shell: pwsh
+      #   run: |
+      #      Get-Childitem –Path ${{ github.workspace }} -Include *.pkg -File -Recurse | Copy-Item -Destination artifacts_macos
 
       - name: Publish build artifacts
         uses: actions/upload-artifact@v2
