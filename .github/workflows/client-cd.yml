@@ -1,0 +1,34 @@
+name: CD CLIENT
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'src/MiBocata.Client/**'
+      - 'src/Commons/**'
+      - '.github/workflows/client-cd.yml'
+      - '.github/workflows/template-maui-cd.yml'
+  pull_request:
+    branches: [ master ]
+    paths:
+      - 'src/MiBocata.Client/**'
+      - 'src/Commons/**'      
+      - '.github/workflows/client-cd.yml'
+      - '.github/workflows/template-maui-cd.yml'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build-mobile:
+    uses: ./.github/workflows/template-maui-cd.yml
+    with:
+      csproj: src/MiBocata.Client/MiBocata.csproj
+      root_path: src/MiBocata.Client/
+      encrypted_keystore_path: android-keystore-test.jks.gpg
+      keystore_path: android-keystore-test.keystore
+    secrets:  
+      android_keystore_gpg_pass: ${{secrets.ANDROID_KEYSTORE_GPG_PASSWORD}}
+      android_signing_store_pass: ${{secrets.ANDROID_SIGNING_STORE_PASS}}
+      android_signing_key_alias: ${{secrets.ANDROID_SIGNING_KEY_ALIAS}}
+      android_signing_key_pass: ${{secrets.ANDROID_SIGNING_KEY_PASS}}

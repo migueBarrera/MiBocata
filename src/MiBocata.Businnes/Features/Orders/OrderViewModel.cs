@@ -7,114 +7,118 @@ using Models.Core;
 using Mibocata.Core.Framework;
 using Models.Responses;
 
-namespace MiBocata.Businnes.Features.Orders
+namespace MiBocata.Businnes.Features.Orders;
+
+public class OrderViewModel : CoreViewModel
 {
-    public class OrderViewModel : CoreViewModel
+    private readonly IOrderApi orderApi;
+    private readonly IPreferencesService preferencesService;
+    private readonly ITaskHelperFactory taskHelperFactory;
+    private readonly ILoggingService loggingService;
+    private readonly IDialogService dialogService;
+
+    private ObservableCollection<Order> orders;
+
+    private Store store;
+
+    public OrderViewModel(
+       IRefitService refitService,
+       IPreferencesService preferencesService,
+       ITaskHelperFactory taskHelperFactory,
+       ILoggingService loggingService,
+       IDialogService dialogService)
     {
-        private readonly IOrderApi orderApi;
-        private readonly IPreferencesService preferencesService;
-        private readonly ITaskHelperFactory taskHelperFactory;
-        private readonly ILoggingService loggingService;
-        private readonly IDialogService dialogService;
+        this.orderApi = refitService.InitRefitInstance<IOrderApi>(isAutenticated: true);
+        this.preferencesService = preferencesService;
+        this.taskHelperFactory = taskHelperFactory;
+        this.loggingService = loggingService;
+        this.dialogService = dialogService;
 
-        private ObservableCollection<Order> orders;
+        RefreshCommand = new AsyncCommand(() => RefreshCommandAsync());
+        OpenChatCommand = new AsyncCommand<Order>((order) => OpenChatCommandAsync(order));
+        CancelOrderCommand = new AsyncCommand<Order>((order) => CancelOrderCommandExecute(order));
+        AcceptOrderCommand = new AsyncCommand<Order>((order) => AcceptOrderCommandExecute(order));
+    }
 
-        private Store store;
+    public ObservableCollection<Order> Orders
+    {
+        get => orders;
+        set => SetAndRaisePropertyChanged(ref orders, value);
+    }
 
-        public OrderViewModel(
-           IRefitService refitService,
-           IPreferencesService preferencesService,
-           ITaskHelperFactory taskHelperFactory,
-           ILoggingService loggingService,
-           IDialogService dialogService)
+    public ICommand RefreshCommand { get; set; }
+
+    public ICommand OpenChatCommand { get; set; }
+
+    public ICommand CancelOrderCommand { get; set; }
+
+    public ICommand AcceptOrderCommand { get; set; }
+
+    public override async Task OnAppearingAsync()
+    {
+        await base.OnAppearingAsync();
+        store = preferencesService.GetStore();
+        await RefreshCommandAsync();
+    }
+
+    private async Task OpenChatCommandAsync(Order order)
+    {
+        if (string.IsNullOrWhiteSpace(order?.Client?.Phone))
         {
-            this.orderApi = refitService.InitRefitInstance<IOrderApi>(isAutenticated: true);
-            this.preferencesService = preferencesService;
-            this.taskHelperFactory = taskHelperFactory;
-            this.loggingService = loggingService;
-            this.dialogService = dialogService;
+            return;
         }
 
-        public ObservableCollection<Order> Orders
+        var uriString = $"whatsapp://send?phone=+{34}{order.Client.Phone}";
+
+        await Launcher.TryOpenAsync(uriString);
+    }
+
+    private async Task CancelOrderCommandExecute(Order order)
+    {
+        await UpdateOrder(order, OrderStates.REJECTED);
+    }
+
+    private async Task AcceptOrderCommandExecute(Order order)
+    {
+        await UpdateOrder(order, OrderStates.ACCEPTED);
+    }
+
+    private async Task RefreshCommandAsync(bool force = false)
+    {
+        if (IsBusy)
         {
-            get => orders;
-            set => SetAndRaisePropertyChanged(ref orders, value);
-        }
-
-        public ICommand RefreshCommand => new AsyncCommand(() => RefreshCommandAsync());
-
-        public ICommand OpenChatCommand => new AsyncCommand<Order>((order) => OpenChatCommandAsync(order));
-
-        public ICommand CancelOrderCommand => new AsyncCommand<Order>((order) => CancelOrderCommandExecute(order));
-
-        public ICommand AcceptOrderCommand => new AsyncCommand<Order>((order) => AcceptOrderCommandExecute(order));
-
-        public override async Task OnAppearingAsync()
-        {
-            await base.OnAppearingAsync();
-            store = preferencesService.GetStore();
-            await RefreshCommandAsync();
-        }
-
-        private async Task OpenChatCommandAsync(Order order)
-        {
-            if (string.IsNullOrWhiteSpace(order?.Client?.Phone))
+            if (!force)
             {
                 return;
             }
-
-            var uriString = $"whatsapp://send?phone=+{34}{order.Client.Phone}";
-
-            await Launcher.TryOpenAsync(uriString);
         }
 
-        private async Task CancelOrderCommandExecute(Order order)
+        await taskHelperFactory.CreateInternetAccessViewModelInstance(loggingService, this).
+            TryExecuteAsync(() => GetOrders());
+    }
+
+    private async Task GetOrders()
+    {
+        var list = await orderApi.GetAllByStore(store.Id);
+        Orders = new ObservableCollection<Order>(list.Select((x) => OrdersResponse.Parse(x)));
+    }
+
+    private async Task UpdateOrder(Order order, OrderStates states)
+    {
+        order.State = states;
+
+        var response = await taskHelperFactory.CreateInternetAccessViewModelInstance(loggingService, this).
+                                TryExecuteAsync(() => orderApi.Update(order.Id, new Models.Requests.UpdateOrderRequest()
+                                {
+                                    //order todo
+                                }));
+        if (response)
         {
-            await UpdateOrder(order, OrderStates.REJECTED);
+            await RefreshCommandAsync(force: true);
         }
-
-        private async Task AcceptOrderCommandExecute(Order order)
+        else
         {
-            await UpdateOrder(order, OrderStates.ACCEPTED);
-        }
-
-        private async Task RefreshCommandAsync(bool force = false)
-        {
-            if (IsBusy)
-            {
-                if (!force)
-                {
-                    return;
-                }
-            }
-
-            await taskHelperFactory.CreateInternetAccessViewModelInstance(loggingService, this).
-                TryExecuteAsync(() => GetOrders());
-        }
-
-        private async Task GetOrders()
-        {
-            var list = await orderApi.GetAllByStore(store.Id);
-            Orders = new ObservableCollection<Order>(list.Select((x) => OrdersResponse.Parse(x)));
-        }
-
-        private async Task UpdateOrder(Order order, OrderStates states)
-        {
-            order.State = states;
-
-            var response = await taskHelperFactory.CreateInternetAccessViewModelInstance(loggingService, this).
-                                    TryExecuteAsync(() => orderApi.Update(order.Id, new Models.Requests.UpdateOrderRequest()
-                                    {
-                                        //order todo
-                                    }));
-            if (response)
-            {
-                await RefreshCommandAsync(force: true);
-            }
-            else
-            {
-                await dialogService.ShowMessage("Ocurrio un error", string.Empty);
-            }
+            await dialogService.ShowMessage("Ocurrio un error", string.Empty);
         }
     }
 }
