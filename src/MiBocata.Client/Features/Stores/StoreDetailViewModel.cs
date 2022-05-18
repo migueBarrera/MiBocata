@@ -23,8 +23,8 @@ public class StoreDetailViewModel : CoreViewModel
         this.sessionService = sessionService;
         this.dialogService = dialogService;
 
-        AddRemoveItemCommand = new AsyncCommand<Product>(AddRemoveItemCommandAsync);
-
+        AddItemCommand = new AsyncCommand<Product>(AddItemCommandAsync);
+        RemoveItemCommand = new AsyncCommand<Product>(RemoveItemCommandAsync);
         GoToCartCommand = new AsyncCommand(async () => await GoToCartCommandAsync());
     }
 
@@ -40,7 +40,9 @@ public class StoreDetailViewModel : CoreViewModel
         set => SetAndRaisePropertyChanged(ref countItems, value);
     }
 
-    public ICommand AddRemoveItemCommand { get; set; }
+    public ICommand RemoveItemCommand { get; set; }
+
+    public ICommand AddItemCommand { get; set; }
 
     public ICommand GoToCartCommand { get; set; }
 
@@ -55,11 +57,6 @@ public class StoreDetailViewModel : CoreViewModel
 
         CountItems = listCartProducts.Count;
 
-        //Hub.Subscribe<OrderProduct>(product =>
-        //{
-        //    AddProduct(product);
-        //});
-
         return base.OnAppearingAsync();
     }
 
@@ -69,12 +66,22 @@ public class StoreDetailViewModel : CoreViewModel
         //Hub.Unsubscribe<OrderProduct>();
     }
 
-    private async Task AddRemoveItemCommandAsync(Product product)
+    private async Task AddItemCommandAsync(Product product)
     {
-        sessionService.Save("AddProduct", product);
-        //await Shell.Current.GoToAsync(nameof(AddProductPage));
-        AddProduct(OrderProduct.Parse(product));
-        //await App.De.Resolve<INavigationService>().NavigateToPopupAsync<AddProductViewModel>(product, false);
+        listCartProducts.Add(OrderProduct.Parse(product));
+        CountItems = listCartProducts.Count;
+    }
+    
+    private async Task RemoveItemCommandAsync(Product product)
+    {
+        var itemforRemove = listCartProducts.FirstOrDefault(x => x.Id == product.Id);
+        if (itemforRemove == null)
+        {
+            return;
+        }
+
+        listCartProducts.Remove(itemforRemove);
+        CountItems = listCartProducts.Count;
     }
 
     private async Task GoToCartCommandAsync()

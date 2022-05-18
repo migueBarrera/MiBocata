@@ -31,12 +31,20 @@
                             <fftransformations:CircleTransformation />
                         </ffimageloading:CachedImage.Transformations>
                     </ffimageloading:CachedImage>-->
-                    <Image
+                    <Frame
+                        CornerRadius="45"
+                        HeightRequest="90"
+                        HorizontalOptions="Center"
+                        WidthRequest="90"
+                        Margin="0,16,0,24">
+                        <Image
                         Source="profile_placeholder.png"
                         HeightRequest="90"
                         WidthRequest="90"
-                         Margin="0,16,0,24"
+                         
                         HorizontalOptions="Center"/>
+                    </Frame>
+
                     <BoxView BackgroundColor="LightGray" HeightRequest="1" />
                     <HorizontalStackLayout
                         Margin="8,4,0,4"
@@ -58,7 +66,7 @@
                         </Label>
 
                     </HorizontalStackLayout>
-                 
+
                     <BoxView BackgroundColor="LightGray" HeightRequest="1" />
                     <Label Style="{StaticResource ButtonStyle}" Text="Edit profile">
                         <Label.GestureRecognizers>

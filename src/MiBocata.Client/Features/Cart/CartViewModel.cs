@@ -94,7 +94,7 @@ public class CartViewModel : CoreViewModel
         double a = 0;
         foreach (var item in ListCartProducts)
         {
-            a += item.UnitPrice;
+            a += item.UnitPrice * item.Quantity;
         }
 
         Amount = a;

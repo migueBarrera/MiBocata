@@ -45,13 +45,33 @@
                     Grid.Row="2"
                     Style="{StaticResource SubTitleStyle}"
                     Text="{Binding Name}" />
+                <HorizontalStackLayout
+                    Grid.Row="1"
+                    VerticalOptions="Center"
+                    HorizontalOptions="End">
+                    <ImageButton
+                        BackgroundColor="Transparent"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:StoreDetailViewModel}}, Path=RemoveItemCommand}"
+                        CommandParameter="{Binding}"
+                        WidthRequest="32"
+                        HeightRequest="32"
+                        Source="remove_circle.png" />
+                    <ImageButton
+                        BackgroundColor="Transparent"
+                        WidthRequest="32"
+                        HeightRequest="32"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:StoreDetailViewModel}}, Path=AddItemCommand}"
+                        CommandParameter="{Binding}"
+                        Source="add_circle.png"
+                         />
+                </HorizontalStackLayout>
 
                 <ImageButton
-                    Grid.Row="1"
+                    
                     BackgroundColor="Transparent"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:StoreDetailViewModel}}, Path=AddRemoveItemCommand}"
                     CommandParameter="{Binding}"
-                    HorizontalOptions="End"
+                    
                     Source="round_add_circle_outline_black_24.png"
                     VerticalOptions="Center" />
             </Grid>

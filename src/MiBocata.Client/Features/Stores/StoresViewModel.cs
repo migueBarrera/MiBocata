@@ -13,9 +13,9 @@ public class StoresViewModel : CoreViewModel
     private readonly ITaskHelperFactory taskHelperFactory;
     private Location userLocation;
 
-    private IEnumerable<Model> stores;
+    private IEnumerable<Store> stores;
 
-    public IAsyncCommand<Model> GoToStoreDetailCommand { get; set; }
+    public IAsyncCommand<Store> GoToStoreDetailCommand { get; set; }
 
     public StoresViewModel(
         IGeolocationService geolocationService,
@@ -30,12 +30,12 @@ public class StoresViewModel : CoreViewModel
         this.taskHelperFactory = taskHelperFactory;
         this.storeApi = refitService.InitRefitInstance<IStoreApi>(isAutenticated: false);
 
-        GoToStoreDetailCommand = new AsyncCommand<Model>((store) => GoToStoreAsync(store));
+        GoToStoreDetailCommand = new AsyncCommand<Store>((store) => GoToStoreAsync(store));
     }
 
     public Location UserLocation { get => userLocation; set => SetAndRaisePropertyChanged(ref userLocation, value); }
 
-    public IEnumerable<Model> Stores { get => stores; set => SetAndRaisePropertyChanged(ref stores, value); }
+    public IEnumerable<Store> Stores { get => stores; set => SetAndRaisePropertyChanged(ref stores, value); }
 
     public override async Task OnAppearingAsync()
     {
@@ -59,52 +59,23 @@ public class StoresViewModel : CoreViewModel
         if (result)
         {
             Stores = result.Value.Select(x =>
-                           new Model()
+                           new Store()
                            {
-                               //Position = new Position(x.StoreLocation.Latitude, x.StoreLocation.Longitude),
-                               Description = x.Name,
-                               Location = StoreLocationResponse.Parse(x.StoreLocation),
-                               IdStore = x.Id,
+                               Name = x.Name,
+                               StoreLocation = StoreLocationResponse.Parse(x.StoreLocation),
+                               Id = x.Id,
                                Image = x.Image,
                                Products = x.Products?.Select(pr => ProductsResponse.Parse(pr)).ToList(),
                            })?.ToList();
         }
     }
 
-    public async Task GoToStoreAsync(Model model)
+    public async Task GoToStoreAsync(Store store)
     {
-        var store = Stores.Where(x => x.IdStore == model.IdStore).FirstOrDefault();
         sessionService.Save(
             "KEY_SESSION_STORE",
-            new Store()
-            {
-                Name = store.Description,
-                StoreLocation = store.Location,
-                Id = store.IdStore,
-                Products = store.Products,
-                Image = store.Image,
-                ////PushToken = store.PushToken,
-            });
+            store);
 
         await Shell.Current.GoToAsync($"{nameof(StoreDetailPage)}");
-    }
-
-    public class Model
-    {
-       // public Position Position { get; set; }
-
-        public string Address { get; set; }
-
-        public string Image { get; set; }
-
-        public string Description { get; set; }
-
-        public int IdStore { get; set; }
-
-        public string PushToken { get; set; }
-
-        public List<Product> Products { get; set; }
-
-        public StoreLocation Location { get; set; }
     }
 }

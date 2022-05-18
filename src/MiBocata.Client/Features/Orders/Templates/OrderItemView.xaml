@@ -11,7 +11,7 @@
             CornerRadius="12">
            
         </pancakeview:PancakeView>-->
-        <Grid Margin="16,8">
+        <Grid Margin="16,8" RowSpacing="4" BackgroundColor="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -19,7 +19,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Label Text="{Binding Store.Name}" TextColor="Black" />
-            <!--<Label HorizontalTextAlignment="End" Text="{Binding OrderState,Converter={StaticResource TextOrderStateConverter}}" TextColor="Blue"/>-->
+            <Label HorizontalTextAlignment="End" Text="{Binding OrderState,Converter={StaticResource TextOrderStateConverter}}" TextColor="Blue"/>
             <Label
                     Grid.Row="1"
                     Margin="8,0,0,0"

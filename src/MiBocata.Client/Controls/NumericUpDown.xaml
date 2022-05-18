@@ -22,32 +22,29 @@
             BackgroundColor="White">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="32" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Label 
-                    x:Name="MinusButton"
-                    Grid.Column="0"
-                    Text="-"
-                    Margin="12, 0, 0, 0">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer                                  
-                            Tapped="MinusTapped" />
-                </Label.GestureRecognizers>
-            </Label>
+            <ImageButton
+                        BackgroundColor="Transparent"
+                Clicked="MinusTapped"
+                        WidthRequest="32"
+                        HeightRequest="32"
+                        Source="remove_circle.png" />
+           
             <Label 
                     x:Name="ValueText"
+                BackgroundColor="Red"
                     Grid.Column="1" />
-            <Label 
-                    x:Name="PlusButton"
-                    Grid.Column="2"
-                    Text="+"
-                    Margin="0, 0, 12, 0">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer                                  
-                            Tapped="PlusTapped" />
-                </Label.GestureRecognizers>
-            </Label>
+        
+            <ImageButton
+                Grid.Column="2"
+                        BackgroundColor="Transparent"
+                        WidthRequest="32"
+                        HeightRequest="32"
+                Clicked="PlusTapped"
+                        Source="add_circle.png"
+                         />
         </Grid>
         <!--<pancakeview:PancakeView
             HeightRequest="24"
