@@ -1,4 +1,6 @@
 ﻿using Mibocata.Core.Services.Interfaces;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Refit;
 
 namespace Mibocata.Core.Features.Refit;
@@ -20,7 +22,12 @@ public class RefitService : IRefitService
     {
         var handler = WireHttpHandlers();
 
-        RefitSettings refitSettings = null;
+        RefitSettings refitSettings = new RefitSettings(
+            new NewtonsoftJsonContentSerializer(
+                new JsonSerializerSettings 
+                { 
+                    ContractResolver = new CamelCasePropertyNamesContractResolver() 
+                }));
 
         var httpClient = GetClient(handler, isAutenticated);
 
