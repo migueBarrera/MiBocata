@@ -69,7 +69,9 @@ public class CartViewModel : CoreViewModel
 
     private Task RemoveItemCommandExecute(OrderProduct orderProduct)
     {
-        var data = ListCartProducts.Where(x => x.IdOriginalProduct == orderProduct.IdOriginalProduct).FirstOrDefault();
+        var data = ListCartProducts
+            .Where(x => x.IdOriginalProduct == orderProduct.IdOriginalProduct)
+            .FirstOrDefault();
         var index = ListCartProducts.IndexOf(data);
         ListCartProducts.RemoveAt(index);
         CalcAmount();

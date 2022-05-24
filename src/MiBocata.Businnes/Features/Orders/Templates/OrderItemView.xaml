@@ -4,7 +4,7 @@
    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewModels="clr-namespace:MiBocata.Businnes.Features.Orders">
-    <!--<ContentView.Resources>
+    <ContentView.Resources>
         <ResourceDictionary>
             <Style x:Key="ButtonStyle" TargetType="Button">
                 <Setter Property="FontSize" Value="{OnPlatform Android=13, UWP=16}" />
@@ -14,13 +14,12 @@
                 <Setter Property="HorizontalOptions" Value="Center" />
             </Style>
         </ResourceDictionary>
-    </ContentView.Resources>-->
-    <!--<ContentView.Content>
-        --><!--<pancakeview:PancakeView
+    </ContentView.Resources>
+    <ContentView.Content>
+        <Frame
             Margin="6"
             BackgroundColor="White"
             BorderColor="Black"
-            BorderThickness="1"
             CornerRadius="12">
             <StackLayout Margin="16,8" Orientation="Vertical">
                 <Grid>
@@ -29,19 +28,15 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    --><!--<ffimageloading:CachedImage
+                    <Image
                         Margin="0,0,0,0"
-                        ErrorPlaceholder="profile_placeholder.png"
                         HeightRequest="40"
                         HorizontalOptions="Center"
-                        LoadingPlaceholder="profile_placeholder.png"
-                        Source="{Binding Client.Image}"
+                        Source="profile_placeholder.png"
                         VerticalOptions="Center"
                         WidthRequest="40">
-                        <ffimageloading:CachedImage.Transformations>
-                            <fftransformations:CircleTransformation />
-                        </ffimageloading:CachedImage.Transformations>
-                    </ffimageloading:CachedImage>--><!--
+                    </Image>
+                        <!--Source="{Binding Client.Image}"-->
                     <Label
                         Grid.Column="1"
                         FontSize="Medium"
@@ -78,19 +73,14 @@
                         TextColor="{Binding State, Converter={StaticResource TextColorStateConverter}}" />
                 </Grid>
                 <BoxView
-                    BackgroundColor="Gray"
+                    Color="Gray"
                     HeightRequest="1"
                     WidthRequest="50" />
                 <StackLayout BindableLayout.ItemsSource="{Binding OrderProducts}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Orientation="Horizontal">
-                                <pancakeview:PancakeView
-                                    Padding="2"
-                                    BorderColor="Gray"
-                                    CornerRadius="2">
-                                    <Label Text="{Binding Quantity}" />
-                                </pancakeview:PancakeView>
+                                <Label Text="{Binding Quantity}" Padding="2"/>
                                 <Label Text="{Binding Name}" VerticalOptions="Center" />
                             </StackLayout>
                         </DataTemplate>
@@ -130,6 +120,6 @@
 
                 </Grid>
             </StackLayout>
-        </pancakeview:PancakeView>--><!--
-    </ContentView.Content>-->
+        </Frame>
+    </ContentView.Content>
 </ContentView>

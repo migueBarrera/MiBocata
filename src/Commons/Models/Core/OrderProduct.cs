@@ -28,7 +28,6 @@ public class OrderProduct
             Image = product.Image,
             Comment = string.Empty,
             Quantity = 1,
-            Id = product.Id,
         };
     }
 }
