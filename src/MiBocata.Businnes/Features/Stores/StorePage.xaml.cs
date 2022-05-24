@@ -2,10 +2,9 @@
 
 public partial class StorePage
 {
-    public StorePage()
+    public StorePage(StoreViewModel viewModel)
     {
         InitializeComponent();
-
-        //BindingContext = App.Current.DependencyService.Resolve<StoreViewModel>();
+        BindingContext = viewModel;
     }
 }

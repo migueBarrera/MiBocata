@@ -1,4 +1,6 @@
-﻿using MiBocata.Businnes.Features.LogIn;
+﻿using MiBocata.Businnes.Features.Configuration;
+using MiBocata.Businnes.Features.LogIn;
+using MiBocata.Businnes.Features.Products;
 using MiBocata.Businnes.Features.Registro;
 
 namespace MiBocata.Businnes;
@@ -12,6 +14,9 @@ public partial class App : Application
 
         Routing.RegisterRoute(nameof(LogInPage), typeof(LogInPage));
         Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
+        Routing.RegisterRoute(nameof(ConfigurationPage), typeof(ConfigurationPage));
+        Routing.RegisterRoute(nameof(ProductsPage), typeof(ProductsPage));
+        Routing.RegisterRoute(nameof(NewProductPage), typeof(NewProductPage));
     }
 
     //protected override void OnStart()

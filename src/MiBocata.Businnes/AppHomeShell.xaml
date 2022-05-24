@@ -6,8 +6,10 @@
     xmlns:local="clr-namespace:MiBocata.Businnes"
     xmlns:signIn="clr-namespace:MiBocata.Businnes.Features.LogIn"
     xmlns:register="clr-namespace:MiBocata.Businnes.Features.Registro"
+    xmlns:products="clr-namespace:MiBocata.Businnes.Features.Products"
     xmlns:order="clr-namespace:MiBocata.Businnes.Features.Orders"
     xmlns:store="clr-namespace:MiBocata.Businnes.Features.Stores"
+    xmlns:config="clr-namespace:MiBocata.Businnes.Features.Configuration"
     Shell.FlyoutBehavior="Disabled">
 
     <TabBar Route="TabBar">
@@ -22,5 +24,23 @@
            ContentTemplate="{DataTemplate store:StorePage}"
            Route="StorePage" />
     </TabBar>
+
+    <ShellContent
+           Title="Products"
+           Icon="baseline_settings_black_24.png"
+           ContentTemplate="{DataTemplate products:ProductsPage}"
+           Route="ProductsPage" />
+    
+    <ShellContent
+           Title="New Product"
+           Icon="baseline_settings_black_24.png"
+           ContentTemplate="{DataTemplate products:NewProductPage}"
+           Route="NewProductName" />
+    
+    <ShellContent
+           Title="Products"
+           Icon="baseline_settings_black_24.png"
+           ContentTemplate="{DataTemplate config:ConfigurationPage}"
+           Route="ConfigurationPage" />
     
 </Shell>

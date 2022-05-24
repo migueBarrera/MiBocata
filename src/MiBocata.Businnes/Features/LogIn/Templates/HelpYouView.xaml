@@ -4,12 +4,26 @@
              x:Class="MiBocata.Businnes.Features.LogIn.Templates.HelpYouView"
              x:Name="HelpYou">
   <ContentView.Content>
-        <StackLayout Orientation="Horizontal" Margin="16,32" >
-            <Image Source="https://cdn.dribbble.com/users/1104048/screenshots/6509120/artboard_2.png" Aspect="AspectFill" HeightRequest="86" WidthRequest="86"/>
-            <StackLayout Orientation="Vertical">
-                <Label Text="¿Necesitas ayuda?¿Más información?" TextColor="Black" FontSize="Large"/>
-                <Label Text="Te atendemos encantados via llamadas o WhatsApp, pulsa en este recuadro" FontSize="12" />
-            </StackLayout>
-        </StackLayout>
+        <Grid
+            ColumnDefinitions="auto,*"
+            RowDefinitions="auto,auto"
+            ColumnSpacing="6">
+            <Image 
+                Source="https://cdn.dribbble.com/users/1104048/screenshots/6509120/artboard_2.png" 
+                Aspect="AspectFill" 
+                HeightRequest="86" 
+                WidthRequest="86"
+                Grid.RowSpan="2"/>
+            <Label 
+                    Text="Need help? More information?" 
+                    TextColor="Black" 
+                Grid.Column="1"
+                    FontSize="Large"/>
+            <Label 
+                    Text="We will be happy to assist you via phone or WhatsApp, click on this box" 
+                    FontSize="12"
+                Grid.Column="1"
+                    Grid.Row="1"/>
+        </Grid>
     </ContentView.Content>
 </ContentView>

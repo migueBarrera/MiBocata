@@ -123,7 +123,7 @@ public class NewProductViewModel : CoreViewModel
             //}
 
             preferencesService.SetStore(store);
-            //TODOawait navigationService.NavigateBackAsync();
+            await Shell.Current.GoToAsync("..");
         }
     }
 

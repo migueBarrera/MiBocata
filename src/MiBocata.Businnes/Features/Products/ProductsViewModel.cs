@@ -69,9 +69,6 @@ namespace MiBocata.Businnes.Features.Products
             }
         }
 
-        private async Task NewProductCommandAsync()
-        {
-            //TODO await navigationService.NavigateToAsync<NewProductViewModel>();
-        }
+        private async Task NewProductCommandAsync() => await Shell.Current.GoToAsync($"{nameof(NewProductPage)}");
     }
 }

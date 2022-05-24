@@ -8,7 +8,9 @@
     xmlns:template="clr-namespace:MiBocata.Businnes.Features.LogIn.Templates">
     <ContentPage.Content>
         <ScrollView>
-            <Grid>
+            <Grid
+                Margin="32,16"
+                RowSpacing="8">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
@@ -19,53 +21,48 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Image 
                     Source="robotfoot.png" 
                     Grid.Column="1" 
                     WidthRequest="{OnPlatform Android=150, iOS=150,WinUI=300}" 
                     HeightRequest="{OnPlatform Android=200, iOS=150,WinUI=400}" 
-                    Margin="0,4,14,0"/>
-                <Label
-                    Grid.Column="0"
-                    Margin="24,24,0,0"
-                    HorizontalOptions="Start"
-                    Text="Volver &gt;">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding BackCommand}" NumberOfTapsRequired="1" />
-                    </Label.GestureRecognizers>
-                </Label>
+                    Margin="0,0,14,0"/>
+
                 <Label
                     Grid.Row="1"
                     Margin="32,-34,0,0"
                     FontSize="28"
-                    Text="Únete"
+                    Text="Join"
                     TextColor="Black" />
                 <Label
                     Grid.Row="2"
                     Margin="38,-14,0,0"
                     FontSize="28"
-                    Text="a nosotros"
+                    Text="us"
                     TextColor="Black" />
                 <StackLayout
                     Grid.Row="3"
-                    Grid.ColumnSpan="2"
-                    Margin="16,0">
+                    Grid.ColumnSpan="2">
                     <Entry Placeholder="Email" Text="{Binding User.Email}" />
                     <Entry
                         IsPassword="True"
-                        Placeholder="Contraseña"
+                        Placeholder="Password"
                         Text="{Binding User.Password}" />
                 </StackLayout>
                 <Button
-                    Text="REGISTRARME!"
+                    Text="Sign Up!"
                     TextColor="White"
                     Command="{Binding RegisterCommand}" 
                     Grid.Row="4"
+                    Margin="0,12,0,0"
                     Grid.ColumnSpan="2"/>
-                <template:HelpYouView Grid.Row="5" Grid.ColumnSpan="2">
+                
+                <template:HelpYouView 
+                    Grid.Row="5" 
+                    Grid.ColumnSpan="2"
+                    Margin="0,12,0,0">
                     <template:HelpYouView.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding CallUsCommand}" NumberOfTapsRequired="1" />
                     </template:HelpYouView.GestureRecognizers>

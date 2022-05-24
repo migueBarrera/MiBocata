@@ -28,13 +28,15 @@ public class ConfigurationViewModel : CoreViewModel
         this.preferencesService = preferencesService;
         this.loggingService = loggingService;
         this.taskHelperFactory = taskHelperFactory;
+
+        SaveCommand = new AsyncCommand(SaveCommandExecute);
     }
 
     public Store Store { get => store; set => SetAndRaisePropertyChanged(ref store, value); }
 
     public IEnumerable<Model> Locations { get => locations; set => SetAndRaisePropertyChanged(ref locations, value); }
 
-    public ICommand SaveCommand => new AsyncCommand(SaveCommandExecute);
+    public ICommand SaveCommand { get;set; }
 
     private async Task SaveCommandExecute()
     {
