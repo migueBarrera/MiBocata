@@ -10,7 +10,7 @@
                 <Setter Property="FontSize" Value="{OnPlatform Android=13, UWP=16, Default=13}" />
                 <Setter Property="TextColor" Value="White" />
                 <Setter Property="CornerRadius" Value="12" />
-                <Setter Property="Padding" Value="{OnPlatform Android=2, UWP=8, Default=13}" />
+                <Setter Property="Padding" Value="{OnPlatform Android=6, UWP=8, Default=13}" />
                 <Setter Property="HorizontalOptions" Value="Center" />
             </Style>
         </ResourceDictionary>
@@ -21,21 +21,26 @@
             BackgroundColor="White"
             BorderColor="Black"
             CornerRadius="12">
-            <StackLayout Margin="16,8" Orientation="Vertical">
+            <StackLayout Margin="16,8" Orientation="Vertical" Spacing="6">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="40" />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Image
-                        Margin="0,0,0,0"
+                    <Frame
                         HeightRequest="40"
-                        HorizontalOptions="Center"
-                        Source="profile_placeholder.png"
-                        VerticalOptions="Center"
-                        WidthRequest="40">
-                    </Image>
+                        WidthRequest="40"
+                        CornerRadius="20">
+                        <Image
+                            HeightRequest="40"
+                            WidthRequest="40"
+                            HorizontalOptions="Center"
+                            Source="profile_placeholder.png"
+                            VerticalOptions="Center"
+                            />
+                    </Frame>
+
                     <Label
                         Grid.Column="1"
                         FontSize="Medium"
@@ -45,7 +50,7 @@
                         VerticalTextAlignment="Center" />
                     <Label
                         Grid.Column="2"
-                        FontAttributes="Bold"
+                        FontFamily="SpaceMonoBold"
                         FontSize="Large"
                         HorizontalOptions="End"
                         HorizontalTextAlignment="End"

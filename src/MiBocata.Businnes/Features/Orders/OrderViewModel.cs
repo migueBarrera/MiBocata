@@ -6,6 +6,7 @@ using Mibocata.Core.Services.Interfaces;
 using Models.Core;
 using Mibocata.Core.Framework;
 using Models.Responses;
+using Models.Requests;
 
 namespace MiBocata.Businnes.Features.Orders;
 
@@ -108,10 +109,7 @@ public class OrderViewModel : CoreViewModel
         order.State = states;
 
         var response = await taskHelperFactory.CreateInternetAccessViewModelInstance(loggingService, this).
-                                TryExecuteAsync(() => orderApi.Update(order.Id, new Models.Requests.UpdateOrderRequest()
-                                {
-                                    //order todo
-                                }));
+                                TryExecuteAsync(() => orderApi.Update(order.Id, UpdateOrderRequest.Parse(order)));
         if (response)
         {
             await RefreshCommandAsync(force: true);

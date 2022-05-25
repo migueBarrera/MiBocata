@@ -28,20 +28,31 @@
                         Source="{Binding Store.Image}" />
                 </pancakeview:PancakeView>-->
 
+                <Frame
+                    HeightRequest="126"
+                    Padding="0"
+                    Margin="24"
+                    CornerRadius="18">
+                    <Image
+                        Aspect="AspectFill"
+                        HeightRequest="126"
+                        Source="defaultstore.jpg" />
+                </Frame>
+                
                 <BoxView BackgroundColor="LightGray" HeightRequest="1" />
-                <Label Style="{StaticResource ButtonStyle}" Text="Editar tienda">
+                <Label Style="{StaticResource ButtonStyle}" Text="Edit store">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ConfigCommand}" NumberOfTapsRequired="1" />
                     </Label.GestureRecognizers>
                 </Label>
                 <BoxView BackgroundColor="LightGray" HeightRequest="1" />
-                <Label Style="{StaticResource ButtonStyle}" Text="Editar productos">
+                <Label Style="{StaticResource ButtonStyle}" Text="Edit products">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ProductsCommand}" NumberOfTapsRequired="1" />
                     </Label.GestureRecognizers>
                 </Label>
                 <BoxView BackgroundColor="LightGray" HeightRequest="1" />
-                <Label Style="{StaticResource ButtonStyle}" Text="Cerrar sesión">
+                <Label Style="{StaticResource ButtonStyle}" Text="Close session">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding CloseSessionCommand}" NumberOfTapsRequired="1" />
                     </Label.GestureRecognizers>

@@ -17,6 +17,7 @@
             <Label 
                     Text="Need help? More information?" 
                     TextColor="Black" 
+                FontFamily="SpaceMonoBold"
                 Grid.Column="1"
                     FontSize="Large"/>
             <Label 

@@ -33,7 +33,7 @@
                     Margin="0,0,4,0"/>
 
 
-                <Label FontSize="28" Text="Log In" Grid.Row="1" Margin="32,-24,0,0" TextColor="Black"/>
+                <Label FontSize="28" FontFamily="SpaceMonoBold" Text="Log In" Grid.Row="1" Margin="32,-24,0,0" TextColor="Black"/>
 
                 <Entry Placeholder="Email" Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding User.Email}"  />
                 <Entry Placeholder="Password" Text="{Binding User.Password}" Grid.Row="3" IsPassword="True" Grid.ColumnSpan="2" />

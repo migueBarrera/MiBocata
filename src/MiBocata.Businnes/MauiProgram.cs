@@ -16,8 +16,9 @@ public static class MauiProgram
 			.ConfigurePages()
 			.ConfigureFonts(fonts =>
 			{
-				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+				fonts.AddFont("SpaceMono-Bold.ttf", "SpaceMonoBold");
+				fonts.AddFont("SpaceMono-Italic.ttf", "SpaceMonoItalic");
+				fonts.AddFont("SpaceMono-Regular.ttf", "SpaceMonoRegular");
 			});
 
 		return builder.Build();
