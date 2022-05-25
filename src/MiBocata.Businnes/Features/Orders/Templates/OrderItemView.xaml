@@ -7,10 +7,10 @@
     <ContentView.Resources>
         <ResourceDictionary>
             <Style x:Key="ButtonStyle" TargetType="Button">
-                <Setter Property="FontSize" Value="{OnPlatform Android=13, UWP=16}" />
+                <Setter Property="FontSize" Value="{OnPlatform Android=13, UWP=16, Default=13}" />
                 <Setter Property="TextColor" Value="White" />
                 <Setter Property="CornerRadius" Value="12" />
-                <Setter Property="Padding" Value="{OnPlatform Android=2, UWP=8}" />
+                <Setter Property="Padding" Value="{OnPlatform Android=2, UWP=8, Default=13}" />
                 <Setter Property="HorizontalOptions" Value="Center" />
             </Style>
         </ResourceDictionary>
@@ -36,7 +36,6 @@
                         VerticalOptions="Center"
                         WidthRequest="40">
                     </Image>
-                        <!--Source="{Binding Client.Image}"-->
                     <Label
                         Grid.Column="1"
                         FontSize="Medium"

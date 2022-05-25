@@ -5,12 +5,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
     <ContentView.Content>
-        <!--<pancakeview:PancakeView
-            Margin="6"
-            BackgroundColor="White"
-            CornerRadius="12">
-           
-        </pancakeview:PancakeView>-->
         <Grid Margin="16,8" RowSpacing="4" BackgroundColor="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
