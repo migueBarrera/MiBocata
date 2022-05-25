@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-mobile:
-    runs-on: macos-12
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -16,12 +16,7 @@ jobs:
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: 6.0.x
-          include-prerelease: true
-
-      - uses: actions/setup-java@v2
-        with:
-          distribution: 'microsoft'
-          java-version: '11'     
+          include-prerelease: true 
 
       - name: Install MAUI Workloads
         run: |
