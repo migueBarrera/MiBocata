@@ -2,9 +2,10 @@
 
 public partial class CreateStorePage
 {
-    public CreateStorePage()
+    public CreateStorePage(CreateStoreViewModel viewModel)
     {
         InitializeComponent();
+        BindingContext = viewModel;
     }
 
     //protected override void OnAppearing()

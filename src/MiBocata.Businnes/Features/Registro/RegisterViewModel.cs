@@ -60,7 +60,7 @@ public class RegisterViewModel : CoreViewModel
             return;
         }
 
-        await registerService.RegisterCommandAsync(User);
+        await registerService.RegisterCommandAsync(this, User);
     }
 
     private async Task<bool> ValidateAsync()

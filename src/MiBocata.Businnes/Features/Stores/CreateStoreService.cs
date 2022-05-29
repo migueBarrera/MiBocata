@@ -64,7 +64,7 @@ public class CreateStoreService : ICreateStoreService
         sessionService.Clear();
         preferencesService.SetStore(storeResult);
 
-        //TODO await miBocataNavigationService.NavigateToHome();
+        App.Current.MainPage = new AppHomeShell();
         return Task.CompletedTask;
     }
 }

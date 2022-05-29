@@ -1,9 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<framework:CorePage
-    x:Class="MiBocata.Businnes.Features.Stores.ChooseLocationPage"
-       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:framework="clr-namespace:Mibocata.Core.Framework;assembly=Mibocata.Core">
+<framework:CorePage x:Class="MiBocata.Businnes.Features.Stores.ChooseLocationPage"
+                    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:framework="clr-namespace:Mibocata.Core.Framework;assembly=Mibocata.Core">
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
@@ -11,14 +10,16 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="60" />
             </Grid.RowDefinitions>
-
-            <Grid BackgroundColor="LightBlue">
-                <StackLayout Orientation="Vertical" Spacing="0">
-                    <Label FontSize="24" Text="¿Donde esta tu tienda?" />
-                    <Label
-                        Margin="8,0,0,0"
-                        FontSize="14"
-                        Text="Intenta elegir con la mayor precisión" />
+            <Grid BackgroundColor="LightBlue" HeightRequest="80">
+                <StackLayout Orientation="Vertical"
+                             Padding="6"
+                             VerticalOptions="Center"
+                             Spacing="0">
+                    <Label FontSize="24"
+                           Text="¿Donde esta tu tienda?" />
+                    <Label Margin="8,0,0,0"
+                           FontSize="14"
+                           Text="Intenta elegir con la mayor precisión" />
                 </StackLayout>
             </Grid>
             <!--<maps:Map
@@ -39,12 +40,18 @@
                     </DataTemplate>
                 </maps:Map.ItemTemplate>
             </maps:Map>-->
-
-            <Grid Grid.Row="2" BackgroundColor="White">
-                <Button
-                    Margin="16,8"
-                    Command="{Binding NextCommand}"
-                    Text="Elegir posición" />
+            <Grid Grid.Row="1">
+                <Label Text="At the moment, maps are not supported in .net maui. Click the button and a random location will be sent."
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Center"
+                       FontFamily="SansMonoBold"
+                       FontSize="Medium" />
+            </Grid>
+            <Grid Grid.Row="2"
+                  BackgroundColor="White">
+                <Button Margin="16,8"
+                        Command="{Binding NextCommand}"
+                        Text="Choose location" />
             </Grid>
         </Grid>
     </ContentPage.Content>

@@ -67,6 +67,11 @@
                         <TapGestureRecognizer Command="{Binding CallUsCommand}" NumberOfTapsRequired="1" />
                     </template:HelpYouView.GestureRecognizers>
                 </template:HelpYouView>
+                
+                <ActivityIndicator IsVisible="{Binding IsBusy}"
+                                   IsRunning="{Binding IsBusy}"
+                                   Grid.RowSpan="6"
+                                   Grid.ColumnSpan="2" />
             </Grid>
         </ScrollView>
     </ContentPage.Content>

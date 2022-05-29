@@ -6,6 +6,7 @@ using Models.Core;
 using Models.Responses;
 using MiBocata.Features.LogIn;
 using Mibocata.Core.Framework;
+using MiBocata.Businnes.Features.Stores;
 
 namespace MiBocata.Businnes.Features.LogIn;
 
@@ -62,7 +63,7 @@ public class LogInService : ILogInService
         }
         else
         {
-            //await miBocataNavigationService.NavigateToChooseLocationStore();
+            await Shell.Current.GoToAsync($"///{nameof(ChooseLocationPage)}");
         }
     }
 }
