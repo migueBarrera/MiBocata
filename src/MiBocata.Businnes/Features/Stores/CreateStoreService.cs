@@ -59,11 +59,12 @@ public class CreateStoreService : ICreateStoreService
         }
     }
 
-    private async Task OnCreateStoreSuccessful(Store storeResult)
+    private Task OnCreateStoreSuccessful(Store storeResult)
     {
         sessionService.Clear();
         preferencesService.SetStore(storeResult);
 
         //TODO await miBocataNavigationService.NavigateToHome();
+        return Task.CompletedTask;
     }
 }

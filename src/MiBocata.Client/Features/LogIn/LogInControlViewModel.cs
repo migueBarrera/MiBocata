@@ -105,11 +105,13 @@ public class LogInControlViewModel : CoreViewModel
         return true;
     }
 
-    private async Task LogInSuccessful(Models.Core.Client client)
+    private Task LogInSuccessful(Models.Core.Client client)
     {
         preferencesService.SetClient(client);
         //await navigationService.NavigateToHome();
         App.Current.MainPage = new AppHomeShell();
+
+        return Task.CompletedTask;
     }
 
     private async Task GoToRegisterCommandAsync()

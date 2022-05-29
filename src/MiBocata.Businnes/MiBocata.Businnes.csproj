@@ -14,7 +14,7 @@
 		<ApplicationTitle>MiBocata.Businnes</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.mbmdevelop.mibocata.client</ApplicationId>
+		<ApplicationId>com.mbmdevelop.mibocata.businnes</ApplicationId>
 		<ApplicationIdGuid>10989397-369A-4643-9B8F-5A0D23FC960C</ApplicationIdGuid>
 
 		<!-- Versions -->

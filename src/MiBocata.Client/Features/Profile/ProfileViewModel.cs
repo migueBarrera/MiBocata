@@ -43,21 +43,20 @@ public class ProfileViewModel : CoreViewModel
         await LoginControlViewModel.OnAppearingAsync();
     }
 
-    private async Task CloseSessionCommandAsync()
+    private Task CloseSessionCommandAsync()
     {
         preferencesService.SetClient(null);
         App.Current.MainPage = new AppShell();
+        return Task.CompletedTask;
     }
 
     private async Task OrdersCommandAsync()
     {
-        //await navigationService.NavigateToOrders();
         await Shell.Current.GoToAsync($"{nameof(OrdersPage)}");
     }
 
     private async Task EditProfileCommandAsync()
     {
-        //await navigationService.NavigateToEditProfile();
         await Shell.Current.GoToAsync($"{nameof(EditProfilePage)}");
     }
 }

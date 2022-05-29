@@ -41,8 +41,9 @@ public class EditProfileViewModel : CoreViewModel
 
     public ICommand SaveCommand => new AsyncCommand(() => SaveCommandExecute());
 
-    private async Task TakeImageCommandAsync()
+    private Task TakeImageCommandAsync()
     {
+        return Task.CompletedTask;
         //var file = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions
         //{
         //    PhotoSize = PhotoSize.Small,

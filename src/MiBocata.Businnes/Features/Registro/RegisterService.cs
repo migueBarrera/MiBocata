@@ -48,9 +48,10 @@ internal class RegisterService : IRegisterService
         }
     }
 
-    private async Task RegisterSuccessesful(Shopkeeper result)
+    private Task RegisterSuccessesful(Shopkeeper result)
     {
         preferencesService.SetShopkeeper(result);
         //TODO await miBocataNavigationService.NavigateToChooseLocationStore();
+        return Task.CompletedTask;
     }
 }

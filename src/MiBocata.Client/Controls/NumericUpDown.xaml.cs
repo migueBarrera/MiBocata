@@ -15,9 +15,9 @@ public partial class NumericUpDown : ContentView
 
     public static readonly BindableProperty MinimumProperty =
                                             BindableProperty.Create(
-                                                nameof(Minimum), 
-                                                typeof(double), 
-                                                typeof(NumericUpDown), 
+                                                nameof(Minimum),
+                                                typeof(double),
+                                                typeof(NumericUpDown),
                                                 0.0,
                                                 propertyChanged: (bindable, oldValue, newValue) => ((NumericUpDown)bindable).Minimum = (double)newValue);
 
@@ -40,7 +40,7 @@ public partial class NumericUpDown : ContentView
     public NumericUpDown()
     {
         InitializeComponent();
-        //TODO ValueText.SetBinding(Label.TextProperty, new Binding(nameof(Value), BindingMode.TwoWay, source: this));
+        ValueText.SetBinding(Label.TextProperty, new Binding(nameof(Value), BindingMode.TwoWay, source: this));
     }
 
     public double Value
@@ -85,13 +85,13 @@ public partial class NumericUpDown : ContentView
 
         if (propertyName == ValueProperty.PropertyName)
         {
-            //ValueText.Text = Value.ToString();
+            ValueText.Text = Value.ToString();
         }
     }
 
     private async void MinusTapped(object sender, EventArgs e)
     {
-       /// await AnimateAsync(MinusButton);
+        await AnimateAsync(sender as VisualElement);
 
         if ((Value - Step) > Minimum)
         {
@@ -105,7 +105,7 @@ public partial class NumericUpDown : ContentView
 
     private async void PlusTapped(object sender, EventArgs e)
     {
-       // await AnimateAsync(PlusButton);
+        await AnimateAsync(sender as VisualElement);
 
         if (Value < Maximum)
         {
