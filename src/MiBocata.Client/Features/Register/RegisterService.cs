@@ -40,9 +40,10 @@ internal class RegisterService : IRegisterService
         }
     }
 
-    private async Task RegisterSuccessesful(Models.Core.Client result)
+    private Task RegisterSuccessesful(Models.Core.Client result)
     {
         preferencesService.SetClient(result);
         App.Current.MainPage = new AppHomeShell();
+        return Task.CompletedTask;
     }
 }

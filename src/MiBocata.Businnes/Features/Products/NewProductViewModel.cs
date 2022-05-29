@@ -71,8 +71,9 @@ public class NewProductViewModel : CoreViewModel
         return base.OnAppearingAsync();
     }
 
-    private async Task TakeImageCommandAsync()
+    private Task TakeImageCommandAsync()
     {
+        return Task.CompletedTask;
         //var file = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions
         //{
         //    PhotoSize = PhotoSize.Small,

@@ -6,6 +6,7 @@ using Models.Core;
 using MiBocata.Features.LogIn;
 using Mibocata.Core.Services.Interfaces;
 using MiBocata.Businnes.Features.Registro;
+using Mibocata.Businnes.Features.LogIn.Templates;
 
 namespace MiBocata.Businnes.Features.LogIn;
 
@@ -15,15 +16,18 @@ public class LogInViewModel : CoreViewModel
     private readonly ILogInService logInService;
     private readonly IDialogService dialogService;
     private readonly IKeyboardService keyboardService;
+    private readonly IHelpYouService helpYouService;
 
     public LogInViewModel(
         ILogInService logInService,
         IDialogService dialogService,
-        IKeyboardService keyboardService)
+        IKeyboardService keyboardService,
+        IHelpYouService helpYouService)
     {
         this.logInService = logInService;
         this.dialogService = dialogService;
         this.keyboardService = keyboardService;
+        this.helpYouService = helpYouService;
 
         CallUsCommand = new AsyncCommand(() => CallUsCommandd());
         DoLoginCommand = new AsyncCommand(() => DoLoginCommandAsync());
@@ -60,16 +64,7 @@ public class LogInViewModel : CoreViewModel
         return base.OnAppearingAsync();
     }
 
-    private async Task CallUsCommandd()
-    {
-        if (DeviceInfo.Platform == DevicePlatform.WinUI)
-        {
-            await dialogService.ShowAlertAsync("603033613", "Llamenos sin compromiso");
-            return;
-        }
-        
-        //PhoneDialer.Open("603033613");
-    }
+    private Task CallUsCommandd() => helpYouService.CallUsAsync();
 
     private async Task DoLoginCommandAsync()
     {

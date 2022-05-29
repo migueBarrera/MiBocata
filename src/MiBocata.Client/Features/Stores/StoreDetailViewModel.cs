@@ -66,22 +66,25 @@ public class StoreDetailViewModel : CoreViewModel
         //Hub.Unsubscribe<OrderProduct>();
     }
 
-    private async Task AddItemCommandAsync(Product product)
+    private Task AddItemCommandAsync(Product product)
     {
         listCartProducts.Add(OrderProduct.Parse(product));
         CountItems = listCartProducts.Count;
+        return Task.CompletedTask;
     }
     
-    private async Task RemoveItemCommandAsync(Product product)
+    private Task RemoveItemCommandAsync(Product product)
     {
         var itemforRemove = listCartProducts.FirstOrDefault(x => x.Id == product.Id);
         if (itemforRemove == null)
         {
-            return;
+            return Task.CompletedTask;
         }
 
         listCartProducts.Remove(itemforRemove);
         CountItems = listCartProducts.Count;
+
+        return Task.CompletedTask;
     }
 
     private async Task GoToCartCommandAsync()

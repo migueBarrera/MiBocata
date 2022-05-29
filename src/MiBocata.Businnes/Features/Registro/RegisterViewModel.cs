@@ -3,6 +3,7 @@ using MiBocata.Businnes.Helpers;
 using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
 using Models.Core;
+using Mibocata.Businnes.Features.LogIn.Templates;
 
 namespace MiBocata.Businnes.Features.Registro;
 
@@ -12,15 +13,18 @@ public class RegisterViewModel : CoreViewModel
     private readonly IRegisterService registerService;
     private readonly IDialogService dialogService;
     private readonly IKeyboardService keyboardService;
+    private readonly IHelpYouService helpYouService;
 
     public RegisterViewModel(
         IRegisterService registerService,
         IDialogService dialogService,
-        IKeyboardService keyboardService)
+        IKeyboardService keyboardService,
+        IHelpYouService helpYouService)
     {
         this.registerService = registerService;
         this.dialogService = dialogService;
         this.keyboardService = keyboardService;
+        this.helpYouService = helpYouService;
     }
 
     public Shopkeeper User
@@ -31,8 +35,6 @@ public class RegisterViewModel : CoreViewModel
 
     public ICommand RegisterCommand => new AsyncCommand(() => RegisterCommandAsync());
 
-    public ICommand BackCommand => new AsyncCommand(() => BackCommandAsync());
-
     public ICommand CallUsCommand => new AsyncCommand(() => CallUsCommandd());
 
     public override async Task OnAppearingAsync()
@@ -42,15 +44,7 @@ public class RegisterViewModel : CoreViewModel
         await base.OnAppearingAsync();
     }
 
-    private async Task CallUsCommandd()
-    {
-        //Xamarin.Essentials.PhoneDialer.Open("603033613");
-    }
-
-    private async Task BackCommandAsync()
-    {
-        //TODOawait navigationService.NavigateBackAsync();
-    }
+    private Task CallUsCommandd() => helpYouService.CallUsAsync();
 
     private async Task RegisterCommandAsync()
     {
@@ -66,7 +60,7 @@ public class RegisterViewModel : CoreViewModel
             return;
         }
 
-        await registerService.RegisterCommandAsync(User);
+        await registerService.RegisterCommandAsync(this, User);
     }
 
     private async Task<bool> ValidateAsync()

@@ -1,51 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<framework:CorePage
-    x:Class="MiBocata.Features.Stores.StoreDetailPage"
-                xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:controls="clr-namespace:MiBocata.Controls"
-    xmlns:framework="clr-namespace:Mibocata.Core.Framework;assembly=Mibocata.Core"
-    xmlns:templates="clr-namespace:MiBocata.Features.Stores.Templates"
-    BackgroundColor="#FFFFFF">
-
+<framework:CorePage x:Class="MiBocata.Features.Stores.StoreDetailPage"
+                    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:controls="clr-namespace:MiBocata.Controls"
+                    xmlns:framework="clr-namespace:Mibocata.Core.Framework;assembly=Mibocata.Core"
+                    xmlns:templates="clr-namespace:MiBocata.Features.Stores.Templates"
+                    BackgroundColor="#FFFFFF">
     <framework:CorePage.Resources>
         <ResourceDictionary>
-
-            <Style x:Key="TitleStyle" TargetType="Label">
-                <Setter Property="FontSize" Value="18" />
-                <Setter Property="TextColor" Value="Black" />
-                <Setter Property="Margin" Value="0, 12, 0, 6" />
+            <Style x:Key="TitleStyle"
+                   TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="18" />
+                <Setter Property="TextColor"
+                        Value="Black" />
+                <Setter Property="Margin"
+                        Value="0, 12, 0, 6" />
             </Style>
-
-            <Style x:Key="SubTitleStyle" TargetType="Label">
-                <Setter Property="FontSize" Value="14" />
-                <Setter Property="TextColor" Value="Gray" />
-                <Setter Property="Margin" Value="0, 0, 0, 18" />
+            <Style x:Key="SubTitleStyle"
+                   TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="14" />
+                <Setter Property="TextColor"
+                        Value="Gray" />
+                <Setter Property="Margin"
+                        Value="0, 0, 0, 18" />
             </Style>
-
         </ResourceDictionary>
     </framework:CorePage.Resources>
-
     <framework:CorePage.ToolbarItems>
-        <ToolbarItem
-            Command="{Binding GoToCartCommand}"
-            IconImageSource="outline_shopping_cart_black.png"
-            Text="Cart" />
+        <ToolbarItem Command="{Binding GoToCartCommand}"
+                     IconImageSource="outline_shopping_cart_black.png"
+                     Text="Cart" />
     </framework:CorePage.ToolbarItems>
-
     <ContentPage.Content>
         <StackLayout Spacing="0">
-            <Image
-                Aspect="AspectFill"
-                HeightRequest="126"
-                Source="defaultstore.jpg" />
-            <Label
-                Margin="12,8,0,0"
-                FontAttributes="Bold"
-                FontSize="Large"
-                Text="{Binding Store.Name}"
-                TextColor="Black" />
-            <Label Margin="16,0,0,0" FontAttributes="Italic">
+            <Image Aspect="AspectFill"
+                   HeightRequest="126"
+                   Source="defaultstore.jpg" />
+            <Label Margin="12,8,0,0"
+                   FontAttributes="Bold"
+                   FontSize="Large"
+                   Text="{Binding Store.Name}"
+                   TextColor="Black" />
+            <Label Margin="16,0,0,0"
+                   FontAttributes="Italic">
                 <Label.FormattedText>
                     <FormattedString>
                         <FormattedString.Spans>
@@ -59,22 +58,21 @@
                 </Label.FormattedText>
             </Label>
             <Grid HeightRequest="60">
-                <Label
-                    Margin="12,4,0,0"
-                    FontSize="Large"
-                    HorizontalOptions="Start"
-                    Text="Carta"
-                    TextColor="Black"
-                    VerticalOptions="Center" />
-                <Label
-                    Margin="0,4,12,0"
-                    HorizontalOptions="End"
-                    VerticalOptions="Center">
+                <Label Margin="12,4,0,0"
+                       FontSize="Large"
+                       HorizontalOptions="Start"
+                       Text="List products"
+                       TextColor="Black"
+                       VerticalOptions="Center" />
+                <Label Margin="0,4,12,0"
+                       FontFamily="SpaceMonoItalic"
+                       HorizontalOptions="End"
+                       VerticalOptions="Center">
                     <Label.FormattedText>
                         <FormattedString>
                             <FormattedString.Spans>
                                 <Span Text="{Binding CountItems}" />
-                                <Span Text=" productos en la cesta" />
+                                <Span Text=" items in cart" />
                             </FormattedString.Spans>
                         </FormattedString>
                     </Label.FormattedText>
@@ -83,19 +81,27 @@
                     </Label.GestureRecognizers>
                 </Label>
             </Grid>
-            <CollectionView
-                x:Name="List"
-                Margin="12,0"
-                ItemsSource="{Binding Store.Products}"
-                SelectionMode="None">
+            <CollectionView x:Name="List"
+                            Margin="12,0"
+                            ItemsSource="{Binding Store.Products}"
+                            SelectionMode="None">
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="2" />
+                    <GridItemsLayout Orientation="Vertical"
+                                     Span="2" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <templates:StoreDetailItemView />
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Grid>
+                        <Label Text="This store does not have any products yet."
+                               VerticalOptions="Center"
+                               TextColor="Black"
+                               HorizontalOptions="Center" />
+                    </Grid>
+                </CollectionView.EmptyView>
             </CollectionView>
         </StackLayout>
     </ContentPage.Content>

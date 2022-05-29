@@ -2,9 +2,10 @@
 
 public partial class ChooseLocationPage
 {
-    public ChooseLocationPage()
+    public ChooseLocationPage(ChooseLocationViewModel viewModel)
     {
         InitializeComponent();
+        BindingContext = viewModel;
     }
 
     //protected override void OnAppearing()

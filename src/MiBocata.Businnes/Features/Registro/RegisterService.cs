@@ -1,6 +1,8 @@
 ﻿using Mibocata.Core.Features.Auth;
 using Mibocata.Core.Features.Refit;
+using Mibocata.Core.Framework;
 using Mibocata.Core.Services.Interfaces;
+using MiBocata.Businnes.Features.Stores;
 using Models.Core;
 
 namespace MiBocata.Businnes.Features.Registro;
@@ -24,10 +26,10 @@ internal class RegisterService : IRegisterService
         this.taskHelperFactory = taskHelperFactory;
     }
 
-    public async Task RegisterCommandAsync(Shopkeeper newShopkeeper)
+    public async Task RegisterCommandAsync(IBusyViewModel viewModel, Shopkeeper newShopkeeper)
     {
         var result = await taskHelperFactory.
-           CreateInternetAccessViewModelInstance(loggingService/*, this*/).
+           CreateInternetAccessViewModelInstance(loggingService, viewModel).
            TryExecuteAsync(
            () => authApi.SignUp(new Models.Requests.ShopkeeperSignUpRequest()
            {
@@ -51,6 +53,6 @@ internal class RegisterService : IRegisterService
     private async Task RegisterSuccessesful(Shopkeeper result)
     {
         preferencesService.SetShopkeeper(result);
-        //TODO await miBocataNavigationService.NavigateToChooseLocationStore();
+        await Shell.Current.GoToAsync($"///{nameof(ChooseLocationPage)}");
     }
 }

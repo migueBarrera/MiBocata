@@ -49,14 +49,19 @@ internal class ChooseLocationService : IChooseLocationService
 
     public async Task GetPlaceMarkAndContinue(IEnumerable<Model> locations)
     {
-        if (locations == null || !locations.Any())
-        {
-            // Todo show error
-            return;
-        }
+        //At the moment, maps are not supported in .net maui. Click the button and a random location will be sent.
 
-        var latitude = locations.First().Position.Latitude;
-        var longitude = locations.First().Position.Longitude;
+        var latitude = GetRandomNumber(37.18817, 43.26271);
+        var longitude = GetRandomNumber(-5.84476, -0.98623);
+
+        //if (locations == null || !locations.Any())
+        //{
+        //    // Todo show error
+        //    return;
+        //}
+
+        //var latitude = locations.First().Position.Latitude;
+        //var longitude = locations.First().Position.Longitude;
 
         var placemark = await geocodingService.GetPlaceMark(latitude, longitude);
 
@@ -69,6 +74,13 @@ internal class ChooseLocationService : IChooseLocationService
             nameof(Store),
             store);
 
-        //TODOawait miBocataNavigationService.NavigateToCreateStore();
+        await Shell.Current.GoToAsync($"///{nameof(CreateStorePage)}");
+    }
+
+    //TEMPORAL
+    public double GetRandomNumber(double minimum, double maximum)
+    {
+        Random random = new Random();
+        return random.NextDouble() * (maximum - minimum) + minimum;
     }
 }

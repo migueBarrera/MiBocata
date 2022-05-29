@@ -34,7 +34,12 @@
                             </maps:Map.ItemTemplate>
                         </maps:Map>
                     </pancakeview:PancakeView>-->
-
+                    <StackLayout>
+                        <Label Text="{Binding Locations[0].Address}" />
+                        <Label Text="{Binding Locations[0].Description}" />
+                        <Label Text="{Binding Locations[0].Position}" />
+                    </StackLayout>
+                    
                     <Entry Placeholder="Nombre de la tienda" Text="{Binding Store.Name}" />
                     <StackLayout Orientation="Horizontal">
                         <Label HorizontalOptions="FillAndExpand" Text="Aceptar pedidos automaticamente" />

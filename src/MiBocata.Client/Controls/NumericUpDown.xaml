@@ -1,50 +1,45 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             x:Class="MiBocata.Controls.NumericUpDown">
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                x:Class="MiBocata.Controls.NumericUpDown">
     <ContentView.Resources>
         <ResourceDictionary>
-
             <Style TargetType="Label">
-                <Setter Property="FontSize" Value="16" />
-                <Setter Property="TextColor" Value="Black" />
-                <Setter Property="HorizontalOptions" Value="Center" />
-                <Setter Property="VerticalOptions" Value="Center" />
-                <Setter Property="Margin" Value="0, 0" />
+                <Setter Property="FontSize"
+                        Value="16" />
+                <Setter Property="TextColor"
+                        Value="Black" />
+                <Setter Property="HorizontalOptions"
+                        Value="Center" />
+                <Setter Property="VerticalOptions"
+                        Value="Center" />
+                <Setter Property="Margin"
+                        Value="0, 0" />
             </Style>
-
         </ResourceDictionary>
     </ContentView.Resources>
     <ContentView.Content>
-        <Grid
-            HeightRequest="24"
-            BackgroundColor="White">
+        <Grid HeightRequest="24"
+              BackgroundColor="White">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="32" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <ImageButton
-                        BackgroundColor="Transparent"
-                Clicked="MinusTapped"
-                        WidthRequest="32"
-                        HeightRequest="32"
-                        Source="remove_circle.png" />
-
-            <Label 
-                    x:Name="ValueText"
-                BackgroundColor="Red"
-                    Grid.Column="1" />
-
-            <ImageButton
-                Grid.Column="2"
-                        BackgroundColor="Transparent"
-                        WidthRequest="32"
-                        HeightRequest="32"
-                Clicked="PlusTapped"
-                        Source="add_circle.png"
-                         />
+            <ImageButton BackgroundColor="Transparent"
+                         Clicked="MinusTapped"
+                         WidthRequest="32"
+                         HeightRequest="32"
+                         Source="remove_circle.png" />
+            <Label x:Name="ValueText"
+                   Grid.Column="1" />
+            <ImageButton Grid.Column="2"
+                         BackgroundColor="Transparent"
+                         WidthRequest="32"
+                         HeightRequest="32"
+                         Clicked="PlusTapped"
+                         Source="add_circle.png" />
         </Grid>
     </ContentView.Content>
 </ContentView>

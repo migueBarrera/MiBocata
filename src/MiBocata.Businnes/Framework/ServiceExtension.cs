@@ -1,4 +1,5 @@
-﻿using Mibocata.Core.Services.Interfaces;
+﻿using Mibocata.Businnes.Features.LogIn.Templates;
+using Mibocata.Core.Services.Interfaces;
 using MiBocata.Businnes.Features.Configuration;
 using MiBocata.Businnes.Features.LogIn;
 using MiBocata.Businnes.Features.Orders;
@@ -22,6 +23,7 @@ internal static class ServiceExtension
         builder.Services.AddTransient<IRegisterService, RegisterService>();
         builder.Services.AddTransient<ICreateStoreService, CreateStoreService>();
         builder.Services.AddTransient<IChooseLocationService, ChooseLocationService>();
+        builder.Services.AddTransient<IHelpYouService, HelpYouService>();
 
 #if ANDROID
         builder.Services.AddTransient<IKeyboardService, MiBocata.Platforms.Android.Services.KeyboardService>();
