@@ -4,7 +4,7 @@
        xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:framework="clr-namespace:Mibocata.Core.Framework;assembly=Mibocata.Core"
-    Title="Rellena los datos">
+    Title="Create your store">
     <ContentPage.Content>
         <ScrollView>
             <Grid Margin="16,8">
@@ -35,14 +35,14 @@
                         </maps:Map>
                     </pancakeview:PancakeView>-->
                     <StackLayout>
-                        <Label Text="{Binding Locations[0].Address}" />
-                        <Label Text="{Binding Locations[0].Description}" />
-                        <Label Text="{Binding Locations[0].Position}" />
+                        <Label Text="{Binding PositionName}" />
                     </StackLayout>
                     
-                    <Entry Placeholder="Nombre de la tienda" Text="{Binding Store.Name}" />
+                    <Entry Placeholder="Store name" Text="{Binding Store.Name}" />
                     <StackLayout Orientation="Horizontal">
-                        <Label HorizontalOptions="FillAndExpand" Text="Aceptar pedidos automaticamente" />
+                        <Label HorizontalOptions="FillAndExpand"
+                               VerticalOptions="Center"
+                               Text="Accept orders automatically" />
                         <Switch IsToggled="{Binding Store.AutoAccept}" />
                     </StackLayout>
 
@@ -50,6 +50,7 @@
 
                 <Button
                     Grid.Row="1"
+                    Margin="0,32,0,0"
                     Command="{Binding NextCommand}"
                     Text="Guardar" />
 

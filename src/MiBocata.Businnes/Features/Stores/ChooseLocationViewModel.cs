@@ -13,13 +13,15 @@ namespace MiBocata.Businnes.Features.Stores
              IChooseLocationService chooseLocationService)
         {
             this.chooseLocationService = chooseLocationService;
+
+            NextCommand = new AsyncCommand(() => NextCommandAsync());
         }
 
         public Location UserLocation { get => userLocation; set => SetAndRaisePropertyChanged(ref userLocation, value); }
 
         public IEnumerable<Model> Locations { get => locations; set => SetAndRaisePropertyChanged(ref locations, value); }
 
-        public ICommand NextCommand => new AsyncCommand(() => NextCommandAsync());
+        public ICommand NextCommand {get; set;}
 
         public override async Task OnAppearingAsync()
         {

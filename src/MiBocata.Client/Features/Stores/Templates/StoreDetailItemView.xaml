@@ -67,11 +67,9 @@
                 </HorizontalStackLayout>
 
                 <ImageButton
-                    
                     BackgroundColor="Transparent"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:StoreDetailViewModel}}, Path=AddRemoveItemCommand}"
                     CommandParameter="{Binding}"
-                    
                     Source="round_add_circle_outline_black_24.png"
                     VerticalOptions="Center" />
             </Grid>
