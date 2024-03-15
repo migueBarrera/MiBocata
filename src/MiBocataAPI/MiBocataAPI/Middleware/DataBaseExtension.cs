@@ -4,7 +4,6 @@ public static class DataBaseExtension
 {
     public static IServiceCollection AddDataBaseConfiguration(this IServiceCollection services, IConfiguration config)
     {
-
         var userDB = config.GetSection("DataBase").GetSection("User").Value;
         var passDB = config.GetSection("DataBase").GetSection("Pass").Value;
         var dataBaseName = config.GetSection("DataBase").GetSection("DataBaseName").Value;

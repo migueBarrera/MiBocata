@@ -14,8 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MauiMaps", "..\MauiMaps\MauiMaps.csproj", "{F807B840-A3D5-42C7-9C50-42B5F7FF24C7}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,18 +66,6 @@ Global
 		{5B1A7006-5CDD-4F68-B1C6-9C6A74D4642B}.Release|iPhone.Build.0 = Release|Any CPU
 		{5B1A7006-5CDD-4F68-B1C6-9C6A74D4642B}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{5B1A7006-5CDD-4F68-B1C6-9C6A74D4642B}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{F807B840-A3D5-42C7-9C50-42B5F7FF24C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F807B840-A3D5-42C7-9C50-42B5F7FF24C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F807B840-A3D5-42C7-9C50-42B5F7FF24C7}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{F807B840-A3D5-42C7-9C50-42B5F7FF24C7}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{F807B840-A3D5-42C7-9C50-42B5F7FF24C7}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{F807B840-A3D5-42C7-9C50-42B5F7FF24C7}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{F807B840-A3D5-42C7-9C50-42B5F7FF24C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F807B840-A3D5-42C7-9C50-42B5F7FF24C7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F807B840-A3D5-42C7-9C50-42B5F7FF24C7}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{F807B840-A3D5-42C7-9C50-42B5F7FF24C7}.Release|iPhone.Build.0 = Release|Any CPU
-		{F807B840-A3D5-42C7-9C50-42B5F7FF24C7}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{F807B840-A3D5-42C7-9C50-42B5F7FF24C7}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

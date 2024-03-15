@@ -6,25 +6,25 @@ public static class ImageHelper
     {
         var url = string.Empty;
 
-        try
-        {
-            CloudBlockBlob resultBlob = null;
-            if (file.Length > 0)
-            {
-                using (var stream = file.OpenReadStream())
-                {
-                    resultBlob = await AzureStorageManager.AzureStorageManager.SaveBlockBlobAsync($"mibocatacontainer/{container}", stream);
-                }
+        //try
+        //{
+        //    CloudBlockBlob resultBlob = null;
+        //    if (file.Length > 0)
+        //    {
+        //        using (var stream = file.OpenReadStream())
+        //        {
+        //            resultBlob = await AzureStorageManager.AzureStorageManager.SaveBlockBlobAsync($"mibocatacontainer/{container}", stream);
+        //        }
 
-                if (resultBlob != null)
-                {
-                    url = resultBlob.Uri.OriginalString;
-                }
-            }
-        }
-        catch (Exception)
-        {
-        }
+        //        if (resultBlob != null)
+        //        {
+        //            url = resultBlob.Uri.OriginalString;
+        //        }
+        //    }
+        //}
+        //catch (Exception)
+        //{
+        //}
 
         return url;
     }

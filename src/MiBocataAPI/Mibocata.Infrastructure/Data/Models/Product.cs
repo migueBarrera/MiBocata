@@ -1,5 +1,4 @@
-﻿using Models.Responses;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mibocata.Infrastructure.Data.Models;
 

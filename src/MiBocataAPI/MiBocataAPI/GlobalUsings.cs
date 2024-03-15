@@ -12,4 +12,3 @@ global using Microsoft.IdentityModel.Tokens;
 global using System.IdentityModel.Tokens.Jwt;
 global using System.Text;
 global using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-global using Microsoft.WindowsAzure.Storage.Blob;
