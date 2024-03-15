@@ -74,7 +74,7 @@ jobs:
   #         retention-days: 90
 
   macos-build-android-macos-ios:
-    runs-on: macos-12
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@v2
 
@@ -84,10 +84,10 @@ jobs:
           cd ${{ github.workspace }}
           gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.android_keystore_gpg_pass }} --output ${{inputs.root_path}}${{ inputs.keystore_path }} ${{ inputs.encrypted_keystore_path }}
 
-      - name: Setup .NET 6
+      - name: Setup .NET 8
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 8.0.x
           include-prerelease: true
 
       - uses: actions/setup-java@v2
@@ -97,7 +97,7 @@ jobs:
 
       - name: Install MAUI Workloads
         run: |
-          dotnet workload install maui --source https://api.nuget.org/v3/index.json
+          dotnet workload install maui
 
       # BUILD
       - name: Restore dependencies
@@ -114,7 +114,7 @@ jobs:
       - name: Build MAUI Android
         shell: pwsh
         run: |
-          dotnet publish ${{ inputs.csproj }} -c Release -f net6.0-android --no-restore /p:AndroidKeyStore=true /p:AndroidSigningKeyStore=${{ inputs.keystore_path }} /p:AndroidSigningStorePass=${{ secrets.android_signing_store_pass }} /p:AndroidSigningKeyAlias=${{ secrets.android_signing_key_alias }} /p:AndroidSigningKeyPass=${{ secrets.android_signing_key_pass }}
+          dotnet publish ${{ inputs.csproj }} -c Release -f net8.0-android --no-restore /p:AndroidKeyStore=true /p:AndroidSigningKeyStore=${{ inputs.keystore_path }} /p:AndroidSigningStorePass=${{ secrets.android_signing_store_pass }} /p:AndroidSigningKeyAlias=${{ secrets.android_signing_key_alias }} /p:AndroidSigningKeyPass=${{ secrets.android_signing_key_pass }}
 
       #POST-BUILD
       - name: Create artifacts folder
