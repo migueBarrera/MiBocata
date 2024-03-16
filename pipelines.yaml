@@ -1,0 +1,20 @@
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x'
+    addToPath: true
+
+- script: |
+    terraform init
+    terraform validate
+  displayName: 'Terraform Init and Validate'
+
+- script: terraform plan -out=tfplan -var="resource_group_name=testmigue" -var="location=eastus"
+  displayName: 'Terraform Plan'
+
+- script: terraform apply -input=false tfplan
+  displayName: 'Terraform Apply'
+  condition: succeeded()
