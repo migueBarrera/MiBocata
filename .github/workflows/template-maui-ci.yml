@@ -7,15 +7,15 @@ on:
 
 jobs:
   build-mobile:
-    runs-on: macos-12
+    runs-on: macos-13
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Setup .NET 6
+      - name: Setup .NET 8
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 8.0.x
           include-prerelease: true
 
       - uses: actions/setup-java@v2
@@ -25,12 +25,12 @@ jobs:
 
       - name: Install MAUI Workloads
         run: |
-          dotnet workload install maui --source https://api.nuget.org/v3/index.json          
+          dotnet workload install maui
 
       - name: Build MAUI Mobile app
         shell: pwsh
         run: |
-          dotnet build ${{inputs.csproj}} -f net6.0-android -bl:mobile.binlog
+          dotnet build ${{inputs.csproj}} -f net8.0-android -bl:mobile.binlog
 
       - name: Archive build log
         uses: actions/upload-artifact@v2
