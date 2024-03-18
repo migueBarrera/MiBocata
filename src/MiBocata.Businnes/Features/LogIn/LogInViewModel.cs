@@ -55,8 +55,8 @@ public class LogInViewModel : CoreViewModel
         {
             User = new Shopkeeper()
             {
-                Email = "mbmdevelop@gmail.com",
-                Password = "12345",
+                Email = "shopkeeper@email.com",
+                Password = "123456",
             };
         }
 #pragma warning restore CS0162 // Unreachable code detected

@@ -50,8 +50,8 @@ public class LogInControlViewModel : CoreViewModel
         {
             User = new Models.Core.Client()
             {
-                Email = "a@a.com",
-                Password = "12345",
+                Email = "shopkeeper@email.com",
+                Password = "123456",
             };
         }
 #pragma warning restore CS0162 // Unreachable code detected

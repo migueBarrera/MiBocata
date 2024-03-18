@@ -8,7 +8,7 @@ public static class DefaultSettings
 
     public const string OneSignalAppId = "__ENTER_YOUR_ONE_SIGNAL_ID_SECRET_HERE__";
 
-    public const string URL_BASE = "http://141.94.207.18";
+    public const string URL_BASE = "https://mibocataapi20240318003721.azurewebsites.net";
 
     public const bool DebugMode =
 #if DEBUG 
