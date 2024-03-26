@@ -1,20 +1,122 @@
+trigger:
+  branches:
+    include:
+      - develop
+      - main
+
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: ubuntu-latest
 
-steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.x'
-    addToPath: true
+variables:
+  - name: "IsPullRequest"
+    value: $[eq(variables['Build.Reason'],'PullRequest')]
+  - name: "IsRelease"
+    value: $[startsWith(variables['Build.SourceBranch'],'refs/tags/release')]
+  - name: "IsNightly"
+    value: $[eq(variables['Build.Reason'],'Schedule')]
+  - name: "BuildConfiguration"
+    value: "Release"
 
-- script: |
-    terraform init
-    terraform validate
-  displayName: 'Terraform Init and Validate'
+  - name: "containerRegistryName"
+    value: "euwedevgimechpropacr.azurecr.io"
+  - name: "containerRegistryRepository"
+    value: "gimechapi"
+  - name: "containerRegistryServiceConnectionName"
+    value: "GIMECH-ACR-CONNECTION-V2"
 
-- script: terraform plan -out=tfplan -var="resource_group_name=testmigue" -var="location=eastus"
-  displayName: 'Terraform Plan'
+  - name: "ServiceName"
+    value: "services"
+  - name: "ServiceNameSpace"
+    value: "GIMechProp"
+  - name: "DockerFile"
+    value: "Dockerfile"
+  - name: "DockerTag"
+    value: "$(Build.BuildId)"
+  - name: "DockerImageName"
+    value: "$(containerRegistryName)/$(containerRegistryRepository):$(DockerTag)"
 
-- script: terraform apply -input=false tfplan
-  displayName: 'Terraform Apply'
-  condition: succeeded()
+resources:
+  containers:
+    - container: database
+      image: mcr.microsoft.com/mssql/server
+      options: -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=_mypassword1234_!"
+      ports:
+        - 6433:1433
+
+stages:
+  - stage: Build
+    displayName: CI
+    variables:
+      - name: "BuildProjects"
+        value: "src/MiBocataAPI/MiBocataAPI/MiBocataAPI.csproj"
+
+    jobs:
+      - job: BuildProject
+        displayName: "Build CI Process"
+        workspace:
+          clean: all
+        services:
+          database: database
+
+        steps:
+          - script: echo $(BuildProjects)
+            displayName: BuildProjects
+
+          - task: UseDotNet@2
+            displayName: Set .Net Version
+            inputs:
+              version: "8.0.x"
+
+          - task: DotNetCoreCLI@2
+            displayName: Restore Packages
+            inputs:
+              command: "restore"
+              projects: "$(BuildProjects)"
+              arguments: "--configuration $(BuildConfiguration)"
+
+          - task: DotNetCoreCLI@2
+            displayName: Build
+            inputs:
+              command: "build"
+              projects: "$(BuildProjects)"
+              feedsToUse: "select"
+
+      - job: DockerImage
+        displayName: "Dockerize"
+        dependsOn: BuildProject
+        condition: and(succeeded(), eq(variables['IsPullRequest'], 'false'),eq(variables['IsNightly'], 'false'))
+
+        steps:
+          - task: Docker@2
+            displayName: "Create Image"
+            inputs:
+              command: "build"
+              Dockerfile: "$(DockerFile)"
+              buildContext: "$(Build.SourcesDirectory)"
+              tags: "$(Build.BuildId)"
+              arguments: "-t $(containerRegistryName)/$(containerRegistryRepository):$(ServiceName)-$(Build.BuildId)"
+          - task: Docker@2
+            displayName: "Publish Image to Container Registry"
+            inputs:
+              command: "push"
+              tags: "$(Build.BuildId)"
+
+  # - stage: DevDeploy
+  #   displayName: Deploy DEV
+  #   dependsOn: Build
+  #   condition: and(succeeded(), eq(variables['IsPullRequest'],false), eq(variables['IsNightly'],false))
+  #   jobs:
+  #     - template: wpa_deployapi_tpl.yaml
+  #       parameters:
+  #         env: "dev"
+  #         short_env: "d"
+
+  # - stage: ProDeploy
+  #   displayName: Deploy PRO
+  #   dependsOn: DevDeploy
+  #   condition: and(succeeded(), eq(variables['IsPullRequest'],false), eq(variables['IsNightly'],false))
+  #   jobs:
+  #     - template: wpa_deployapi_tpl.yaml
+  #       parameters:
+  #         env: "prd"
+  #         short_env: "p"
